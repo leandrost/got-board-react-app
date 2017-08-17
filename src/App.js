@@ -10,9 +10,10 @@ class App extends Component {
       <div styleName="app">
         <div styleName="board"></div>
         <aside>
-          <div styleName="throne-token"></div>
-          <div styleName="blade-token"></div>
-          <div styleName="raven-token"></div>
+          <div styleName="iron-throne-token"></div>
+          <div styleName="valyrian-steel-blade-token"></div>
+          <div styleName="mensseger-raven-token"></div>
+          <div styleName="wilding-threat-token"></div>
         </aside>
       </div>
     );

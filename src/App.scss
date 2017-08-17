@@ -17,25 +17,33 @@
 @mixin piece {
   background-repeat: no-repeat;
   display: inline-block;
+  border: 1px solid;
 }
 
-.throne-token {
+.iron-throne-token {
   @include piece;
   height: 25em;
   width: 16em;
-  background-image: url("images/special/throne.png");
+  background-image: url("images/tokens/throne.png");
 }
 
-.blade-token {
+.valyrian-steel-blade-token {
   @include piece;
   height: 32em;
   width: 12em;
-  background-image: url("images/special/blade.png");
+  background-image: url("images/tokens/blade.png");
 }
 
-.raven-token {
+.mensseger-raven-token {
   @include piece;
   height: 25em;
   width: 16em;
-  background-image: url("images/special/raven.png");
+  background-image: url("images/tokens/raven.png");
+}
+
+.wilding-threat-token {
+  @include piece;
+  height: 5em;
+  width: 5em;
+  background-image: url("images/tokens/wilding.png");
 }
