@@ -1,0 +1,121 @@
+.app {
+  display: flex;
+
+  .board {
+    min-width: 1980px;
+    min-height: 2975px;
+    background-image: url("images/board.jpg");
+    background-repeat: no-repeat;
+  }
+
+  aside {
+  }
+}
+
+@mixin piece {
+  background-repeat: no-repeat;
+  display: inline-block;
+  border: 1px solid;
+  margin: 5px;
+}
+
+.iron-throne-token {
+  @include piece;
+  height: 25em;
+  width: 16em;
+  background-image: url("images/tokens/throne.png");
+}
+
+.valyrian-steel-blade-token {
+  @include piece;
+  height: 32em;
+  width: 12em;
+  background-image: url("images/tokens/blade.png");
+}
+
+.mensseger-raven-token {
+  @include piece;
+  height: 25em;
+  width: 16em;
+  background-image: url("images/tokens/raven.png");
+}
+
+.wilding-threat-token {
+  @include piece;
+  height: 5em;
+  width: 5em;
+  background-image: url("images/tokens/wilding.png");
+}
+
+.round-marker {
+  @include piece;
+  height: 5em;
+  width: 6em;
+  background-image: url("images/round-marker.png");
+  background-position: center;
+}
+
+$factions: baratheon lannister stark greyjoy tyrell martell;
+
+@each $faction in $factions {
+  .#{$faction}-influence-token {
+    @include piece;
+    height: 6.4em;
+    width: 6.3em;
+    background-image: url("images/tokens/influence/#{$faction}.png");
+  }
+  .#{$faction}-supply-token {
+    @include piece;
+    height: 5.6em;
+    width: 4.5em;
+    background-image: url("images/tokens/supply/#{$faction}.png");
+  }
+  .#{$faction}-victory-token {
+    @include piece;
+    height: 5em;
+    width: 5.6em;
+    background-image: url("images/tokens/victory/#{$faction}.png");
+  }
+  .#{$faction}-power-token {
+    @include piece;
+    height: 5em;
+    width: 3.5em;
+    background-image: url("images/tokens/power/#{$faction}.png");
+  }
+
+  .#{$faction}-footman {
+    @include piece;
+    height: 5em;
+    width: 5em;
+    background-image: url("images/units/footman/#{$faction}.png");
+  }
+  .#{$faction}-knight {
+    @include piece;
+    height: 5.5em;
+    width: 5.5em;
+    background-image: url("images/units/knight/#{$faction}.png");
+  }
+  .#{$faction}-ship {
+    @include piece;
+    height: 5.5em;
+    width: 6em;
+    background-image: url("images/units/ship/#{$faction}.png");
+  }
+  .#{$faction}-siege-engine {
+    @include piece;
+    height: 5.3em;
+    width: 5em;
+    background-image: url("images/units/siege-engine/#{$faction}.png");
+  }
+}
+
+$garrisons: dragonstone highgarden lannisport pyke sunspear winterfell;
+
+@each $garrison in $garrisons {
+  .garrison-#{$garrison} {
+    @include piece;
+    height: 6.5em;
+    width: 9.5em;
+    background-image: url("images/tokens/garrison/#{$garrison}.png");
+  }
+}
