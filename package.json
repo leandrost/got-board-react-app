@@ -38,6 +38,8 @@
     "react": "^15.6.1",
     "react-css-modules": "^4.7.1",
     "react-dev-utils": "^3.1.0",
+    "react-dnd": "^2.4.0",
+    "react-dnd-html5-backend": "^2.4.1",
     "react-dom": "^15.6.1",
     "react-error-overlay": "^1.0.10",
     "resolve-url-loader": "^2.1.0",
