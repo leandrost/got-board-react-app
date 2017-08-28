@@ -1,32 +1,49 @@
 .app {
   display: flex;
-
-  .board {
-    min-width: 1980px;
-    min-height: 2975px;
-    background-image: url("images/board.jpg");
-    background-repeat: no-repeat;
-
-    svg g {
-      fill: none;
-      stroke: none;
-      pointer-events: all;
-      opacity: 0.7;
-
-      &:hover {
-        fill: orange;
-        opacity: 0.7;
-      }
-
-      &.dragging-hover {
-        path {
-          fill: white;
-          opacity: 0.7;
-        }
-      }
-    }
-  }
 }
+
+.board {
+  min-width: 1980px;
+  min-height: 2975px;
+  background-image: url("images/board.jpg");
+  background-repeat: no-repeat;
+
+}
+
+.wildlings-threat-track {
+  position: absolute;
+  top: 78px;
+  left: 374px;
+  width: 710px;
+  height: 95px;
+  display: flex;
+}
+.position {
+  height: 95px;
+  width: 101px;
+  border-radius: 50px;
+}
+
+.position-actived {
+  composes: position;
+  background-color: white;
+  opacity: 0.7;
+}
+
+.territory {
+  fill: none;
+  stroke: none;
+  pointer-events: all;
+  opacity: 0.7;
+}
+
+.territory-actived {
+  fill: white;
+  stroke: none;
+  pointer-events: all;
+  opacity: 0.7;
+}
+
 
 @mixin piece {
   background-repeat: no-repeat;
@@ -56,7 +73,7 @@
   background-image: url("images/tokens/raven.png");
 }
 
-.wilding-threat-token {
+.wildling-threat-token {
   @include piece;
   height: 5em;
   width: 5em;

@@ -201,6 +201,7 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   modules: true,
+                  localIdentName: '[name]--[local]--[hash:base64:5]'
                 },
               },
               "resolve-url-loader",

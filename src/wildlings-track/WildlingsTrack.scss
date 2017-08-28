@@ -1,0 +1,29 @@
+@import '../app.scss';
+
+.track {
+  position: absolute;
+  top: 78px;
+  left: 374px;
+  width: 710px;
+  height: 95px;
+  display: flex;
+}
+
+.position {
+  height: 95px;
+  width: 101px;
+  border-radius: 50px;
+}
+
+.position-actived {
+  composes: position;
+  background-color: white;
+  opacity: 0.7;
+}
+
+.threat-token {
+  @include piece;
+  height: 5em;
+  width: 5em;
+  background-image: url("images/tokens/wilding.png");
+}
