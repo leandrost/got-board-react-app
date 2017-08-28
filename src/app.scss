@@ -48,8 +48,11 @@
 @mixin piece {
   background-repeat: no-repeat;
   display: inline-block;
-  border: 1px solid;
   margin: 5px;
+
+  &:active {
+    opacity: 0.95;
+  }
 }
 
 .iron-throne-token {

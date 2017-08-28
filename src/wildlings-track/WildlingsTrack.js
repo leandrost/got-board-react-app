@@ -1,24 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import CSSModules from 'react-css-modules';
 import { DropTarget, DragSource } from 'react-dnd';
 
 import styles from './WildlingsTrack.scss';
 
-const source = {
-  beginDrag() {
-
+@DragSource("wildling-threat-token", {
+  beginDrag(props) {
+    return props;
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) { return false; }
-    var r = monitor.getDropResult();
-    const el = ReactDOM.findDOMNode(component);
-    const top = el.offsetTop + r.y
-    return top;
+    var object = monitor.getDropResult();
+    props.onDragEnd(object);
   }
-};
-
-@DragSource("wildling-threat-token", source, (connect, monitor) => {
+}, (connect, monitor) => {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
@@ -34,45 +29,62 @@ export class WildlingThreatToken extends React.Component {
   }
 }
 
-const POSITION_COUNT = 7;
+@DropTarget("wildling-threat-token", {
+  drop(props, monitor, component) {
+    const item = monitor.getItem();
+    if (component.onDrop) { component.onDrop(item); }
+    return props;
+  }
+}, (connect, monitor) => {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+  }
+})
+@CSSModules(styles)
+export class WildlingTrackSlot extends React.Component {
+  render() {
+    const { connectDropTarget, isOver, children } = this.props;
+    const actived =  isOver ? "-actived" : '';
+
+    return connectDropTarget(
+      <div styleName={`position${actived}`}>
+        { children }
+      </div>
+    );
+  }
+}
 
 @CSSModules(styles)
 export default class WildlingsTrack extends React.Component {
   constructor() {
     super();
-    this.state = { positionIndex: 2 };
+    this.state = { position: 1 };
   }
 
   updateCurrentPosition(position) {
-    this.setState('position', position);
+    this.setState({ position: position });
   }
 
   renderToken(position) {
-    if (this.state.position === position) {
-      return <WildlingThreatToken />;
+    if (this.state.position === position)  {
+      return <WildlingThreatToken position={position} onDragEnd={ token => this.updateCurrentPosition(token.position) } />;
     }
   }
 
   renderPosition(position) {
     return (
-      <div styleName="position-actived">
+      <WildlingTrackSlot key={position} position={position}>
         { this.renderToken(position) }
-      </div>
+      </WildlingTrackSlot>
       );
   }
 
   render() {
-    const positions = new Array(POSITION_COUNT);
-    console.log(positions);
-    const arr = positions.map(i => { return 0 })
-    console.log(arr);
-    return (
-      <div styleName="track">
-        {
-        positions.map(i => { return (<div styleName="position-actived"> { this.renderToken(i) } </div>) })
-        }
-      </div>
-      );
+    const positions = [0, 2, 4, 6, 8, 10, 12];
+    return <div styleName="track">
+      { positions.map((threat, position) => { return this.renderPosition(position) }) }
+    </div>
   }
 }
 
