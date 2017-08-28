@@ -5,16 +5,12 @@ import { DragSource, DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import WildlingsTrack from './wildlings-track/WildlingsTrack';
+import InfluenceTrack from './influence-track/InfluenceTrack';
 
 import styles from './app.scss';
 
 const specs = {
   drop(props, monitor, component) {
-    console.log(monitor.getInitialClientOffset());
-    console.log(monitor.getInitialSourceClientOffset());
-    console.log(monitor.getClientOffset());
-    console.log(monitor.getDifferenceFromInitialOffset());
-    console.log(monitor.getSourceClientOffset());
     return monitor.getDifferenceFromInitialOffset();
   }
 };
@@ -87,6 +83,10 @@ class App extends Component {
             <Territory name="kings-landing" boundaries="M1063.93,1872.91L1036.81,1879.53L973.385,1878.45C930.357,1861.14 895.138,1872.79 867.729,1913.39C865.959,1974.95 851.375,2018.97 868.814,2023.44C862.886,2069.32 867.405,2097.02 887.195,2098.15C900.062,2102.25 909.33,2108.57 914.999,2117.12L962.937,2122.43C1004.25,2095.49 1046.4,2065.95 1090.36,2030.68L1111.64,2005.09L1104.14,1977.3C1078.34,1988.78 1052.94,1995.78 1028.13,1996.24C1001.58,2012.72 981.448,2017.87 975.416,1998.1C956.576,2011.31 954.52,2005.16 969.249,1979.64C947.773,1960.93 954.395,1949.6 989.117,1945.65C1000.51,1932.94 1015.27,1926.39 1033.38,1926.01L1028.59,1942.44L1043.59,1931.02C1041.18,1908.08 1052.33,1897.02 1069.64,1891.34C1063.56,1885.61 1061.66,1879.46 1063.93,1872.91Z" />
           </svg>
           <WildlingsTrack />
+          { <InfluenceTrack /> }
+          { /* <SupplyTrack /> */ }
+          { /* <RoundTrack /> */ }
+          { /* <VictoryTrack /> */ }
         </div>
         <aside>
           <div styleName="iron-throne-token"></div>
