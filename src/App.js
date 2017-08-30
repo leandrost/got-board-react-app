@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom';
 import CSSModules from 'react-css-modules';
 import { DragSource, DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
+
 
 import WildlingsTrack from './wildlings-track/WildlingsTrack';
 import InfluenceTrack from './influence-track/InfluenceTrack';
 
 import styles from './app.scss';
+
+function DnDBackend()
+{
+  const is_touch_device = 'ontouchstart' in window || navigator.maxTouchPoints;
+  if (is_touch_device) {
+    return TouchBackend;
+  }
+  return HTML5Backend;
+}
 
 const specs = {
   drop(props, monitor, component) {
@@ -71,7 +82,7 @@ export class Piece extends Component {
   }
 }
 
-@DragDropContext(HTML5Backend)
+@DragDropContext(DnDBackend())
 @CSSModules(styles)
 class App extends Component {
   render() {
