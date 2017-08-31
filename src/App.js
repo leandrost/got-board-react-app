@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import CSSModules from 'react-css-modules';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { DragSource, DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
-
+import build from 'redux-object';
 
 import WildlingsTrack from './wildlings-track/WildlingsTrack';
 import InfluenceTrack from './influence-track/InfluenceTrack';
+
+import { fetchBoard } from './redux/actions/';
 
 import styles from './app.scss';
 
@@ -83,9 +87,25 @@ export class Piece extends Component {
 }
 
 @DragDropContext(DnDBackend())
+@connect(
+  state => (
+    { board: state.board }
+  ),
+  dispatch => (
+    bindActionCreators({
+      fetchBoard,
+    }, dispatch)
+  )
+)
 @CSSModules(styles)
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchBoard(42);
+  }
   render() {
+    const board = build(this.props, 'board', 42);
+    const territory = build(this.props, 'territory', 1);
+    console.log("T ", territory);
     return (
       <div styleName="app">
         <div styleName="board">
