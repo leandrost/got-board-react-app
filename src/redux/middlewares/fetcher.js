@@ -1,63 +1,25 @@
 const fetchData = (config, dispatch, action) => {
   console.log("Action ", action);
-  //function asyncFunc(e) {
-    //return new Promise((resolve, reject) => {
-      //setTimeout(() => resolve(e), e * 1000);
-    //});
-  //}
 
-  //const p1 = new Promise(result => {
-    //return "this";
-  //});
-  //const p2 = new Promise(result => {
-    //console.log(result);
-    //debugger
-    //return result.then(`${result} is`);
-  //});
-  //const p3 = new Promise(result => {
-    //debugger
-    //return result.then(`${result} it!`);
-  //});
+  Promise.chain = function(arr, value) {
+    return arr.reduce(
+      (promise, item) => {
+        return promise.then(item).catch(console.error);
+      },
+      Promise.resolve(value)
+    );
+  };
 
-  //const arr = [ p1, p2, p3 ];
-
-  //function promiseChain(arr) {
-    //return arr.reduce((promise, item) => {
-      //return item;
-    //}, Promise.resolve());
-  //}
-
-  //p1.then(p2).then(p3);
-
-  function asyncFunc(e) {
-    return new Promise((resolve, reject) => {
-       resolve(e);
+  const promises = action.fetch.included.map(include => {
+    return (json => {
+      dispatch({
+        type: `LOAD_${include.toUpperCase()}`,
+        payload: json,
+        jsonapi: true,
+      });
+      return json;
     });
-  }
-
-  const arr = [1, 2, 3];
-  let final = [];
-
-  function workMyCollection(arr) {
-    return arr.reduce((promise, item) => {
-      return promise
-      .then((result) => {
-        console.log(`item ${item}`);
-        return asyncFunc(item).then(result => {
-          final.push(result)
-          return result;
-        });
-      })
-      .catch(console.error);
-    }, Promise.resolve());
-  }
-
-  workMyCollection(arr)
-  .then((r) => console.log(`FINAL RESULT is ${final} - ${r}`));
-
-  //promiseChain(arr).then(json => {
-    //console.log("CHAIN: ", json)
-  //});
+  });
 
   fetchFrom(action, config).then(json => {
     dispatch({
@@ -68,12 +30,7 @@ const fetchData = (config, dispatch, action) => {
     return json;
   })
   .then(json => {
-    console.log(json);
-    dispatch({
-      type: `LOAD_TERRITORIES`,
-      payload: json,
-      jsonapi: true,
-    });
+    return Promise.chain(promises, json);
   })
   .catch(exception => {
     console.error(exception);
