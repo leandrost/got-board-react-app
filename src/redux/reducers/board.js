@@ -4,7 +4,7 @@ export default (state = {}, action) => {
       return  {...state, loading: true };
 
     case 'FETCH_BOARD_SUCCESS':
-      return  action.payload.board;
+      return  action.payload.games;
 
     default:
       return state;

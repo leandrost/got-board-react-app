@@ -3,9 +3,8 @@ export function fetchBoard(id) {
     dispatch({
       type: 'FETCH_BOARD',
       fetch: {
-        //endpoint: `/board/${id}`,
-        endpoint: `board${id}`,
-        included: ["territories", "units", "power_tokens"],
+        included: ["territories"],
+        endpoint: `/games/${id}?included=territories`,
       }
     });
   };

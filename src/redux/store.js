@@ -11,7 +11,7 @@ const middlewares = applyMiddleware(
   logger,
   fetcher({
     //host: process.env.API_HOST,
-    host: 'https://quarkbackend.com/getfile/leandrost/',
+    host: 'http://localhost:3001',
     headers: {
       'Content-Type': 'application/json',
     },

@@ -1,6 +1,4 @@
 const fetchData = (config, dispatch, action) => {
-  console.log("Action ", action);
-
   Promise.chain = function(arr, value) {
     return arr.reduce(
       (promise, item) => {
@@ -39,8 +37,9 @@ const fetchData = (config, dispatch, action) => {
 
 function fetchFrom(action, config) {
   const options = Object.assign({}, config.options, action.options);
+  const endpoint = `${config.host}${action.fetch.endpoint}`;
 
-  return fetch(`${config.host}${action.fetch.endpoint}`, options)
+  return fetch(endpoint, options)
     .then(checkStatus).then(formatToJSON);
 }
 

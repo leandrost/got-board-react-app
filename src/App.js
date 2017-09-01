@@ -89,7 +89,7 @@ export class Piece extends Component {
 @DragDropContext(DnDBackend())
 @connect(
   state => (
-    { board: state.board, territory: state.territory }
+    { territory: state.territory }
   ),
   dispatch => (
     bindActionCreators({
@@ -100,10 +100,9 @@ export class Piece extends Component {
 @CSSModules(styles)
 class App extends Component {
   componentDidMount() {
-    this.props.fetchBoard(42);
+    this.props.fetchBoard(1);
   }
   render() {
-    const board = build(this.props, 'board', 42);
     return (
       <div styleName="app">
         <div styleName="board">
