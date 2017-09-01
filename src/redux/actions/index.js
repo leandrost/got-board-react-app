@@ -1,10 +1,10 @@
-export function fetchBoard(id) {
+export function fetchGame(id) {
   return (dispatch) => {
     dispatch({
-      type: 'FETCH_BOARD',
+      type: 'FETCH_GAME',
       fetch: {
-        included: ["territories"],
-        endpoint: `/games/${id}?included=territories`,
+        include: ["territories"],
+        endpoint: `/games/${id}?include=territories`,
       }
     });
   };

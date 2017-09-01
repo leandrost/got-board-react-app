@@ -1,8 +1,8 @@
 import { combineReducers }  from 'redux';
-import board from './board';
-import territory from './territory';
+import games from './games';
+import territories from './territories';
 
 export default combineReducers({
-  board,
-  territory,
+  games,
+  territories,
 });

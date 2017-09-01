@@ -1,24 +1,5 @@
 const fetchData = (config, dispatch, action) => {
-  Promise.chain = function(arr, value) {
-    return arr.reduce(
-      (promise, item) => {
-        return promise.then(item).catch(console.error);
-      },
-      Promise.resolve(value)
-    );
-  };
-
-  const promises = action.fetch.included.map(include => {
-    return (json => {
-      dispatch({
-        type: `LOAD_${include.toUpperCase()}`,
-        payload: json,
-        jsonapi: true,
-      });
-      return json;
-    });
-  });
-
+  const dispatchers = dispatchersFor(action.fetch.include, dispatch);
   fetchFrom(action, config).then(json => {
     dispatch({
       type: `${action.type}_SUCCESS`,
@@ -28,11 +9,33 @@ const fetchData = (config, dispatch, action) => {
     return json;
   })
   .then(json => {
-    return Promise.chain(promises, json);
+    return Promise.chain(dispatchers, json);
   })
   .catch(exception => {
     console.error(exception);
   });
+};
+
+function dispatchersFor(includes, dispatch) {
+  return includes.map(include => {
+    return (json => {
+      dispatch({
+        type: `LOAD_${include.toUpperCase()}`,
+        payload: json,
+        jsonapi: true,
+      });
+      return json;
+    });
+  });
+}
+
+Promise.chain = function(arr, value) {
+  return arr.reduce(
+    (promise, item) => {
+      return promise.then(item).catch(console.error);
+    },
+    Promise.resolve(value)
+  );
 };
 
 function fetchFrom(action, config) {

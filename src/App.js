@@ -11,7 +11,7 @@ import build from 'redux-object';
 import WildlingsTrack from './wildlings-track/WildlingsTrack';
 import InfluenceTrack from './influence-track/InfluenceTrack';
 
-import { fetchBoard } from './redux/actions/';
+import { fetchGame } from './redux/actions/';
 
 import styles from './app.scss';
 
@@ -53,8 +53,7 @@ export class Territory extends Component {
 
 const source = {
   beginDrag(props) {
-    console.log(arguments);
-    return { okay: "ok" };
+    return props;
   },
   endDrag(props, monitor, component) {
     console.log(monitor.getItem());
@@ -89,20 +88,24 @@ export class Piece extends Component {
 @DragDropContext(DnDBackend())
 @connect(
   state => (
-    { territory: state.territory }
+    {
+      territories: state.territories
+    }
   ),
   dispatch => (
     bindActionCreators({
-      fetchBoard,
+      fetchGame,
     }, dispatch)
   )
 )
 @CSSModules(styles)
 class App extends Component {
   componentDidMount() {
-    this.props.fetchBoard(1);
+    this.props.fetchGame(1);
   }
   render() {
+    const game = build(this.props, 'games', 1);
+    console.log("G", game);
     return (
       <div styleName="app">
         <div styleName="board">
@@ -130,7 +133,10 @@ class App extends Component {
   }
 
   renderTerritories(){
-    return build(this.props, 'territory').map(territory => {
+    const territories = build(this.props, 'territories');
+    console.log("T", territories);
+    if(!territories) { return; }
+    return territories.map(territory => {
       return <Territory
         key={territory.id}
         name={territory.name}

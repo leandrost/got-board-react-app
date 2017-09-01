@@ -44,8 +44,9 @@ export class InfluenceToken extends React.Component {
 @CSSModules(styles)
 export class InfluenceTrackSlot extends React.Component {
   render() {
-    const { connectDropTarget, isOver, children } = this.props;
-    const actived =  isOver ? "-actived" : '';
+    const { connectDropTarget, children } = this.props;
+    //const { connectDropTarget, isOver, children } = this.props;
+    //const actived =  isOver ? "-actived" : '';
 
     return connectDropTarget(
       <div>

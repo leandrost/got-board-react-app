@@ -1,10 +1,10 @@
 export default (state = {}, action) => {
   switch (action.type) {
-    case 'FETCH_BOARD':
+    case 'FETCH_GAME':
       return  {...state, loading: true };
 
-    case 'FETCH_BOARD_SUCCESS':
-      return  action.payload.games;
+    case 'FETCH_GAME_SUCCESS':
+      return action.payload.games || state;
 
     default:
       return state;
