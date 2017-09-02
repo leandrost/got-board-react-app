@@ -1,46 +1,22 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import { DropTarget, DragSource } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
 
+import { draggable, dropable } from '../decorators';
 import styles from './WildlingsTrack.scss';
 
-@DragSource("wildling-threat-token", {
-  beginDrag(props) {
-    return props;
-  },
-  endDrag(props, monitor, component) {
-    if (!monitor.didDrop()) { return false; }
-    var object = monitor.getDropResult();
-    props.onDragEnd(object);
-  }
-}, (connect, monitor) => {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
-  }
-})
+@draggable("wildling-threat-token")
 @CSSModules(styles)
 export class WildlingThreatToken extends React.Component {
-  render() {
-    const { connectDragSource } = this.props;
-    return connectDragSource(
-      <div styleName="threat-token"></div>
-    );
-  }
+	render() {
+		const { connectDragSource } = this.props;
+		return connectDragSource(
+				<div styleName="threat-token"></div>
+		);
+	}
 }
 
-@DropTarget("wildling-threat-token", {
-  drop(props, monitor, component) {
-    const item = monitor.getItem();
-    if (component.onDrop) { component.onDrop(item); }
-    return props;
-  }
-}, (connect, monitor) => {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-  }
-})
+@dropable("wildling-threat-token")
 @CSSModules(styles)
 export class WildlingTrackSlot extends React.Component {
   render() {
@@ -68,7 +44,9 @@ export default class WildlingsTrack extends React.Component {
 
   renderToken(position) {
     if (this.state.position === position)  {
-      return <WildlingThreatToken position={position} onDragEnd={ token => this.updateCurrentPosition(token.position) } />;
+      return <WildlingThreatToken
+				position={position}
+			  onDragEnd={ token => this.updateCurrentPosition(token.position) } />;
     }
   }
 
@@ -87,4 +65,3 @@ export default class WildlingsTrack extends React.Component {
     </div>
   }
 }
-

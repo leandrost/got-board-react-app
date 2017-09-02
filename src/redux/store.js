@@ -10,8 +10,10 @@ const middlewares = applyMiddleware(
   thunk,
   logger,
   fetcher({
-    //host: process.env.API_HOST,
-    host: 'http://localhost:3001',
+    // host: process.env.API_HOST,
+    // host: 'http://localhost:3001',
+    host: 'http://got-board-api.herokuapp.com/',
+
     headers: {
       'Content-Type': 'application/json',
     },
