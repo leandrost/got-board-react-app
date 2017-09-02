@@ -1,6 +1,5 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import { DropTarget } from 'react-dnd';
 
 import { draggable, dropable } from '../decorators';
 import styles from './WildlingsTrack.scss';

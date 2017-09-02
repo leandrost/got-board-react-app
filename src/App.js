@@ -113,7 +113,7 @@ class App extends Component {
             { this.renderTerritories() }
           </svg>
           <WildlingsTrack />
-          { <InfluenceTrack /> }
+          <InfluenceTrack />
           { /* <SupplyTrack /> */ }
           { /* <RoundTrack /> */ }
           { /* <VictoryTrack /> */ }

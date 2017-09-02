@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { DragSource } from 'react-dnd';
 
 const source = {
@@ -19,19 +19,19 @@ const collect = (connect, monitor) => {
 	}
 };
 
-class Wrapper extends React.Component {
-	render() {
-		const { connectDragSource, children } = this.props;
-		return connectDragSource(<div {...this.props}>{children}</div>);
-	}
-}
-class Draggable extends React.Component {
-	render() {
-		const { type, children } = this.props;
-		const EnhancedComponent = DragSource(type, source, collect)(Wrapper);
-		return <EnhancedComponent {...this.props}>{children}</EnhancedComponent>
-	}
-}		
+// class Wrapper extends React.Component {
+// 	render() {
+// 		const { connectDragSource, children } = this.props;
+// 		return connectDragSource(<div {...this.props}>{children}</div>);
+// 	}
+// }
+// class Draggable extends React.Component {
+// 	render() {
+// 		const { type, children } = this.props;
+// 		const EnhancedComponent = DragSource(type, source, collect)(Wrapper);
+// 		return <EnhancedComponent {...this.props}>{children}</EnhancedComponent>
+// 	}
+// }		
 
 export default (type) => {
 	return (Component) => {
