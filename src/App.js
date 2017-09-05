@@ -10,6 +10,9 @@ import build from 'redux-object';
 
 import WildlingsTrack from './wildlings-track/WildlingsTrack';
 import InfluenceTrack from './influence-track/InfluenceTrack';
+import SupplyTrack from './supply-track/SupplyTrack';
+import RoundTrack from './round-track/RoundTrack';
+import VictoryTrack from './victory-track/VictoryTrack';
 
 import { fetchGame } from './redux/actions/';
 
@@ -115,10 +118,11 @@ class App extends Component {
           </svg>
           <div styleName="board-tracks">
             <InfluenceTrack />
-            { /* <SupplyTrack /> */ }
-            { /* <RoundTrack /> */ }
-            { /* <VictoryTrack /> */ }
+            <SupplyTrack />
+            <RoundTrack />
+            <VictoryTrack />
           </div>
+          <Piece name="greyjoy-knight" />
         </div>
         <aside>
           <div styleName="iron-throne-token"></div>
@@ -158,7 +162,6 @@ class App extends Component {
     return factions.map(faction => {
       return (
         <div key={faction}>
-          <Piece name={`${faction}-knight`} />
           <div styleName={`${faction}-influence-token`}></div>
           <div styleName={`${faction}-supply-token`}></div>
           <div styleName={`${faction}-victory-token`}></div>
