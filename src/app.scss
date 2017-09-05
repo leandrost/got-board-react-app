@@ -7,6 +7,16 @@
   min-height: 2975px;
   background-image: url("images/board.jpg");
   background-repeat: no-repeat;
+  display: flex;
+
+  svg {
+    opacity: 0.8;
+  }
+
+  &-tracks {
+    width: 495px;
+    height: 2975px;
+  }
 }
 
 .wildlings-threat-track {

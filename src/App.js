@@ -109,14 +109,16 @@ class App extends Component {
     return (
       <div styleName="app">
         <div styleName="board">
-          <svg width="1980px" height="2975px">
+          <WildlingsTrack />
+          <svg width="1495px" height="2975px">
             { this.renderTerritories() }
           </svg>
-          <WildlingsTrack />
-          <InfluenceTrack />
-          { /* <SupplyTrack /> */ }
-          { /* <RoundTrack /> */ }
-          { /* <VictoryTrack /> */ }
+          <div styleName="board-tracks">
+            <InfluenceTrack />
+            { /* <SupplyTrack /> */ }
+            { /* <RoundTrack /> */ }
+            { /* <VictoryTrack /> */ }
+          </div>
         </div>
         <aside>
           <div styleName="iron-throne-token"></div>

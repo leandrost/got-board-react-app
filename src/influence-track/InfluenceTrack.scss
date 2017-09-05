@@ -1,3 +1,24 @@
-.track {
-	background-color: black;	
+.tracks {
+  opacity: 0.8;
+  margin-top: 80px;
+  margin-left: 20px;
+  display: flex;
+
+  li {
+    border: 1px solid;
+    height: 865px;
+    width: 145px;
+    display: flex;
+    justify-content: center;
+
+    ol {
+      li {
+        opacity: 0.8;
+        width: 113px;
+        height: 113px;
+        border-radius: 113px;
+        margin-bottom: 35px;
+      }
+    }
+  }
 }

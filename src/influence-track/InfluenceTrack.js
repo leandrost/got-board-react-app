@@ -28,8 +28,38 @@ export class InfluenceTrackSlot extends React.Component {
 @CSSModules(styles)
 export default class InfluenceTrack extends React.Component {
   render() {
-    return <div styleName="track">
-    </div>
+    return <ul styleName="tracks">
+      <li className="iron-throne">
+        <ol>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+      </li>
+      <li className="fiefdoms">
+        <ol>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+      </li>
+      <li className="kings-court">
+        <ol>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+      </li>
+    </ul>
   }
 }
 
