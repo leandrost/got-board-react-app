@@ -13,9 +13,36 @@
     opacity: 0.8;
   }
 
-  &-tracks {
-    width: 495px;
+  aside {
+    width: 485px;
     height: 2975px;
+    padding-top: 25px;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      margin-top: 5px;
+      width: 447px;
+
+    }
+
+    ol li.actived {
+      background-color: white;
+      opacity: 0.8
+    }
+  }
+
+  .supply {
+    align-items: center;
+    display: flex;
+    height: 790px;
+    justify-content: center;
+  }
+
+  .round-victory {
+    display: flex;
+    height: 966px;
   }
 }
 

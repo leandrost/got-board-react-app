@@ -6,7 +6,7 @@ import styles from './VictoryTrack.scss';
 @CSSModules(styles)
 export default class VictoryTrack extends React.Component {
   render() {
-    return <ul styleName="track">
+    return <ol styleName="track">
       <li></li>
       <li></li>
       <li></li>
@@ -14,7 +14,7 @@ export default class VictoryTrack extends React.Component {
       <li></li>
       <li></li>
       <li></li>
-    </ul>
+    </ol>
   }
 }
 

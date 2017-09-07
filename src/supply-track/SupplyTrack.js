@@ -6,8 +6,15 @@ import styles from './SupplyTrack.scss';
 @CSSModules(styles)
 export default class SupplyTrack extends React.Component {
   render() {
-    return <ul styleName="track">
-    </ul>
+    return <ol type="1" styleName="track">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ol>
   }
 }
 
