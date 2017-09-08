@@ -3,7 +3,9 @@ import { DropTarget } from 'react-dnd';
 const specs = {
   drop(props, monitor, component) {
     const item = monitor.getItem();
-    if (component.onDrop) { component.onDrop(item); }
+    if (component.drop) {
+      return component.drop(item, monitor);
+    }
     return props;
   }
 };

@@ -7,9 +7,9 @@ const source = {
 	},
 	endDrag(props, monitor, component) {
 		if (!monitor.didDrop()) { return false; }
-		var object = monitor.getDropResult();
-		if (!props.onDragEnd) { return; };
-		props.onDragEnd(object);
+		var dropResult = monitor.getDropResult();
+		if (!component.endDrag) { return; };
+		component.endDrag(dropResult, monitor);
 	}
 };
 const collect = (connect, monitor) => {

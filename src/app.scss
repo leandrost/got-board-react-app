@@ -2,50 +2,6 @@
   display: flex;
 }
 
-.board {
-  min-width: 1980px;
-  min-height: 2975px;
-  background-image: url("images/board.jpg");
-  background-repeat: no-repeat;
-  display: flex;
-
-  svg {
-    opacity: 0.8;
-  }
-
-  aside {
-    width: 485px;
-    height: 2975px;
-    padding-top: 25px;
-    padding-left: 15px;
-    display: flex;
-    flex-direction: column;
-
-    > div {
-      margin-top: 5px;
-      width: 447px;
-
-    }
-
-    ol li.actived {
-      background-color: white;
-      opacity: 0.8
-    }
-  }
-
-  .supply {
-    align-items: center;
-    display: flex;
-    height: 790px;
-    justify-content: center;
-  }
-
-  .round-victory {
-    display: flex;
-    height: 966px;
-  }
-}
-
 .wildlings-threat-track {
   position: absolute;
   top: 78px;
@@ -65,21 +21,6 @@
   background-color: white;
   opacity: 0.7;
 }
-
-.territory {
-  fill: none;
-  stroke: none;
-  pointer-events: all;
-  opacity: 0.7;
-}
-
-.territory-actived {
-  fill: white;
-  stroke: none;
-  pointer-events: all;
-  opacity: 0.7;
-}
-
 
 @mixin piece {
   background-repeat: no-repeat;

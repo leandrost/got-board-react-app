@@ -1,7 +1,7 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 
-import { draggable, dropable } from '../decorators';
+import { draggable, droppable } from '../decorators';
 import styles from './WildlingsTrack.scss';
 
 @draggable("wildling-threat-token")
@@ -15,7 +15,7 @@ export class WildlingThreatToken extends React.Component {
 	}
 }
 
-@dropable("wildling-threat-token")
+@droppable("wildling-threat-token")
 @CSSModules(styles)
 export class WildlingTrackSlot extends React.Component {
   render() {
