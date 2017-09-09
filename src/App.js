@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 
 import Board from './board/Board';
+import WarRoom from './war-room/WarRoom';
 
 import styles from './app.scss';
 
@@ -34,6 +35,7 @@ class App extends Component {
             { this.renderGarrisons() }
           </div>
         </aside>
+				<WarRoom />
       </div>
     );
   }
