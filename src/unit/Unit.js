@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 
@@ -23,15 +22,9 @@ export default class Unit extends React.Component {
     };
   }
 
-  endDrag(r, monitor) {
-    console.log(r);
-    const el = ReactDOM.findDOMNode(this);
-    const x = el.offsetLeft + r.x;
-    const y = el.offsetTop + r.y;
-    console.log(x, y);
-    console.log('scrollTop', document.body.scrollTop);
-    console.log('getClientOffset', monitor.getClientOffset());
-    this.setState({ x: x, y: r.y });
+  endDrag(monitor) {
+    const result = monitor.getDropResult();
+    this.setState(result);
   }
 
   render() {

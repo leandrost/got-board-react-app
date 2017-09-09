@@ -52,21 +52,8 @@ export default class Map extends React.Component {
 @droppable("unit")
 @CSSModules(styles)
 export class Territory extends React.Component {
-  drop(item, monitor) {
-    console.log('drop');
-    console.log('scrollTop', document.body.scrollTop);
-    console.log('scrollLeft', document.body.scrollLeft);
-    const y = document.body.scrollTop + monitor.getSourceClientOffset().y;
-    //const x = document.body.scrollLeft + monitor.getSourceClientOffset().x;
-    const x = monitor.getDifferenceFromInitialOffset().x;
-
-    console.log('getClientOffset', monitor.getClientOffset());
-    console.log('getInitialClientOffset', monitor.getInitialClientOffset());
-    console.log('getInitialSourceClientOffset', monitor.getInitialSourceClientOffset());
-    console.log('getDifferenceFromInitialOffset', monitor.getDifferenceFromInitialOffset());
-    console.log('getSourceClientOffset', monitor.getSourceClientOffset());
-
-    return  { x: x, y: y };
+  drop(monitor) {
+    return monitor.getDropPosition();
   }
 
   render() {

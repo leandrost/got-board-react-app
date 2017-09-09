@@ -7,6 +7,10 @@ import styles from './WildlingsTrack.scss';
 @draggable("wildling-threat-token")
 @CSSModules(styles)
 export class WildlingThreatToken extends React.Component {
+  endDrag(monitor) {
+    const result = monitor.getDropResult();
+    this.props.onDragEnd(result.position);
+  }
 	render() {
 		const { connectDragSource } = this.props;
 		return connectDragSource(
@@ -18,6 +22,10 @@ export class WildlingThreatToken extends React.Component {
 @droppable("wildling-threat-token")
 @CSSModules(styles)
 export class WildlingTrackSlot extends React.Component {
+  drop() {
+    return { position: this.props.position }
+  }
+
   render() {
     const { connectDropTarget, isOver, children } = this.props;
     const actived =  isOver ? "-actived" : '';
@@ -45,7 +53,7 @@ export default class WildlingsTrack extends React.Component {
     if (this.state.position === position)  {
       return <WildlingThreatToken
 				position={position}
-			  onDragEnd={ token => this.updateCurrentPosition(token.position) } />;
+			  onDragEnd={ position => this.updateCurrentPosition(position) } />;
     }
   }
 

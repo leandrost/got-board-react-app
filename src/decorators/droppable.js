@@ -2,11 +2,10 @@ import { DropTarget } from 'react-dnd';
 
 const specs = {
   drop(props, monitor, component) {
-    const item = monitor.getItem();
-    if (component.drop) {
-      return component.drop(item, monitor);
-    }
-    return props;
+    if (!component.drop) { return props; }
+    const offset = monitor.getSourceClientOffset();
+    monitor.getDropPosition = () => { return getPosition(offset); };
+    return component.drop(monitor);
   }
 };
 const collect = (connect, monitor) => {
@@ -15,6 +14,14 @@ const collect = (connect, monitor) => {
     isOver: monitor.isOver(),
   }
 };
+
+const getPosition = (offset)  => {
+  const parent = document.body;
+  return {
+    y: parent.scrollTop + offset.y,
+    x: parent.scrollLeft + offset.x
+  }
+}
 
 export default (type) => {
 	return (Component) => {
