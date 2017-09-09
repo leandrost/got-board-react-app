@@ -3,6 +3,8 @@ import CSSModules from 'react-css-modules';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
+import { connect } from 'react-redux'
+import build from 'redux-object';
 
 import Board from './board/Board';
 import WarRoom from './war-room/WarRoom';
@@ -18,13 +20,17 @@ function DnDBackend()
   return HTML5Backend;
 }
 
+@connect(
+		state => ({ units: state.units })
+)
 @DragDropContext(DnDBackend())
 @CSSModules(styles)
 class App extends Component {
   render() {
+		const units = build(this.props, 'units');
     return (
       <div styleName="app">
-        <Board />
+        <Board units={[units[1]]} />
         <aside>
           <div styleName="iron-throne-token"></div>
           <div styleName="valyrian-steel-blade-token"></div>
@@ -35,7 +41,7 @@ class App extends Component {
             { this.renderGarrisons() }
           </div>
         </aside>
-				<WarRoom />
+				<WarRoom units={[units[0]]}/>
       </div>
     );
   }

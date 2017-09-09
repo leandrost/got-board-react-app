@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import build from 'redux-object';
 
-import { droppable } from '../decorators';
 import { fetchGame } from '../redux/actions/';
+import { droppable } from '../decorators';
 
 import styles from './Map.scss';
 

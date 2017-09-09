@@ -20,7 +20,13 @@ export default class Board extends React.Component {
         <main>
           <Map />
           <WildlingsTrack />
-          <Unit name="greyjoy-knight" x={799} y={238} />
+					{
+					this.props.units.map(unit => {
+							return (
+									<Unit key={unit.id} name={`${unit.house}-${unit.type}`} x={unit.x} y={unit.y} />
+									);
+							})
+					}
         </main>
         <aside>
           <InfluenceTrack />
