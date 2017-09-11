@@ -28,18 +28,19 @@ export default class WarRoom extends React.Component {
   }
 
   drop(){
-    return { territory: '', x: 0, y: 0 };
+    return { territory: null, x: 0, y: 0 };
   }
 
   render() {
-    const { connectDragSource, isDragging, connectDropTarget } = this.props;
+    const { connectDragSource, isDragging, connectDropTarget, isOver } = this.props;
     const { x, y } = this.state;
     const style = {
       transform: `translate(${x}px, ${y}px)`,
       visibility: isDragging ? 'hidden' : '',
     };
+    const styleName = `war-room${isOver ? '-actived' : ''}`;
     return connectDragSource(connectDropTarget(
-      <div styleName="war-room" style={style}>
+      <div styleName='war-room' data-dragging={isDragging} data-dragging-over={isOver || null}  style={style}>
         {
         this.props.units.map(unit => {
         return (<Unit key={unit.id} {...unit} />);

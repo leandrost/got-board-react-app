@@ -4,6 +4,19 @@ const default_state = {
 		"attributes": {
 			'house': 'stark',
 			'type': 'footman',
+			'territory': null,
+			'x': 0,
+			'y': 0
+		}
+  },
+	"27": {
+		"id": '27',
+		"attributes": {
+			'house': 'stark',
+			'type': 'knight',
+			'territory': null,
+			'x': 0,
+			'y': 0
 		}
   },
 	'24': {
@@ -11,7 +24,7 @@ const default_state = {
 		'attributes': {
 			'house': 'baratheon',
 			'type': 'knight',
-			'territory': 'bay_of_ice',
+			'territory': 'castle_black',
 			'x': 799,
 			'y': 238
 		}

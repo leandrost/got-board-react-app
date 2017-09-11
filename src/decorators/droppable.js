@@ -2,11 +2,11 @@ import { DropTarget } from 'react-dnd';
 
 const specs = {
   drop(props, monitor, component) {
-    debugger
-    if (!component.drop) { return props; }
+    const wrappedComponent = component.decoratedComponentInstance || component;
+    if (!wrappedComponent.drop) { return props; }
     const offset = monitor.getSourceClientOffset();
     monitor.getDropPosition = () => { return getPosition(offset); };
-    return component.drop(monitor);
+    return wrappedComponent.drop(monitor);
   }
 };
 const collect = (connect, monitor) => {
