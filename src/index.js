@@ -21,6 +21,7 @@ function render(App) {
 }
 
 render(App);
+registerServiceWorker();
 
 if (module.hot) {
   module.hot.accept('./App', () => {
@@ -29,4 +30,3 @@ if (module.hot) {
   })
 }
 
-registerServiceWorker();

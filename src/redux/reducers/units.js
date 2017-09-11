@@ -4,7 +4,6 @@ const default_state = {
 		"attributes": {
 			'house': 'stark',
 			'type': 'footman',
-			'place': 'war_room'
 		}
   },
 	'24': {
@@ -12,7 +11,7 @@ const default_state = {
 		'attributes': {
 			'house': 'baratheon',
 			'type': 'knight',
-			'place': 'bay_of_ice',
+			'territory': 'bay_of_ice',
 			'x': 799,
 			'y': 238
 		}
@@ -21,9 +20,15 @@ const default_state = {
 
 export default (state = default_state, action) => {
   switch (action.type) {
-    case 'FIND_UNITS':
-			console.log(state);
-      return  state;
+    case 'MOVE_UNIT':
+      let id = action.id;
+      if (!id) { return; }
+      return {...state,
+        [id]: {...state[id],
+          attributes: { ...state[id].attributes, ...action.attributes }
+        }
+      };
+
     default:
       return state;
   }

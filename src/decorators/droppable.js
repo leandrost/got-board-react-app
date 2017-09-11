@@ -2,6 +2,7 @@ import { DropTarget } from 'react-dnd';
 
 const specs = {
   drop(props, monitor, component) {
+    debugger
     if (!component.drop) { return props; }
     const offset = monitor.getSourceClientOffset();
     monitor.getDropPosition = () => { return getPosition(offset); };

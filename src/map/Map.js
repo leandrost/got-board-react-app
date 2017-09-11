@@ -32,10 +32,7 @@ export default class Map extends React.Component {
     if(!territories) { return; }
     return territories.map(territory => {
       return (
-        <Territory
-          key={territory.id}
-          name={territory.name}
-          boundaries={territory.boundaries} />
+        <Territory key={territory.id} {...territory} />
         );
     });
   }
@@ -53,16 +50,21 @@ export default class Map extends React.Component {
 @CSSModules(styles)
 export class Territory extends React.Component {
   drop(monitor) {
-    return monitor.getDropPosition();
+    const result = Object.assign(
+      { territory: this.props.slug },
+      monitor.getDropPosition()
+    );
+    return result;
   }
 
   render() {
-    const { connectDropTarget, isOver } = this.props;
-    const styleName =  isOver ? "territory-actived" : 'territory';
+    const props = this.props;
+    const { connectDropTarget, isOver } = props;
+    const styleName = isOver ? "territory-actived" : 'territory';
 
     return connectDropTarget(
-      <g id={this.props.name} styleName={styleName}>
-        <path d={this.props.boundaries} />
+      <g id={props.slug} styleName={styleName}>
+        <path d={props.boundaries} />
       </g>
     );
   }

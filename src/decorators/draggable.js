@@ -2,35 +2,22 @@
 import { DragSource } from 'react-dnd';
 
 const source = {
-	beginDrag(props) {
-		return props;
+	beginDrag(props, monitor, component) {
+		return { props: props, component: component };
 	},
 	endDrag(props, monitor, component) {
 		if (!monitor.didDrop()) { return false; }
 		if (!component.endDrag) { return; };
 		component.endDrag(monitor);
-	}
+	},
 };
 const collect = (connect, monitor) => {
 	return {
     connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
 	  isDragging: monitor.isDragging()
 	}
 };
-
-// class Wrapper extends React.Component {
-// 	render() {
-// 		const { connectDragSource, children } = this.props;
-// 		return connectDragSource(<div {...this.props}>{children}</div>);
-// 	}
-// }
-// class Draggable extends React.Component {
-// 	render() {
-// 		const { type, children } = this.props;
-// 		const EnhancedComponent = DragSource(type, source, collect)(Wrapper);
-// 		return <EnhancedComponent {...this.props}>{children}</EnhancedComponent>
-// 	}
-// }		
 
 export default (type) => {
 	return (Component) => {

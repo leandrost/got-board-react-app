@@ -10,10 +10,16 @@ import Map from '../map/Map';
 import Unit from '../unit/Unit';
 
 import styles from './Board.scss';
+import { connect } from 'react-redux'
+import build from 'redux-object';
 
+@connect(
+  state => ({
+    units: (build(state, 'units')  || []).filter(unit => unit.territory)
+  })
+)
 @CSSModules(styles)
 export default class Board extends React.Component {
-
   render() {
     return (
       <div styleName="board">
@@ -23,7 +29,7 @@ export default class Board extends React.Component {
 					{
 					this.props.units.map(unit => {
 							return (
-									<Unit key={unit.id} name={`${unit.house}-${unit.type}`} x={unit.x} y={unit.y} />
+									<Unit key={unit.id} {...unit} />
 									);
 							})
 					}

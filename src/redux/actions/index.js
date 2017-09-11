@@ -9,3 +9,13 @@ export function fetchGame(id) {
     });
   };
 }
+
+export function moveUnit(id, attrs) {
+  return (dispatch) => {
+    dispatch({
+      type: 'MOVE_UNIT',
+      id: id,
+      attributes: attrs,
+    });
+  };
+}
