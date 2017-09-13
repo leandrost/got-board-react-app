@@ -19,7 +19,11 @@ import styles from './WarRoom.scss';
 export default class WarRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { x: props.x, y: props.y };
+    this.state = {
+      isVisible: false,
+      x: props.x,
+      y: props.y
+    };
   }
 
   endDrag(monitor){
@@ -31,22 +35,47 @@ export default class WarRoom extends React.Component {
     return { territory: null, x: 0, y: 0 };
   }
 
+  openWarRoom() {
+    const x = window.pageXOffset + 30;
+    const y = window.pageYOffset + 30;
+    this.setState({ isVisible: true, x, y });
+  }
+
+  closeWarRoom() {
+     this.setState({ isVisible: false });
+  }
+
+  getVisibility() {
+    let isVisible = this.state.isVisible;
+    if(this.props.isDragging) { isVisible = false; }
+    return isVisible ? '' : 'hidden';
+  }
+
+
   render() {
     const { connectDragSource, isDragging, connectDropTarget, isOver } = this.props;
     const { x, y } = this.state;
     const style = {
       transform: `translate(${x}px, ${y}px)`,
-      visibility: isDragging ? 'hidden' : '',
+      visibility: this.getVisibility()
     };
-    const styleName = `war-room${isOver ? '-actived' : ''}`;
-    return connectDragSource(connectDropTarget(
+    return (
+    <div>
+      <button styleName='war-room-button' onClick={() => this.openWarRoom()}>War Room</button>
+      {
+      connectDragSource(connectDropTarget(
       <div styleName='war-room' data-dragging={isDragging} data-dragging-over={isOver || null}  style={style}>
+        <button onClick={() => this.closeWarRoom()}>Fechar</button>
+        <br />
         {
         this.props.units.map(unit => {
         return (<Unit key={unit.id} {...unit} />);
         })
         }
       </div>
-    ));
+      ))
+      }
+    </div>
+    )
   }
 }

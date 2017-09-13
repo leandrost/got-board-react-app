@@ -26,6 +26,7 @@ class App extends Component {
   drop(monitor) {
     return monitor.getDropPosition();
   }
+
   render() {
     return this.props.connectDropTarget(
       <div styleName="app">

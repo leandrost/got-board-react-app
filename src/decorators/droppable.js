@@ -17,10 +17,9 @@ const collect = (connect, monitor) => {
 };
 
 const getPosition = (offset)  => {
-  const parent = document.body;
   return {
-    y: parent.scrollTop + offset.y,
-    x: parent.scrollLeft + offset.x
+    y: window.pageYOffset + offset.y,
+    x: window.pageXOffset + offset.x
   }
 }
 

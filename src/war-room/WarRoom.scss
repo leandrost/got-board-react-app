@@ -1,4 +1,4 @@
-.war-room{
+.war-room {
 	position: absolute;
 
 	background-color: rgba(0,0,0,.7);
@@ -7,13 +7,16 @@
 	width: 800px;
 	height: 400px;
 
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	top: 30px;
+	left: 30px;
 
   &[data-dragging-over] {
     background-color: rgba(255,255,255,.7);
   }
 }
 
+.war-room-button {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
