@@ -26,3 +26,7 @@
     background-image: url("images/units/siege-engine/#{$faction}.png");
   }
 }
+
+.disabled {
+  opacity: 0.5;
+}

@@ -1,18 +1,13 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import { connect } from 'react-redux'
-import build from 'redux-object';
 import { draggable, droppable } from '../decorators';
 
-import Unit from '../unit/Unit';
+import AvailableUnits from './available-units/AvailableUnits';
 
 import styles from './WarRoom.scss';
 
-@connect(
-  state => ({
-    units: (build(state, 'units')  || []).filter(unit => !unit.territory)
-  })
-)
+const DEFAULT_POSITION = { x: 30, y: 30 };
+
 @droppable("unit")
 @draggable("war-room")
 @CSSModules(styles)
@@ -20,9 +15,8 @@ export default class WarRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: false,
-      x: props.x,
-      y: props.y
+      isVisible: true,
+      DEFAULT_POSITION
     };
   }
 
@@ -36,13 +30,13 @@ export default class WarRoom extends React.Component {
   }
 
   openWarRoom() {
-    const x = window.pageXOffset + 30;
-    const y = window.pageYOffset + 30;
+    const x = window.pageXOffset + DEFAULT_POSITION.x;
+    const y = window.pageYOffset + DEFAULT_POSITION.y;
     this.setState({ isVisible: true, x, y });
   }
 
   closeWarRoom() {
-     this.setState({ isVisible: false });
+    this.setState({ isVisible: false });
   }
 
   getVisibility() {
@@ -51,8 +45,8 @@ export default class WarRoom extends React.Component {
     return isVisible ? '' : 'hidden';
   }
 
-
   render() {
+    const house = 'stark';
     const { connectDragSource, isDragging, connectDropTarget, isOver } = this.props;
     const { x, y } = this.state;
     const style = {
@@ -60,22 +54,23 @@ export default class WarRoom extends React.Component {
       visibility: this.getVisibility()
     };
     return (
-    <div>
-      <button styleName='war-room-button' onClick={() => this.openWarRoom()}>War Room</button>
-      {
-      connectDragSource(connectDropTarget(
-      <div styleName='war-room' data-dragging={isDragging} data-dragging-over={isOver || null}  style={style}>
-        <button onClick={() => this.closeWarRoom()}>Fechar</button>
-        <br />
+      <div>
+        <button styleName='war-room-button' onClick={() => this.openWarRoom()}>War Room</button>
         {
-        this.props.units.map(unit => {
-        return (<Unit key={unit.id} {...unit} />);
-        })
+        connectDragSource(connectDropTarget(
+        <div styleName='war-room' data-dragging={isDragging} data-dragging-over={isOver || null}  style={style}>
+          <button onClick={() => this.closeWarRoom()}>Fechar</button>
+          <main>
+            <AvailableUnits house={house} type='footman' />
+            <AvailableUnits house={house} type='knight' />
+            <AvailableUnits house={house} type='siege-engine' />
+            <AvailableUnits house={house} type='ship' />
+          </main>
+        </div>
+        ))
         }
       </div>
-      ))
-      }
-    </div>
-    )
+      )
   }
 }
+

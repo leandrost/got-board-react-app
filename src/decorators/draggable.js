@@ -1,8 +1,12 @@
 import { DragSource } from 'react-dnd';
 
-const source = {
+const specs = {
 	beginDrag(props, monitor, component) {
 		return { props: props, component: component };
+	},
+	canDrag(props) {
+		if (props.disabled) { return false; };
+    return true;
 	},
 	endDrag(props, monitor, component) {
 		if (!monitor.didDrop()) { return false; }
@@ -20,7 +24,7 @@ const collect = (connect, monitor) => {
 
 export default (type) => {
 	return (Component) => {
-		return DragSource(type, source, collect)(Component);
+		return DragSource(type, specs, collect)(Component);
 	};
 };
 

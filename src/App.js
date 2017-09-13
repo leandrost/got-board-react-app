@@ -62,10 +62,6 @@ class App extends Component {
           <div styleName={`${faction}-supply-token`}></div>
           <div styleName={`${faction}-victory-token`}></div>
           <div styleName={`${faction}-power-token`}></div>
-          <div styleName={`${faction}-footman`}></div>
-          <div styleName={`${faction}-knight`}></div>
-          <div styleName={`${faction}-ship`}></div>
-          <div styleName={`${faction}-siege-engine`}></div>
         </div>
         );
     });

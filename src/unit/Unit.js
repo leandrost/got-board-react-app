@@ -18,11 +18,12 @@ import styles from './Unit.scss';
   )
 )
 @draggable("unit")
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class Unit extends React.Component {
   static propTypes = {
     x: PropTypes.number,
     y: PropTypes.number,
+    disabled: PropTypes.bool,
   };
 
   constructor(props) {
@@ -46,11 +47,12 @@ export default class Unit extends React.Component {
 
   render() {
     const props = this.props;
-    const { connectDragSource } = props;
+    const { connectDragSource, house, type } = props;
     const style = { left: props.x, top: props.y };
+    const disabled = props.disabled ? 'disabled' : '';
     if (props.territory) { style.position = 'absolute' };
     return connectDragSource(
-      <div id={props.id} styleName={`${props.house}-${props.type}`} style={style}></div>
+      <div id={props.id} styleName={`${house}-${type} ${disabled}`} style={style}></div>
       );
   }
 }
