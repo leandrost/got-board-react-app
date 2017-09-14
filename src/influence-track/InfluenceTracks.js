@@ -5,34 +5,49 @@ import build from 'redux-object';
 
 import styles from './InfluenceTracks.scss';
 
-import { droppable } from '../decorators';
+import { droppable, draggable } from '../decorators';
 
+@draggable('influence-token')
 @CSSModules(styles)
 export class InfluenceToken extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { x: 0, y: 0, position: props.position };
+  }
+
+  endDrag(monitor) {
+    const { x, y, position } = monitor.getDropResult();
+    this.setState({ x, y, position });
+  }
+
   render() {
-    const { connectDragSource } = this.props;
+    const { x, y, position } = this.state;
+    const style = {
+      transform: `translate(${x}px, ${y}px)`,
+      position: position ? 'static' : 'absolute',
+    };
+    const { connectDragSource, house } = this.props;
     return connectDragSource(
-      <div></div>
+      <div styleName={`${house}-influence-token`} style={style}></div>
     );
   }
 }
 
 @droppable('influence-token')
 @CSSModules(styles)
-export class InfluenceTrackSlot extends React.Component {
+export class InfluencePosition extends React.Component {
   render() {
-    const { connectDropTarget, house } = this.props;
-    const token = <div styleName={`${house}-influence-token`}></div>;
+    const { connectDropTarget, house, key } = this.props;
     return connectDropTarget(
       <li>
-        { house ? token : null }
+        { house ? <InfluenceToken house={house} position={key} /> : null }
       </li>
     );
   }
 }
 
 @connect(
-  state => ({ ironThroneTrack: build(state, 'ironThroneTrack')['0'] }),
+  state => ({ ironThroneTrack: build(state, 'ironThroneTrack')[0] }),
 )
 @CSSModules(styles)
 export default class InfluenceTracks extends React.Component {
@@ -41,7 +56,7 @@ export default class InfluenceTracks extends React.Component {
     const positions = ironThroneTrack.positions.slice().reverse();
     return <div styleName="tracks">
       <ol className="iron-throne">
-        { positions.map((position, index) => { return <InfluenceTrackSlot key={index} house={position} /> }) }
+        { positions.map((position, index) => { return <InfluencePosition key={index} house={position} /> }) }
       </ol>
       <ol className="fiefdoms">
         <li></li>

@@ -13,15 +13,24 @@ import styles from './Board.scss';
 import { connect } from 'react-redux'
 import build from 'redux-object';
 
+import { droppable } from '../decorators';
+
 @connect(
   state => ({
-    units: (build(state, 'units')  || []).filter(unit => unit.territory)
+    units: (build(state, 'units')  || []).filter(unit => unit.territory),
+    influenceTokens: (state.influenceTokens)
   })
 )
+@droppable('influence-token')
 @CSSModules(styles)
 export default class Board extends React.Component {
+  drop(monitor) {
+    return monitor.getDropPosition();
+  }
+
   render() {
-    return (
+    const { connectDropTarget } = this.props;
+    return connectDropTarget(
       <div styleName="board">
         <main>
           <Map />

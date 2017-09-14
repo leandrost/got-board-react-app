@@ -19,3 +19,13 @@ export function moveUnit(id, attrs) {
     });
   };
 }
+
+export function moveInfluenceToken(id, attrs) {
+  return (dispatch) => {
+    dispatch({
+      type: 'MOVE_INFLUENCE_TRACK_TOKEN',
+      id: id,
+      attributes: attrs,
+    });
+  };
+}
