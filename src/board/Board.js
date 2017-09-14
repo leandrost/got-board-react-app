@@ -2,7 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 
 import WildlingsTrack from '../wildlings-track/WildlingsTrack';
-import InfluenceTrack from '../influence-track/InfluenceTrack';
+import InfluenceTracks from '../influence-track/InfluenceTracks';
 import SupplyTrack from '../supply-track/SupplyTrack';
 import RoundTrack from '../round-track/RoundTrack';
 import VictoryTrack from '../victory-track/VictoryTrack';
@@ -35,7 +35,7 @@ export default class Board extends React.Component {
 					}
         </main>
         <aside>
-          <InfluenceTrack />
+          <InfluenceTracks />
           <div styleName="supply">
             <SupplyTrack />
           </div>

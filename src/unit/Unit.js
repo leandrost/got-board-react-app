@@ -41,10 +41,6 @@ export default class Unit extends React.Component {
     this.props.moveUnit(this.props.id, result);
   }
 
-  onDrag(monitor) {
-    console.log(0);
-  }
-
   render() {
     const props = this.props;
     const { connectDragSource, house, type } = props;
