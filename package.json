@@ -1,8 +1,9 @@
 {
   "name": "got-board-react-app",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "babel-plugin-root-import": "^5.1.0",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6"
   },
@@ -106,7 +107,8 @@
   },
   "babel": {
     "plugins": [
-      "transform-decorators-legacy"
+      "transform-decorators-legacy",
+      ["babel-plugin-root-import", { "rootPathSuffix": "src" }]
     ],
     "presets": [
       "react-app"

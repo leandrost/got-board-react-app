@@ -1,5 +1,3 @@
-'use strict';
-
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
@@ -205,7 +203,13 @@ module.exports = {
                 },
               },
               "resolve-url-loader",
-              "sass-loader?sourceMap"
+              {
+                loader: "sass-loader",
+                options: {
+                  sourceMap: true,
+                  includePaths: ["src"]
+                }
+              }
             ]
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

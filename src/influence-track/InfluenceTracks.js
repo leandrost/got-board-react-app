@@ -5,7 +5,7 @@ import build from 'redux-object';
 
 import styles from './InfluenceTracks.scss';
 
-import { droppable, draggable } from '../decorators';
+import { droppable, draggable } from '~/decorators';
 
 @draggable('influence-token')
 @CSSModules(styles)
@@ -17,7 +17,7 @@ export class InfluenceToken extends React.Component {
 
   endDrag(monitor) {
     const { x, y, position } = monitor.getDropResult();
-    this.setState({ x, y, position });
+    // move to influence tokens or move to a track positions
   }
 
   render() {
