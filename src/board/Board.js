@@ -28,6 +28,10 @@ export default class Board extends React.Component {
     return monitor.getDropPosition();
   }
 
+  componentDidMount() {
+    throw new Error("test");
+  }
+
   render() {
     const { connectDropTarget } = this.props;
     return connectDropTarget(

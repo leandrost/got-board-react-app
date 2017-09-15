@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import Raven from 'raven-js';
 
 import store from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
@@ -8,6 +9,10 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 
 import './index.scss';
+
+Raven.config('https://abfdfecaed9e4bff9ccaa89645dcdd61@sentry.io/217779', {
+})
+.install();
 
 const rootElement = document.getElementById('root');
 
