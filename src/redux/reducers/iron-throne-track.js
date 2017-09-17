@@ -4,7 +4,8 @@ const default_state = {
 		attributes: {
       game_id: 1,
       type: 'iron_throne',
-      positions: ['baratheon', 'lannister', 'tyrell', 'stark', 'greyjoy', 'martell'],
+      //positions: ['baratheon', 'lannister', 'tyrell', 'stark', 'greyjoy', 'martell'],
+      positions: [1, null, null, null, null, null],
     }
   },
 };

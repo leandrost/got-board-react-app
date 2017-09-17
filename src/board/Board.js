@@ -17,7 +17,7 @@ import { droppable } from '../decorators';
 
 @connect(
   state => ({
-    units: (build(state, 'units')  || []).filter(unit => unit.territory),
+    units: (build(state, 'units') || []).filter(unit => unit.territory),
     influenceTokens: (state.influenceTokens)
   })
 )
@@ -25,17 +25,15 @@ import { droppable } from '../decorators';
 @CSSModules(styles)
 export default class Board extends React.Component {
   drop(monitor) {
+    console.log('Board#drop');
     return monitor.getDropPosition();
-  }
-
-  componentDidMount() {
-    throw new Error("test");
   }
 
   render() {
     const { connectDropTarget } = this.props;
-    return connectDropTarget(
+    return (
       <div styleName="board">
+        { connectDropTarget(
         <main>
           <Map />
           <WildlingsTrack />
@@ -47,6 +45,7 @@ export default class Board extends React.Component {
 							})
 					}
         </main>
+        )}
         <aside>
           <InfluenceTracks />
           <div styleName="supply">

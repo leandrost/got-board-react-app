@@ -5,6 +5,7 @@ import units from './units';
 import ironThroneTrack from './iron-throne-track';
 import fiefdomsTrack from './fiefdoms-track';
 import kingsCourtTrack from './kings-court-track';
+import influenceTokens from './influence-tokens';
 
 export default combineReducers({
   games,
@@ -13,4 +14,5 @@ export default combineReducers({
   ironThroneTrack,
   fiefdomsTrack,
   kingsCourtTrack,
+  influenceTokens,
 });

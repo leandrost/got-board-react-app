@@ -58,7 +58,6 @@ class App extends Component {
     return factions.map(faction => {
       return (
         <div key={faction}>
-          <div styleName={`${faction}-influence-token`}></div>
           <div styleName={`${faction}-supply-token`}></div>
           <div styleName={`${faction}-victory-token`}></div>
           <div styleName={`${faction}-power-token`}></div>

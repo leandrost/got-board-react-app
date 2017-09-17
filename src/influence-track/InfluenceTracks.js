@@ -1,12 +1,27 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import build from 'redux-object';
 
 import styles from './InfluenceTracks.scss';
 
 import { droppable, draggable } from '~/decorators';
+import { moveInfluenceToken } from '~/redux/actions';
 
+@connect(
+  (state, props) => {
+    console.log('InfluenceTracks', props);
+    return {
+      token: build(state, 'influenceToken', props.id),
+    }
+  },
+  dispatch => (
+    bindActionCreators({
+      moveInfluenceToken,
+    }, dispatch)
+  )
+)
 @draggable('influence-token')
 @CSSModules(styles)
 export class InfluenceToken extends React.Component {
@@ -17,16 +32,15 @@ export class InfluenceToken extends React.Component {
 
   endDrag(monitor) {
     const { x, y, position } = monitor.getDropResult();
-    // move to influence tokens or move to a track positions
+    this.props.moveInfluenceToken(this.props.id, { x, y, position });
   }
 
   render() {
-    const { x, y, position } = this.state;
+    const { connectDragSource, x, y, position, house } = this.props;
     const style = {
       transform: `translate(${x}px, ${y}px)`,
       position: position ? 'static' : 'absolute',
     };
-    const { connectDragSource, house } = this.props;
     return connectDragSource(
       <div styleName={`${house}-influence-token`} style={style}></div>
     );
@@ -34,46 +48,54 @@ export class InfluenceToken extends React.Component {
 }
 
 @droppable('influence-token')
+@connect(
+  state => ({ tokens: build(state, 'influenceTokens') }),
+)
 @CSSModules(styles)
 export class InfluencePosition extends React.Component {
+  drop(monitor) {
+    console.log('InfluencePosition#drop');
+    return { position: this.props.position, x: 0, y: 0 };
+  }
+
+ findTokenBy(track, position) {
+   const result = this.props.tokens.filter(
+     token => token.track === track &&
+       token.position === position
+   );
+   return result ? result[0] : null;
+  }
+
   render() {
-    const { connectDropTarget, house, key } = this.props;
+    console.log('InfluencePosition#render');
+    const { connectDropTarget, track, position, isOver } = this.props;
+    const token = this.findTokenBy(track, position);
+
     return connectDropTarget(
-      <li>
-        { house ? <InfluenceToken house={house} position={key} /> : null }
+      <li data-dragging-over={isOver || null}>
+        { token ? <InfluenceToken {...token} /> : null }
       </li>
     );
   }
 }
 
-@connect(
-  state => ({ ironThroneTrack: build(state, 'ironThroneTrack')[0] }),
-)
 @CSSModules(styles)
 export default class InfluenceTracks extends React.Component {
+  renderTrack(track) {
+    const positions = [6, 5, 4, 3, 2, 1];
+    return positions.map(position => <InfluencePosition
+      key={position}
+      track={track}
+      position={position} />
+    );
+  }
+
   render() {
-    const { ironThroneTrack } = this.props;
-    const positions = ironThroneTrack.positions.slice().reverse();
+    console.log('InfluenceTracks#render');
+    const tracks = ['iron_throne', 'fiefdoms', 'kings_court'];
+
     return <div styleName="tracks">
-      <ol className="iron-throne">
-        { positions.map((position, index) => { return <InfluencePosition key={index} house={position} /> }) }
-      </ol>
-      <ol className="fiefdoms">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ol>
-      <ol className="kings-court">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ol>
+      { tracks.map(track => <ol key={track}>{ this.renderTrack(track) }</ol>) }
     </div>
   }
 }

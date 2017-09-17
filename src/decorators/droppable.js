@@ -7,7 +7,7 @@ const specs = {
     const offset = monitor.getSourceClientOffset();
     monitor.getDropPosition = () => { return getPosition(offset); };
     return wrappedComponent.drop(monitor);
-  }
+  },
 };
 const collect = (connect, monitor) => {
   return {
@@ -17,9 +17,10 @@ const collect = (connect, monitor) => {
 };
 
 const getPosition = (offset)  => {
+  offset = offset || { x: 0, y: 0 };
   return {
+    x: window.pageXOffset + offset.x,
     y: window.pageYOffset + offset.y,
-    x: window.pageXOffset + offset.x
   }
 }
 
