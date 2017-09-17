@@ -14,7 +14,7 @@ const createComponent = function (baseDir, name) {
 }
 
 const copyTo = function(path, name, extension) {
-  fs.createReadStream(`./scripts/touch-component/component.${extension}`).pipe(
+  fs.createReadStream(`./scripts/generators/component.${extension}`).pipe(
     fs.createWriteStream(`${path}/${name}.${extension}`)
   );
 }

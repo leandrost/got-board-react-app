@@ -10,9 +10,11 @@ import App from './App';
 
 import './index.scss';
 
-Raven.config('https://abfdfecaed9e4bff9ccaa89645dcdd61@sentry.io/217779', {
-})
-.install();
+if (!window.location.host.startsWith('local')) {
+  Raven.config('https://abfdfecaed9e4bff9ccaa89645dcdd61@sentry.io/217779', {
+  })
+  .install();
+}
 
 const rootElement = document.getElementById('root');
 

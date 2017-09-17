@@ -15,7 +15,7 @@ export default class WarRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: true,
+      isVisible: this.props.visible || false,
       DEFAULT_POSITION
     };
   }

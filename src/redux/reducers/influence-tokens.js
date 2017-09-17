@@ -3,7 +3,7 @@ const default_state = {
 		id: 1,
 		attributes: {
       track: 'iron_throne',
-      position: 1,
+      position: null,
       house: 'baratheon',
       x: 0,
       y: 0,

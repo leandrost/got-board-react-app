@@ -1,0 +1,10 @@
+@import 'styles/mixins';
+
+@each $house in $houses {
+  .#{$house}-influence-token {
+    @include piece;
+    height: 6.4em;
+    width: 6.3em;
+    background-image: url("images/tokens/influence/#{$house}.png");
+  }
+}

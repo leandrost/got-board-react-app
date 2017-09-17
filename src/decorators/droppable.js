@@ -17,7 +17,6 @@ const collect = (connect, monitor) => {
 };
 
 const getPosition = (offset)  => {
-  offset = offset || { x: 0, y: 0 };
   return {
     x: window.pageXOffset + offset.x,
     y: window.pageYOffset + offset.y,

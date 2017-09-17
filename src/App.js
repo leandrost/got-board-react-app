@@ -41,7 +41,7 @@ class App extends Component {
             { this.renderGarrisons() }
           </div>
         </aside>
-				<WarRoom top={0} left={0} />
+				<WarRoom />
       </div>
     );
   }

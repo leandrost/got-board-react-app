@@ -1,22 +1,25 @@
 .board {
-  min-width: 1980px;
-  min-height: 2975px;
-  background-image: url("images/board.jpg");
-  background-repeat: no-repeat;
   display: flex;
 
+  background-image: url("images/board.jpg");
+  background-repeat: no-repeat;
+
+  width: 1980px;
+  height: 2975px;
+
+  main {
+    display: flex;
+    width: 1495px;
+  }
+
   aside {
-    width: 485px;
-    height: 2975px;
-    padding-top: 25px;
-    padding-left: 15px;
     display: flex;
     flex-direction: column;
 
-    > div {
-      margin-top: 5px;
-      width: 447px;
-    }
+    width: 485px;
+
+    padding-top: 25px;
+    padding-left: 15px;
   }
 
   .supply {

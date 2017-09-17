@@ -1,5 +1,9 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
+import { connect } from 'react-redux'
+import build from 'redux-object';
+
+import { droppable } from '../decorators';
 
 import WildlingsTrack from '../wildlings-track/WildlingsTrack';
 import InfluenceTracks from '../influence-track/InfluenceTracks';
@@ -8,17 +12,14 @@ import RoundTrack from '../round-track/RoundTrack';
 import VictoryTrack from '../victory-track/VictoryTrack';
 import Map from '../map/Map';
 import Unit from '../unit/Unit';
+import InfluenceToken from '~/influence-token/InfluenceToken';
 
 import styles from './Board.scss';
-import { connect } from 'react-redux'
-import build from 'redux-object';
-
-import { droppable } from '../decorators';
 
 @connect(
   state => ({
     units: (build(state, 'units') || []).filter(unit => unit.territory),
-    influenceTokens: (state.influenceTokens)
+      influenceTokens: (build(state, 'influenceTokens') || []).filter(token => !token.position)
   })
 )
 @droppable('influence-token')
@@ -30,20 +31,15 @@ export default class Board extends React.Component {
   }
 
   render() {
-    const { connectDropTarget } = this.props;
+    const { connectDropTarget, units, influenceTokens } = this.props;
     return (
       <div styleName="board">
         { connectDropTarget(
         <main>
           <Map />
           <WildlingsTrack />
-					{
-					this.props.units.map(unit => {
-							return (
-									<Unit key={unit.id} {...unit} />
-									);
-							})
-					}
+          { units.map(unit =>  <Unit key={unit.id} {...unit} />) }
+          { influenceTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
         </main>
         )}
         <aside>
@@ -57,6 +53,6 @@ export default class Board extends React.Component {
           </div>
         </aside>
       </div>
-    );
+      );
   }
 }

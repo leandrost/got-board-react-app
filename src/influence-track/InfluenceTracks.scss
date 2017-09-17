@@ -1,8 +1,6 @@
-@import 'styles/mixins';
-
 .tracks {
   display: flex;
-  padding-top: 50px;
+  padding-top: 55px;
   height: 1153px;
 
   ol {
@@ -26,14 +24,5 @@
         background-color: rgba(255,255,255,.7);
       }
     }
-  }
-}
-
-@each $faction in $factions {
-  .#{$faction}-influence-token {
-    @include piece;
-    height: 6.4em;
-    width: 6.3em;
-    background-image: url("images/tokens/influence/#{$faction}.png");
   }
 }
