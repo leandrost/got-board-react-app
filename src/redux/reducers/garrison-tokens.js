@@ -2,6 +2,7 @@ const default_state = {
   '1': {
     id: 1,
     attributes: {
+      type: 'garrison-tokens',
       name: 'dragonstone',
       territory: 'dragonstone',
       x: 1372,
@@ -11,6 +12,7 @@ const default_state = {
   '2': {
     id: 2,
     attributes: {
+      type: 'garrison-tokens',
       name: 'winterfell',
       territory: 'winterfell',
       x: 655,
@@ -20,6 +22,7 @@ const default_state = {
   '3': {
     id: 3,
     attributes: {
+      type: 'garrison-tokens',
       name: 'pyke',
       territory: 'pyke',
       x: 179,
@@ -29,6 +32,7 @@ const default_state = {
   '4': {
     id: 4,
     attributes: {
+      type: 'garrison-tokens',
       name: 'highgarden',
       territory: 'highgarden',
       x: 246,
@@ -38,6 +42,7 @@ const default_state = {
   '5': {
     id: 5,
     attributes: {
+      type: 'garrison-tokens',
       name: 'lannisport',
       territory: 'lannisport',
       x: 299,
@@ -47,6 +52,7 @@ const default_state = {
   '6': {
     id: 6,
     attributes: {
+      type: 'garrison-tokens',
       name: 'sunspear',
       territory: 'sunspear',
       x: 1115,

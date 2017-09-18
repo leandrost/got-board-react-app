@@ -1,25 +1,66 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 
+import { draggable } from '~/decorators';
+import { findDOMNode } from 'react-dom';
+
 import styles from './GarrisonToken.scss';
 
-import { draggable } from '~/decorators';
-
-@draggable('garrison-token')
+@piece('garrison-token')
 @CSSModules(styles)
 export default class GarrisonToken extends React.Component {
-  endDrag(monitor) {
-    const result = monitor.getDropResult();
-    this.props.onDragEnd(this.props, result);
-  }
-
   render() {
-    const { connectDragSource, name, territory, x, y } = this.props;
-    const styleName = name ? `garrison-${name}` : null;
-    const style = {
-      transform: `translate(${x}px, ${y}px)`,
-      position: territory ? 'absolute' : null,
-    };
-    return connectDragSource(<div styleName={styleName} style={style}></div>);
+    console.log("GarrisonToken#render");
+    const { name } = this.props;
+    return <div styleName={`garrison-${name}`} style={this.props.style}></div>
   }
+}
+
+function wrapper(Component, type) {
+  return @draggable(type)
+  class Piece extends React.Component {
+    static defaultProps = {
+      steady: false,
+    }
+
+    applyPieceStyle(node) {
+      if(!node) { return; }
+      const { steady, x, y } = this.props;
+      console.log('applyPieceStyle');
+      node.style.transform = `translate(${x}px, ${y}px)`;
+      node.style.position = steady ? 'static' : 'absolute';
+    }
+
+    getStyle() {
+      const { steady, x, y } = this.props;
+      return {
+        transform: `translate(${x}px, ${y}px)`,
+        position: steady ? 'static' : 'absolute',
+      }
+    }
+
+    getRef = (instance) => {
+      const node = findDOMNode(instance);
+      return this.props.connectDragSource(node);
+    }
+
+    render() {
+      console.log(9);
+      return <Component
+        kind={type}
+        {...this.props}
+        {...this.state}
+        style={this.getStyle()}
+        ref={this.getRef}
+      />;
+    }
+  }
+}
+
+
+
+function piece(type) {
+	return (Component) => {
+		return wrapper(Component, type);
+	};
 }

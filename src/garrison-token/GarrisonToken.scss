@@ -4,8 +4,9 @@ $garrisons: dragonstone highgarden lannisport pyke sunspear winterfell;
 @each $garrison in $garrisons {
   .garrison-#{$garrison} {
     @include piece;
-    height: 6.5em;
-    width: 9.5em;
+    height: 4.5em;
+    width: 6.5em;
     background-image: url("images/tokens/garrison/#{$garrison}.png");
+    background-size: contain;
   }
 }

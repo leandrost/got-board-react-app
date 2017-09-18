@@ -8,7 +8,7 @@ import normalizer from './middlewares/normalizer';
 
 const middlewares = applyMiddleware(
   thunk,
-  logger,
+  //logger,
   fetcher({
     // host: process.env.API_HOST,
     // host: 'http://localhost:3001',

@@ -1,12 +1,8 @@
 import React from 'react';
-import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import build from 'redux-object';
 
-import styles from './GarrisonTokens.scss';
-
-import GarrisonToken from '~/garrison-token/GarrisonToken';
 import { movePiece } from '~/redux/actions';
 
 @connect(
@@ -21,18 +17,27 @@ import { movePiece } from '~/redux/actions';
     }, dispatch)
   )
 )
-@CSSModules(styles)
 export default class GarrisonTokens extends React.Component {
-  movePiece(props, dropResult) {
+  constructor() {
+    super();
+    this.state = {
+      steady: false,
+    };
+  }
+  movePiece = (props, dropResult) => {
     const { x, y, territory } = dropResult;
+    console.log(props);
     this.props.movePiece('garrison-token', props.id, { x, y, territory });
   }
 
   render() {
+    const { steady } = this.props;
+    const Piece = this.props.piece;
     return <section>
-      { this.props.tokens.map(token => <GarrisonToken
+      { this.props.tokens.map(token => <Piece
         key={token.id}
         {...token}
+        steady={steady}
         onDragEnd={this.movePiece} />
       ) }
     </section>

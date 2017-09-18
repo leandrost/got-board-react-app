@@ -10,6 +10,13 @@ const specs = {
 	},
 	endDrag(props, monitor, component) {
 		if (!monitor.didDrop()) { return false; }
+      console.log('k');
+    if (props.onDragEnd) {
+      console.log('ok');
+      const result = monitor.getDropResult();
+      props.onDragEnd(props, result);
+      return;
+    };
 		if (!component.endDrag) { return; };
 		component.endDrag(monitor);
 	},

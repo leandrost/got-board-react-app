@@ -14,6 +14,7 @@ import VictoryTrack from '../victory-track/VictoryTrack';
 import Unit from '../unit/Unit';
 import InfluenceToken from '~/influence-token/InfluenceToken';
 import GarrisonTokens from '~/garrison-tokens/GarrisonTokens';
+import GarrisonToken from '~/garrison-token/GarrisonToken';
 
 import styles from './Board.scss';
 
@@ -41,7 +42,7 @@ export default class Board extends React.Component {
           <WildlingsTrack />
           { units.map(unit =>  <Unit key={unit.id} {...unit} />) }
           { influenceTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
-          <GarrisonTokens filter={token => token.territory} />
+          <GarrisonTokens piece={GarrisonToken} filter={token => token.territory} />
         </main>
         )}
         <aside>
