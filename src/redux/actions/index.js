@@ -31,9 +31,10 @@ export function moveInfluenceToken(id, attrs) {
 }
 
 export function movePiece(type, id, attrs) {
+  type = type.toUpperCase().replace(/-/g, '_');
   return (dispatch) => {
     dispatch({
-      type: `MOVE_${type.toUpperCase()}`,
+      type: `MOVE_${type}`,
       id: id,
       attributes: attrs,
     });

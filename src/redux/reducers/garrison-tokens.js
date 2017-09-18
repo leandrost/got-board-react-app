@@ -59,7 +59,7 @@ export default (state = default_state, action) => {
   switch (action.type) {
     case 'MOVE_GARRISON_TOKEN':
       let id = action.id;
-    if (!id) { return; }
+    if (!id) { return state; }
     return {...state,
       [id]: {...state[id],
         attributes: { ...state[id].attributes, ...action.attributes }
