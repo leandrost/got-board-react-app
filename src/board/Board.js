@@ -5,14 +5,15 @@ import build from 'redux-object';
 
 import { droppable } from '../decorators';
 
+import Map from '../map/Map';
 import WildlingsTrack from '../wildlings-track/WildlingsTrack';
 import InfluenceTracks from '../influence-track/InfluenceTracks';
 import SupplyTrack from '../supply-track/SupplyTrack';
 import RoundTrack from '../round-track/RoundTrack';
 import VictoryTrack from '../victory-track/VictoryTrack';
-import Map from '../map/Map';
 import Unit from '../unit/Unit';
 import InfluenceToken from '~/influence-token/InfluenceToken';
+import GarrisonTokens from '~/garrison-tokens/GarrisonTokens';
 
 import styles from './Board.scss';
 
@@ -40,6 +41,7 @@ export default class Board extends React.Component {
           <WildlingsTrack />
           { units.map(unit =>  <Unit key={unit.id} {...unit} />) }
           { influenceTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
+          <GarrisonTokens filter={token => token.territory} />
         </main>
         )}
         <aside>

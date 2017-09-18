@@ -37,11 +37,8 @@ class App extends Component {
           <div styleName="mensseger-raven-token"></div>
           <div styleName="round-marker"></div>
           { this.renderFactions() }
-          <div>
-            { this.renderGarrisons() }
-          </div>
         </aside>
-				<WarRoom />
+				<WarRoom visible={true} />
       </div>
     );
   }
@@ -63,21 +60,6 @@ class App extends Component {
           <div styleName={`${faction}-power-token`}></div>
         </div>
         );
-    });
-  }
-
-  renderGarrisons() {
-    const garrisons = [
-      "dragonstone",
-      "highgarden",
-      "lannisport",
-      "pyke",
-      "sunspear",
-      "winterfell",
-    ];
-
-    return garrisons.map(garrison => {
-      return (<div key={garrison} styleName={`garrison-${garrison}`}></div>);
     });
   }
 }

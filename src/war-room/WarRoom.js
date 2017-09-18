@@ -3,13 +3,14 @@ import CSSModules from 'react-css-modules';
 import { draggable, droppable } from '../decorators';
 
 import AvailableUnits from './available-units/AvailableUnits';
+import GarrisonTokens from '~/garrison-tokens/GarrisonTokens';
 
 import styles from './WarRoom.scss';
 
 const DEFAULT_POSITION = { x: 30, y: 30 };
 
-@droppable("unit")
-@draggable("war-room")
+@droppable(['unit', 'garrison-token'])
+@draggable('war-room')
 @CSSModules(styles)
 export default class WarRoom extends React.Component {
   constructor(props) {
@@ -63,8 +64,9 @@ export default class WarRoom extends React.Component {
           <main>
             <AvailableUnits house={house} type='footman' />
             <AvailableUnits house={house} type='knight' />
-            <AvailableUnits house={house} type='siege-engine' />
             <AvailableUnits house={house} type='ship' />
+            <AvailableUnits house={house} type='siege-engine' />
+            <GarrisonTokens filter={token => !token.territory} />
           </main>
         </div>
         ))

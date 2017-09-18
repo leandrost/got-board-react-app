@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import build from 'redux-object';
 
-import { fetchGame } from '../redux/actions/';
-import { droppable } from '../decorators';
+import { fetchGame } from '~/redux/actions/';
+import { droppable } from '~/decorators';
 
 import styles from './Map.scss';
 
@@ -46,7 +46,7 @@ export default class Map extends React.Component {
   }
 }
 
-@droppable("unit")
+@droppable(['unit', 'garrison-token'])
 @CSSModules(styles)
 export class Territory extends React.Component {
   drop(monitor) {
