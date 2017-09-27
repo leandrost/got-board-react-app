@@ -1,7 +1,7 @@
 const default_state = {
   1: {
-		id: 1,
-		attributes: {
+    id: 1,
+    attributes: {
       track: 'iron_throne',
       position: 1,
       house: 'baratheon',
@@ -10,8 +10,8 @@ const default_state = {
     }
   },
   4: {
-		id: 4,
-		attributes: {
+    id: 4,
+    attributes: {
       track: 'fiefdoms',
       position: 5,
       house: 'baratheon',
@@ -20,8 +20,8 @@ const default_state = {
     }
   },
   5: {
-		id: 5,
-		attributes: {
+    id: 5,
+    attributes: {
       track: 'kings_court',
       position: 4,
       house: 'baratheon',
@@ -30,8 +30,8 @@ const default_state = {
     }
   },
   6: {
-		id: 6,
-		attributes: {
+    id: 6,
+    attributes: {
       track: 'iron_throne',
       position: 3,
       house: 'stark',
@@ -40,8 +40,8 @@ const default_state = {
     }
   },
   8: {
-		id: 8,
-		attributes: {
+    id: 8,
+    attributes: {
       track: 'fiefdoms',
       position: 4,
       house: 'stark',
@@ -50,8 +50,8 @@ const default_state = {
     }
   },
   9: {
-		id: 9,
-		attributes: {
+    id: 9,
+    attributes: {
       track: 'kings_court',
       position: 2,
       house: 'stark',
