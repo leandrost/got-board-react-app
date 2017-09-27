@@ -1,5 +1,4 @@
 const fetchData = (config, dispatch, action) => {
-  const dispatchers = dispatchersFor(action.fetch.include, dispatch);
   fetchFrom(action, config).then(json => {
     dispatch({
       type: `${action.type}_SUCCESS`,
@@ -9,6 +8,8 @@ const fetchData = (config, dispatch, action) => {
     return json;
   })
   .then(json => {
+    const includes = Object.keys(json.data.relationships);
+    const dispatchers = dispatchersFor(includes, dispatch);
     return Promise.chain(dispatchers, json);
   })
   .catch(exception => {
