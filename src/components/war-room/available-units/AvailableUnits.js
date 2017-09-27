@@ -5,7 +5,7 @@ import build from 'redux-object';
 
 import styles from './AvailableUnits.scss';
 
-import Unit from '../../unit/Unit';
+import Unit from '~/components/unit/Unit';
 
 @connect(
   state => ({

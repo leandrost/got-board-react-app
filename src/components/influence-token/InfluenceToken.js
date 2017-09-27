@@ -6,7 +6,7 @@ import build from 'redux-object';
 
 import styles from './InfluenceToken.scss';
 
-import { droppable, draggable } from '~/decorators';
+import { draggable } from '~/decorators';
 import { moveInfluenceToken } from '~/redux/actions';
 
 @connect(
@@ -22,7 +22,6 @@ import { moveInfluenceToken } from '~/redux/actions';
   )
 )
 @draggable('influence-token')
-//@droppable('influence-token')
 @CSSModules(styles)
 export default class InfluenceToken extends React.Component {
   constructor(props) {
@@ -36,13 +35,13 @@ export default class InfluenceToken extends React.Component {
   }
 
   render() {
-    const { connectDragSource, x, y, position, house } = this.props;
+    const { connectDragSource, x, y, position, houseName } = this.props;
     const style = {
       transform: `translate(${x}px, ${y}px)`,
       position: position ? 'static' : 'absolute',
     };
     return connectDragSource(
-      <div styleName={`${house}-influence-token`} style={style}></div>
+      <div styleName={`${houseName}-influence-token`} style={style}></div>
     );
   }
 }

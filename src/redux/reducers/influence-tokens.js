@@ -64,6 +64,17 @@ const default_state = {
 export default (state = default_state, action) => {
   switch (action.type) {
 
+    case 'LOAD_TOKENS':
+      const payload = action.payload;
+      const influenceTokens = Object.assign(
+        {},
+        payload.ironThroneTokens,
+        payload.fiefdomTokens,
+        payload.kingsCourtTokens
+      );
+      console.log("InfluenceTokens", influenceTokens);
+      return influenceTokens || state;
+
     case 'MOVE_INFLUENCE_TOKEN':
       let id = action.id;
       if (!id) { return; }

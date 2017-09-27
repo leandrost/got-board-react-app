@@ -4,8 +4,8 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { draggable } from '../decorators';
-import { moveUnit } from '../redux/actions/';
+import { draggable } from '~/decorators';
+import { moveUnit } from '~/redux/actions/';
 
 import styles from './Unit.scss';
 

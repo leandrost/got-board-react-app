@@ -1,7 +1,7 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 
-import { draggable, droppable } from '../decorators';
+import { draggable, droppable } from '~/decorators';
 import styles from './WildlingsTrack.scss';
 
 @draggable("wildling-threat-token")

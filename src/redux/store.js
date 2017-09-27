@@ -8,10 +8,10 @@ import normalizer from './middlewares/normalizer';
 
 const middlewares = applyMiddleware(
   thunk,
-  //logger,
+  logger,
   fetcher({
     // host: process.env.API_HOST,
-    // host: 'http://localhost:3001',
+    //host: 'http://192.168.1.120:3000',
     host: 'https://got-board-api.herokuapp.com/',
 
     headers: {

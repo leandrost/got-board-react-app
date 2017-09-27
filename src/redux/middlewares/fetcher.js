@@ -21,7 +21,7 @@ function dispatchersFor(includes, dispatch) {
   return includes.map(include => {
     return (json => {
       dispatch({
-        type: `LOAD_${include.toUpperCase()}`,
+        type: `LOAD_${include.replace(/-/g, "_").toUpperCase()}`,
         payload: json,
         jsonapi: true,
       });

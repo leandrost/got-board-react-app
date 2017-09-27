@@ -7,7 +7,7 @@ import styles from './InfluenceTracks.scss';
 
 import { droppable } from '~/decorators';
 
-import InfluenceToken from '~/influence-token/InfluenceToken'
+import InfluenceToken from '~/components/influence-token/InfluenceToken'
 
 @CSSModules(styles)
 export default class InfluenceTracks extends React.Component {
@@ -22,7 +22,7 @@ export default class InfluenceTracks extends React.Component {
 
   render() {
     console.log('InfluenceTracks#render');
-    const tracks = ['iron_throne', 'fiefdoms', 'kings_court'];
+    const tracks = ['IronThroneToken', 'FiefdomToken', 'KingsCourtToken'];
 
     return <div styleName="tracks">
       { tracks.map(track => <ol key={track}>{ this.renderTrack(track) }</ol>) }
@@ -37,13 +37,12 @@ export default class InfluenceTracks extends React.Component {
 @CSSModules(styles)
 export class InfluencePosition extends React.Component {
   drop(monitor) {
-    console.log('InfluencePosition#drop');
     return { position: this.props.position, x: 0, y: 0 };
   }
 
  findTokenBy(track, position) {
    const result = this.props.tokens.filter(
-     token => token.track === track &&
+     token => token.type === track &&
        token.position === position
    );
    return result ? result[0] : null;

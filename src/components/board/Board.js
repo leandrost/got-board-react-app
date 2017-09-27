@@ -3,18 +3,18 @@ import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux'
 import build from 'redux-object';
 
-import { droppable } from '../decorators';
+import { droppable } from '~/decorators';
 
-import Map from '../map/Map';
-import WildlingsTrack from '../wildlings-track/WildlingsTrack';
-import InfluenceTracks from '../influence-track/InfluenceTracks';
-import SupplyTrack from '../supply-track/SupplyTrack';
-import RoundTrack from '../round-track/RoundTrack';
-import VictoryTrack from '../victory-track/VictoryTrack';
-import Unit from '../unit/Unit';
-import InfluenceToken from '~/influence-token/InfluenceToken';
-import GarrisonTokens from '~/garrison-tokens/GarrisonTokens';
-import GarrisonToken from '~/garrison-token/GarrisonToken';
+import Map from '~/components/map/Map';
+import WildlingsTrack from '~/components/wildlings-track/WildlingsTrack';
+import InfluenceTracks from '~/components/influence-track/InfluenceTracks';
+import SupplyTrack from '~/components/supply-track/SupplyTrack';
+import RoundTrack from '~/components/round-track/RoundTrack';
+import VictoryTrack from '~/components/victory-track/VictoryTrack';
+import Unit from '~/components/unit/Unit';
+import InfluenceToken from '~/components/influence-token/InfluenceToken';
+import GarrisonTokens from '~/components/garrison-tokens/GarrisonTokens';
+import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 
 import styles from './Board.scss';
 

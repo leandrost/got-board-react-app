@@ -1,9 +1,9 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import { draggable, droppable } from '../decorators';
+import { draggable, droppable } from '~/decorators';
 
 import AvailableUnits from './available-units/AvailableUnits';
-import GarrisonTokens from '~/garrison-tokens/GarrisonTokens';
+import GarrisonTokens from '~/components/garrison-tokens/GarrisonTokens';
 
 import styles from './WarRoom.scss';
 

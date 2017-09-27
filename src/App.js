@@ -3,10 +3,10 @@ import CSSModules from 'react-css-modules';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
-import { droppable } from './decorators';
+import { droppable } from '~/decorators';
 
-import Board from './board/Board';
-import WarRoom from './war-room/WarRoom';
+import Board from '~/components/board/Board';
+import WarRoom from '~/components/war-room/WarRoom';
 
 import styles from './app.scss';
 
