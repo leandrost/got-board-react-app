@@ -21,7 +21,9 @@ import styles from './Board.scss';
 @connect(
   state => ({
     units: (build(state, 'units') || []).filter(unit => unit.territory),
-      influenceTokens: (build(state, 'influenceTokens') || []).filter(token => !token.position)
+    ironThroneTokens: (build(state, 'ironThroneTokens') || []).filter(token => !token.position),
+    fiefdomTokens: (build(state, 'fiefdomTokens') || []).filter(token => !token.position),
+    kingsCourtTokens: (build(state, 'kingsCourtTokens') || []).filter(token => !token.position)
   })
 )
 @droppable('influence-token')
@@ -33,7 +35,7 @@ export default class Board extends React.Component {
   }
 
   render() {
-    const { connectDropTarget, units, influenceTokens } = this.props;
+    const { connectDropTarget, units, ironThroneTokens, fiefdomTokens, kingsCourtTokens } = this.props;
     return (
       <div styleName="board">
         { connectDropTarget(
@@ -41,12 +43,18 @@ export default class Board extends React.Component {
           <Map />
           <WildlingsTrack />
           { units.map(unit =>  <Unit key={unit.id} {...unit} />) }
-          { influenceTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
+          { ironThroneTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
+          { fiefdomTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
+          { kingsCourtTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
           <GarrisonTokens piece={GarrisonToken} filter={token => token.territory} />
         </main>
         )}
         <aside>
-          <InfluenceTracks />
+          <div styleName="influence-tracks">
+            <InfluenceTracks type="ironThrone" />
+            <InfluenceTracks type="fiefdom"/>
+            <InfluenceTracks type="kingsCourt" />
+          </div>
           <div styleName="supply">
             <SupplyTrack />
           </div>

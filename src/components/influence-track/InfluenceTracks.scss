@@ -1,28 +1,22 @@
-.tracks {
+.influence-track {
   display: flex;
-  padding-top: 55px;
-  height: 1153px;
+  flex-direction: column;
 
-  ol {
-    display: flex;
-    flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
-    align-items: center;
-    justify-content: space-between;
+  height: 867px;
+  width: 147px;
 
-    height: 867px;
-    width: 147px;
+  li {
+    $size: 118px;
+    width: $size;
+    height: $size;
+    border-radius: $size;
+    padding: 5px;
 
-    li {
-      $size: 118px;
-      width: $size;
-      height: $size;
-      border-radius: $size;
-      padding: 5px;
-
-      &[data-dragging-over] {
-        background-color: rgba(255,255,255,.7);
-      }
+    &[data-dragging-over] {
+      background-color: rgba(255,255,255,.7);
     }
   }
 }

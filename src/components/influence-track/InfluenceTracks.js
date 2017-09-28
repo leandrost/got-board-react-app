@@ -9,49 +9,53 @@ import { droppable } from '~/decorators';
 
 import InfluenceToken from '~/components/influence-token/InfluenceToken'
 
+@connect(
+  (state, props) => ({ tokens: build(state, `${props.type}Tokens`) }),
+)
 @CSSModules(styles)
 export default class InfluenceTracks extends React.Component {
   renderTrack(track) {
-    const positions = [6, 5, 4, 3, 2, 1];
-    return positions.map(position => <InfluencePosition
+  }
+
+ findTokenBy(position) {
+   const tokenType = {
+     ironThrone: 'IronThroneToken',
+     fiefdom: 'FiefdomToken',
+     kingsCourt: 'KingsCourtToken'
+   };
+   const result = this.props.tokens.filter(
+     token => token.type === tokenType[this.props.type] &&
+       token.position === position
+   );
+   return result ? result[0] : null;
+  }
+
+  renderPosition(position) {
+    return <InfluencePosition
       key={position}
-      track={track}
-      position={position} />
-    );
+      position={position}
+      token={this.findTokenBy(position)}
+    />
   }
 
   render() {
     console.log('InfluenceTracks#render');
-    const tracks = ['IronThroneToken', 'FiefdomToken', 'KingsCourtToken'];
-
-    return <div styleName="tracks">
-      { tracks.map(track => <ol key={track}>{ this.renderTrack(track) }</ol>) }
-    </div>
+    const positions = [6, 5, 4, 3, 2, 1];
+    return <ol styleName="influence-track">
+      { positions.map(position => this.renderPosition(position)) }
+    </ol>
   }
 }
 
 @droppable('influence-token')
-@connect(
-  state => ({ tokens: build(state, 'influenceTokens') }),
-)
 @CSSModules(styles)
 export class InfluencePosition extends React.Component {
   drop(monitor) {
     return { position: this.props.position, x: 0, y: 0 };
   }
 
- findTokenBy(track, position) {
-   const result = this.props.tokens.filter(
-     token => token.type === track &&
-       token.position === position
-   );
-   return result ? result[0] : null;
-  }
-
   render() {
-    console.log('InfluencePosition#render');
-    const { connectDropTarget, track, position, isOver } = this.props;
-    const token = this.findTokenBy(track, position);
+    const { connectDropTarget, token, isOver } = this.props;
 
     return connectDropTarget(
       <li data-dragging-over={isOver || null}>

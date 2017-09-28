@@ -2,22 +2,17 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import build from 'redux-object';
 
 import styles from './InfluenceToken.scss';
 
 import { draggable } from '~/decorators';
-import { moveInfluenceToken } from '~/redux/actions';
+import { movePiece } from '~/redux/actions';
 
 @connect(
-  (state, props) => {
-    return {
-      token: build(state, 'influenceToken', props.id),
-    }
-  },
+  state => ({}),
   dispatch => (
     bindActionCreators({
-      moveInfluenceToken,
+      movePiece,
     }, dispatch)
   )
 )
@@ -31,7 +26,7 @@ export default class InfluenceToken extends React.Component {
 
   endDrag(monitor) {
     const { x, y, position } = monitor.getDropResult();
-    this.props.moveInfluenceToken(this.props.id, { x, y, position });
+    this.props.movePiece(this.props.type, this.props.id, { x, y, position });
   }
 
   render() {

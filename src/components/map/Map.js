@@ -24,7 +24,7 @@ import styles from './Map.scss';
 @CSSModules(styles)
 export default class Map extends React.Component {
   componentDidMount() {
-    this.props.fetchGame(1);
+    this.props.fetchGame(6);
   }
 
   renderTerritories(){
