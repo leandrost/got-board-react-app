@@ -35,4 +35,4 @@ const replaceComponentName = function(filepath, name) {
 }
 
 let args = process.argv.slice(2);
-createComponent("src", args[0]);
+createComponent("src/components/", args[0]);

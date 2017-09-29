@@ -6,7 +6,7 @@ export default (state = default_state, action) => {
     case 'LOAD_IRON_THRONE_TOKENS':
       return action.payload.ironThroneTokens || state;
 
-    case 'MOVE_IRONTHRONETOKEN':
+    case 'MOVE_IRON_THRONE_TOKEN':
       let id = action.id;
       if (!id) { return; }
       return {...state,

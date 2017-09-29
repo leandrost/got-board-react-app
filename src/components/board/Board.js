@@ -7,7 +7,7 @@ import { droppable } from '~/decorators';
 
 import Map from '~/components/map/Map';
 import WildlingsTrack from '~/components/wildlings-track/WildlingsTrack';
-import InfluenceTracks from '~/components/influence-track/InfluenceTracks';
+import InfluenceTrack from '~/components/influence-track/InfluenceTrack';
 import SupplyTrack from '~/components/supply-track/SupplyTrack';
 import RoundTrack from '~/components/round-track/RoundTrack';
 import VictoryTrack from '~/components/victory-track/VictoryTrack';
@@ -51,9 +51,9 @@ export default class Board extends React.Component {
         )}
         <aside>
           <div styleName="influence-tracks">
-            <InfluenceTracks type="ironThrone" />
-            <InfluenceTracks type="fiefdom"/>
-            <InfluenceTracks type="kingsCourt" />
+            <InfluenceTrack type="ironThrone" />
+            <InfluenceTrack type="fiefdom"/>
+            <InfluenceTrack type="kingsCourt" />
           </div>
           <div styleName="supply">
             <SupplyTrack />

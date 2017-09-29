@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export function fetchGame(id) {
   return (dispatch) => {
     dispatch({
@@ -19,22 +21,12 @@ export function moveUnit(id, attrs) {
   };
 }
 
-export function moveInfluenceToken(id, attrs) {
-  return (dispatch) => {
-    dispatch({
-      type: 'MOVE_INFLUENCE_TOKEN',
-      id: id,
-      attributes: attrs,
-    });
-  };
-}
-
-export function movePiece(type, id, attrs) {
-  type = type.toUpperCase().replace(/-/g, '_');
+export function movePiece(piece, attrs) {
+  const type = _.snakeCase(piece.type).toUpperCase();
   return (dispatch) => {
     dispatch({
       type: `MOVE_${type}`,
-      id: id,
+      id: piece.id,
       attributes: attrs,
     });
   };

@@ -26,8 +26,7 @@ export default class GarrisonTokens extends React.Component {
   }
   movePiece = (props, dropResult) => {
     const { x, y, territory } = dropResult;
-    console.log(props);
-    this.props.movePiece('garrison-token', props.id, { x, y, territory });
+    this.props.movePiece(props, { x, y, territory });
   }
 
   render() {

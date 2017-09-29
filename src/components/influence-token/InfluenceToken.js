@@ -26,7 +26,7 @@ export default class InfluenceToken extends React.Component {
 
   endDrag(monitor) {
     const { x, y, position } = monitor.getDropResult();
-    this.props.movePiece(this.props.type, this.props.id, { x, y, position });
+    this.props.movePiece(this.props, { x, y, position });
   }
 
   render() {
