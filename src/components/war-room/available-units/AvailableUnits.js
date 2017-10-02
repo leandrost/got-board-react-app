@@ -9,14 +9,26 @@ import Unit from '~/components/unit/Unit';
 
 @connect(
   state => ({
-    units: (build(state, 'units')  || []).filter(unit => !unit.territory)
+    footmen: (build(state, 'footmen') || []).filter(unit => !unit.territory),
+    knights: (build(state, 'knights') || []).filter(unit => !unit.territory),
+    ships: (build(state, 'ships') || []).filter(unit => !unit.territory),
+    siegeEngines: (build(state, 'siegeEngines') || []).filter(unit => !unit.territory),
   })
 )
 @CSSModules(styles)
 export default class AvailableUnits extends React.Component {
   unitsByType() {
-    const { units, type } = this.props;
-    return units.filter(unit => unit.type === type);
+    const {
+      footmen,
+      knights,
+      ships,
+      siegeEngines,
+      type,
+      house,
+    } = this.props;
+
+    const units = [...footmen, ...knights, ...ships, ...siegeEngines];
+    return units.filter(unit => unit.type.toLowerCase() === type && unit.houseName === house);
   }
 
   getFirstUnit() {
@@ -35,7 +47,7 @@ export default class AvailableUnits extends React.Component {
     return (
       <div styleName="available-units">
         <strong>{this.getUnitsCount(type)}</strong>
-        { unit ? <Unit {...unit} /> : <Unit house={house} type={type} disabled={true} /> }
+        { unit ? <Unit {...unit} /> : <Unit houseName={house} type={type} disabled={true} /> }
       </div>
       );
   }

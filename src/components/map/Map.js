@@ -1,10 +1,8 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import build from 'redux-object';
 
-import { fetchGame } from '~/redux/actions/';
 import { droppable } from '~/decorators';
 
 import styles from './Map.scss';
@@ -14,19 +12,10 @@ import styles from './Map.scss';
     {
       territories: state.territories
     }
-  ),
-  dispatch => (
-    bindActionCreators({
-      fetchGame,
-    }, dispatch)
   )
 )
 @CSSModules(styles)
 export default class Map extends React.Component {
-  componentDidMount() {
-    this.props.fetchGame(2);
-  }
-
   renderTerritories(){
     const territories = build(this.props, 'territories');
     if(!territories) { return; }

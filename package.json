@@ -71,6 +71,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "deploy": "git push heroku master",
     "g": "node scripts/generator.js"
   },
   "jest": {

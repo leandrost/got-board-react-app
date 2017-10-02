@@ -2,6 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux'
 import build from 'redux-object';
+import { bindActionCreators } from 'redux'
 
 import { droppable } from '~/decorators';
 
@@ -17,25 +18,49 @@ import GarrisonTokens from '~/components/garrison-tokens/GarrisonTokens';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 
 import styles from './Board.scss';
+import { fetchGame } from '~/redux/actions/';
 
 @connect(
   state => ({
-    units: (build(state, 'units') || []).filter(unit => unit.territory),
+    footmen: (build(state, 'footmen') || []).filter(unit => unit.territory),
+    knights: (build(state, 'knights') || []).filter(unit => unit.territory),
+    ships: (build(state, 'ships') || []).filter(unit => unit.territory),
+    siegeEngines: (build(state, 'siegeEngines') || []).filter(unit => unit.territory),
     ironThroneTokens: (build(state, 'ironThroneTokens') || []).filter(token => !token.position),
     fiefdomTokens: (build(state, 'fiefdomTokens') || []).filter(token => !token.position),
     kingsCourtTokens: (build(state, 'kingsCourtTokens') || []).filter(token => !token.position)
-  })
+  }),
+  dispatch => (
+    bindActionCreators({ fetchGame }, dispatch)
+  )
 )
 @droppable('influence-token')
 @CSSModules(styles)
 export default class Board extends React.Component {
+  componentDidMount() {
+    const arr = window.location.pathname.split('/');
+    const gameId = arr[arr.length - 1];
+    this.props.fetchGame(gameId);
+  }
+
   drop(monitor) {
-    console.log('Board#drop');
     return monitor.getDropPosition();
   }
 
   render() {
-    const { connectDropTarget, units, ironThroneTokens, fiefdomTokens, kingsCourtTokens } = this.props;
+    const {
+      connectDropTarget,
+      footmen,
+      knights,
+      ships,
+      siegeEngines,
+      ironThroneTokens,
+      fiefdomTokens,
+      kingsCourtTokens
+    } = this.props;
+
+    const units = [...footmen, ...knights, ...ships, ...siegeEngines];
+
     return (
       <div styleName="board">
         { connectDropTarget(
