@@ -71,12 +71,6 @@
 $factions: baratheon lannister stark greyjoy tyrell martell;
 
 @each $faction in $factions {
-  .#{$faction}-supply-token {
-    @include piece;
-    height: 5.6em;
-    width: 4.5em;
-    background-image: url("images/tokens/supply/#{$faction}.png");
-  }
   .#{$faction}-victory-token {
     @include piece;
     height: 5em;

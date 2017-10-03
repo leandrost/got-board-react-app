@@ -1,0 +1,10 @@
+@import 'styles/mixins';
+
+@each $house in $houses {
+  .#{$house}-supply-token {
+    @include piece;
+    height: 5.6em;
+    width: 4.5em;
+    background-image: url("images/tokens/supply/#{$house}.png");
+  }
+}

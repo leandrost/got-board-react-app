@@ -1,20 +1,58 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
+import _ from 'lodash';
+import { droppable } from '~/decorators';
+import { connect } from 'react-redux';
 
 import styles from './SupplyTrack.scss';
+import SupplyToken from '~/components/supply-token/SupplyToken';
 
+import build from 'redux-object';
+
+@connect(
+  (state, props) => ({ tokens: build(state, `supplyTokens`) }),
+)
 @CSSModules(styles)
 export default class SupplyTrack extends React.Component {
+  findTokenBy(position) {
+    const { tokens } = this.props;
+    if (!tokens) { return []; }
+    return tokens.filter(token => token.position === position);
+  }
+
+  renderPosition(position) {
+    const tokens = this.findTokenBy(position);
+    return <TrackPosition
+      key={position}
+      position={position}
+      token={this.findTokenBy(position)}
+    >
+      { tokens.map(token => <SupplyToken key={token.id} {...token} />) }
+    </TrackPosition>
+  }
+
   render() {
-    return <ol type="1" styleName="track">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
+    const positions = _.rangeRight(7);
+    return <ol styleName="track">
+      { positions.map(position => this.renderPosition(position)) }
     </ol>
+  }
+}
+
+@droppable('supply-token')
+class TrackPosition extends React.Component {
+  drop(monitor) {
+    return { position: this.props.position, x: 0, y: 0 };
+  }
+
+  render() {
+    const { connectDropTarget, isOver, children } = this.props;
+
+    return connectDropTarget(
+      <li data-dragging-over={isOver || null}>
+        { children }
+      </li>
+    );
   }
 }
 
