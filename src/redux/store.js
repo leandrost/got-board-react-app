@@ -11,8 +11,8 @@ const middlewares = applyMiddleware(
   //logger,
   fetcher({
      //host: process.env.API_HOST,
-    //host: 'http://192.168.1.120:3000',
-    host: 'https://got-board-api.herokuapp.com',
+    host: 'http://192.168.1.120:3000',
+    //host: 'https://got-board-api.herokuapp.com',
 
     headers: {
       'Content-Type': 'application/json',

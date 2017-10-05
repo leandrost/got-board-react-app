@@ -15,7 +15,8 @@ const specs = {
       props.onDragEnd(props, result);
       return;
     };
-		if (!component.endDrag) { return; };
+    console.log(arguments);
+		if (!component || !component.endDrag) { return; };
 		component.endDrag(monitor);
 	},
 };

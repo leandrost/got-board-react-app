@@ -5,7 +5,7 @@ import { droppable } from '~/decorators';
 import { connect } from 'react-redux';
 
 import styles from './SupplyTrack.scss';
-import SupplyToken from '~/components/supply-token/SupplyToken';
+import HouseToken from '~/components/house-token/HouseToken';
 
 import build from 'redux-object';
 
@@ -27,7 +27,7 @@ export default class SupplyTrack extends React.Component {
       position={position}
       token={this.findTokenBy(position)}
     >
-      { tokens.map(token => <SupplyToken key={token.id} {...token} />) }
+      { tokens.map(token => <HouseToken key={token.id} {...token} steady={true} />) }
     </TrackPosition>
   }
 
@@ -39,10 +39,11 @@ export default class SupplyTrack extends React.Component {
   }
 }
 
+
 @droppable('supply-token')
 class TrackPosition extends React.Component {
   drop(monitor) {
-    return { position: this.props.position, x: 0, y: 0 };
+    return { x: 0, y: 0, position: this.props.position };
   }
 
   render() {
