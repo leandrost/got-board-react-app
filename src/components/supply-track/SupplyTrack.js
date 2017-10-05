@@ -3,11 +3,11 @@ import CSSModules from 'react-css-modules';
 import _ from 'lodash';
 import { droppable } from '~/decorators';
 import { connect } from 'react-redux';
+import build from 'redux-object';
 
 import styles from './SupplyTrack.scss';
 import HouseToken from '~/components/house-token/HouseToken';
 
-import build from 'redux-object';
 
 @connect(
   (state, props) => ({ tokens: build(state, `supplyTokens`) }),

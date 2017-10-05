@@ -35,7 +35,6 @@ class App extends Component {
           <div styleName="iron-throne-token"></div>
           <div styleName="valyrian-steel-blade-token"></div>
           <div styleName="mensseger-raven-token"></div>
-          <div styleName="round-marker"></div>
           { this.renderFactions() }
         </aside>
 				<WarRoom visible={true} />
@@ -55,7 +54,6 @@ class App extends Component {
     return factions.map(faction => {
       return (
         <div key={faction}>
-          <div styleName={`${faction}-victory-token`}></div>
           <div styleName={`${faction}-power-token`}></div>
         </div>
         );

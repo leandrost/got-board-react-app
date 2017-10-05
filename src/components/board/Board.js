@@ -39,8 +39,8 @@ import { fetchGame } from '~/redux/actions/';
 export default class Board extends React.Component {
   componentDidMount() {
     const arr = window.location.pathname.split('/');
-    const gameId = arr[arr.length - 1];
-    this.props.fetchGame(gameId);
+    window.gameId = arr[arr.length - 1];
+    this.props.fetchGame(window.gameId);
   }
 
   drop(monitor) {

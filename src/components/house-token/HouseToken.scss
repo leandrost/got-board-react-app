@@ -7,4 +7,16 @@
     width: 4.5em;
     background-image: url("images/tokens/supply/#{$house}.png");
   }
+  .#{$house}-victory-token {
+    @include piece;
+    height: 5em;
+    width: 5.6em;
+    background-image: url("images/tokens/victory/#{$house}.png");
+  }
+  .#{$house}-power-token {
+    @include piece;
+    height: 5em;
+    width: 3.5em;
+    background-image: url("images/tokens/power/#{$house}.png");
+  }
 }
