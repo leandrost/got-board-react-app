@@ -1,5 +1,4 @@
 import { combineReducers }  from 'redux';
-import games from './games';
 import territories from './territories';
 import garrisonTokens from './garrison-tokens';
 import _ from 'lodash';
@@ -20,9 +19,14 @@ const pieceReducer = (type, collection) => {
   const pieces = _.snakeCase(collection).toUpperCase();
   return (state = {}, action) => {
     switch (action.type) {
+      case `FETCH_${piece}`:
+        return  {...state, loading: true };
+
+      case `FETCH_${piece}_SUCCESS`:
       case `LOAD_${pieces}`:
         return action.payload[collection] || state;
 
+      case `UPDATE_${piece}`:
       case `MOVE_${piece}`:
         return updateAttributes(state, action);
 
@@ -33,7 +37,7 @@ const pieceReducer = (type, collection) => {
 }
 
 export default combineReducers({
-  games,
+  games: pieceReducer('game', 'games'),
 
   footmen: pieceReducer('footman', 'footmen'),
   knights: pieceReducer('knight', 'knights'),

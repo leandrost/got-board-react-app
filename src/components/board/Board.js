@@ -22,6 +22,7 @@ import { fetchGame } from '~/redux/actions/';
 
 @connect(
   state => ({
+    game: (build(state, `games`) || [])[0],
     footmen: (build(state, 'footmen') || []).filter(unit => unit.territory),
     knights: (build(state, 'knights') || []).filter(unit => unit.territory),
     ships: (build(state, 'ships') || []).filter(unit => unit.territory),
@@ -60,6 +61,8 @@ export default class Board extends React.Component {
     } = this.props;
 
     const units = [...footmen, ...knights, ...ships, ...siegeEngines];
+    const game = this.props.game || {};
+    const { id, round }  = game;
 
     return (
       <div styleName="board">
@@ -77,14 +80,14 @@ export default class Board extends React.Component {
         <aside>
           <div styleName="influence-tracks">
             <InfluenceTrack type="ironThrone" />
-            <InfluenceTrack type="fiefdom"/>
+            <InfluenceTrack type="fiefdom" />
             <InfluenceTrack type="kingsCourt" />
           </div>
           <div styleName="supply">
             <SupplyTrack />
           </div>
           <div styleName="round-victory">
-            <RoundTrack />
+            <RoundTrack gameId={id} round={round} />
             <VictoryTrack />
           </div>
         </aside>

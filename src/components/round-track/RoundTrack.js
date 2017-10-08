@@ -3,31 +3,36 @@ import CSSModules from 'react-css-modules';
 import _ from 'lodash';
 import { droppable, draggable } from '~/decorators';
 import { connect } from 'react-redux';
-import build from 'redux-object';
 import { movePiece } from '~/redux/actions';
 import { bindActionCreators } from 'redux';
 
 import styles from './RoundTrack.scss';
 
 @connect(
-  (state, props) => ({ game: build(state, `games`)[0] }),
+  state => ({}),
+  dispatch => (
+    bindActionCreators({
+      movePiece,
+    }, dispatch)
+  )
 )
 @CSSModules(styles)
 export default class Track extends React.Component {
-  findTokenBy(position) {
-    const { tokens } = this.props;
-    if (!tokens) { return []; }
-    return tokens.filter(token => token.position === position);
+  updateRound(changes) {
+    const { gameId } = this.props;
+    this.props.movePiece({ type: 'game', id: gameId }, changes);
+  }
+
+  renderMarker() {
+    return <RoundMarker onDragEnd={(_p, changes) => this.updateRound(changes) } />;
   }
 
   renderPosition(position) {
-    const { game } = this.props;
-    return <TrackPosition
-      key={position}
-      position={position}
-      token={this.findTokenBy(position)}
-    >
-      { game.round === position ? <RoundMarker key={game.round} /> : null }
+    const { round } = this.props;
+    if(!round) { return; }
+    let marker = position === round ? this.renderMarker() : null;
+    return <TrackPosition key={position} position={position}>
+      { marker }
     </TrackPosition>
   }
 
@@ -43,7 +48,7 @@ export default class Track extends React.Component {
 @droppable('round-marker')
 class TrackPosition extends React.Component {
   drop(monitor) {
-    return { x: 0, y: 0, position: this.props.position };
+    return { round: this.props.position };
   }
 
   render() {
@@ -57,22 +62,9 @@ class TrackPosition extends React.Component {
   }
 }
 
-@connect(
-  state => ({}),
-  dispatch => (
-    bindActionCreators({
-      movePiece,
-    }, dispatch)
-  )
-)
 @draggable('round-marker')
 @CSSModules(styles)
 class RoundMarker extends React.Component {
-  endDrag(monitor) {
-    const move = monitor.getDropResult();
-    this.props.movePiece(this.props, move);
-  }
-
   render() {
     const { connectDragSource } = this.props;
 
