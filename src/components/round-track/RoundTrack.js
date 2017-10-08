@@ -1,30 +1,31 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import _ from 'lodash';
-import { droppable, draggable } from '~/decorators';
-import { connect } from 'react-redux';
+import { droppable } from '~/decorators';
+import { connect, actions } from '~/redux/tools';
 import { movePiece } from '~/redux/actions';
-import { bindActionCreators } from 'redux';
 
 import styles from './RoundTrack.scss';
+import Draggable from '~/components/draggable/Draggable';
 
 @connect(
-  state => ({}),
-  dispatch => (
-    bindActionCreators({
-      movePiece,
-    }, dispatch)
-  )
+  state => ({
+  }),
+  actions({ movePiece })
 )
 @CSSModules(styles)
 export default class Track extends React.Component {
-  updateRound(changes) {
+  handleMove = (_p, changes) => {
     const { gameId } = this.props;
     this.props.movePiece({ type: 'game', id: gameId }, changes);
   }
 
   renderMarker() {
-    return <RoundMarker onDragEnd={(_p, changes) => this.updateRound(changes) } />;
+    return <Draggable
+      type='round-marker'
+      styleName='round-marker'
+      onDragEnd={this.handleMove}
+    />;
   }
 
   renderPosition(position) {
@@ -62,14 +63,3 @@ class TrackPosition extends React.Component {
   }
 }
 
-@draggable('round-marker')
-@CSSModules(styles)
-class RoundMarker extends React.Component {
-  render() {
-    const { connectDragSource } = this.props;
-
-    return connectDragSource(
-      <div styleName="round-marker"></div>
-    );
-  }
-}

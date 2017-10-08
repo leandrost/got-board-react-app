@@ -1,4 +1,4 @@
-.available-units {
+.piece-counter {
   display: flex;
 
   strong {
@@ -20,5 +20,9 @@
 
     font-size: 0.8em;
     font-weight: bold;
+  }
+
+  [disabled] {
+    opacity: 0.5;
   }
 }

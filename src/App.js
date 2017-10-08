@@ -35,29 +35,10 @@ class App extends Component {
           <div styleName="iron-throne-token"></div>
           <div styleName="valyrian-steel-blade-token"></div>
           <div styleName="mensseger-raven-token"></div>
-          { this.renderFactions() }
         </aside>
 				<WarRoom visible={true} />
       </div>
     );
-  }
-
-  renderFactions() {
-    const factions = [
-      "baratheon",
-      "lannister",
-      "stark",
-      "greyjoy",
-      "tyrell",
-      "martell"
-    ];
-    return factions.map(faction => {
-      return (
-        <div key={faction}>
-          <div styleName={`${faction}-power-token`}></div>
-        </div>
-        );
-    });
   }
 }
 

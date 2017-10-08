@@ -1,45 +1,34 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-import { connect } from 'react-redux'
-import build from 'redux-object';
-import { bindActionCreators } from 'redux'
+import styles from './Board.scss';
 
+import { connect, build, actions } from '~/redux/tools';
 import { droppable } from '~/decorators';
 
 import Map from '~/components/map/Map';
 import WildlingsTrack from '~/components/wildlings-track/WildlingsTrack';
+import Pieces from '~/components/pieces/Pieces';
 import InfluenceTrack from '~/components/influence-track/InfluenceTrack';
 import SupplyTrack from '~/components/supply-track/SupplyTrack';
 import RoundTrack from '~/components/round-track/RoundTrack';
 import VictoryTrack from '~/components/victory-track/VictoryTrack';
-import Unit from '~/components/unit/Unit';
 import InfluenceToken from '~/components/influence-token/InfluenceToken';
-import GarrisonTokens from '~/components/garrison-tokens/GarrisonTokens';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
+import HouseToken from '~/components/house-token/HouseToken';
 
-import styles from './Board.scss';
 import { fetchGame } from '~/redux/actions/';
 
 @connect(
   state => ({
-    game: (build(state, `games`) || [])[0],
-    footmen: (build(state, 'footmen') || []).filter(unit => unit.territory),
-    knights: (build(state, 'knights') || []).filter(unit => unit.territory),
-    ships: (build(state, 'ships') || []).filter(unit => unit.territory),
-    siegeEngines: (build(state, 'siegeEngines') || []).filter(unit => unit.territory),
-    ironThroneTokens: (build(state, 'ironThroneTokens') || []).filter(token => !token.position),
-    fiefdomTokens: (build(state, 'fiefdomTokens') || []).filter(token => !token.position),
-    kingsCourtTokens: (build(state, 'kingsCourtTokens') || []).filter(token => !token.position)
+    game: (build(state, `games`) || [])[0] || {},
   }),
-  dispatch => (
-    bindActionCreators({ fetchGame }, dispatch)
-  )
+  actions({ fetchGame })
 )
 @droppable('influence-token')
 @CSSModules(styles)
 export default class Board extends React.Component {
   componentDidMount() {
-    const arr = window.location.pathname.split('/');
+    const arr = window.location.search.split('=');
     window.gameId = arr[arr.length - 1];
     this.props.fetchGame(window.gameId);
   }
@@ -49,32 +38,26 @@ export default class Board extends React.Component {
   }
 
   render() {
-    const {
-      connectDropTarget,
-      footmen,
-      knights,
-      ships,
-      siegeEngines,
-      ironThroneTokens,
-      fiefdomTokens,
-      kingsCourtTokens
-    } = this.props;
-
-    const units = [...footmen, ...knights, ...ships, ...siegeEngines];
-    const game = this.props.game || {};
+    const { connectDropTarget, game } = this.props;
     const { id, round }  = game;
+    const territoryFilter = (piece) => piece.territory;
+    const positionFiler = (token) => !token.position;
 
     return (
       <div styleName="board">
         { connectDropTarget(
         <main>
           <Map />
+          <Pieces piece={HouseToken} collection="footmen" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="knights" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="ships" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="siegeEngines" filter={territoryFilter} />
+          <Pieces piece={InfluenceToken} collection="ironThroneTokens" filter={positionFiler} />
+          <Pieces piece={InfluenceToken} collection="fiefdomTokens" filter={positionFiler} />
+          <Pieces piece={InfluenceToken} collection="kingsCourtTokens" filter={positionFiler} />
+          <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="powerTokens" type="power-token" filter={territoryFilter} />
           <WildlingsTrack />
-          { units.map(unit =>  <Unit key={unit.id} {...unit} />) }
-          { ironThroneTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
-          { fiefdomTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
-          { kingsCourtTokens.map(token => <InfluenceToken key={token.id} {...token} />) }
-          <GarrisonTokens piece={GarrisonToken} filter={token => token.territory} />
         </main>
         )}
         <aside>

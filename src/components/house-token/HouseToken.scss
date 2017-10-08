@@ -19,4 +19,29 @@
     width: 3.5em;
     background-image: url("images/tokens/power/#{$house}.png");
   }
+
+  .#{$house}-footman {
+    @include piece;
+    height: 5em;
+    width: 5em;
+    background-image: url("images/units/footman/#{$house}.png");
+  }
+  .#{$house}-knight {
+    @include piece;
+    height: 5.5em;
+    width: 5.5em;
+    background-image: url("images/units/knight/#{$house}.png");
+  }
+  .#{$house}-ship {
+    @include piece;
+    height: 5.5em;
+    width: 6em;
+    background-image: url("images/units/ship/#{$house}.png");
+  }
+  .#{$house}-siege-engine {
+    @include piece;
+    height: 5.3em;
+    width: 5em;
+    background-image: url("images/units/siege-engine/#{$house}.png");
+  }
 }

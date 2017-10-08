@@ -50,7 +50,10 @@ export default combineReducers({
 
   supplyTokens: pieceReducer('SUPPLY_TOKEN', 'supplyTokens'),
   victoryTokens: pieceReducer('VICTORY_TOKEN', 'victoryTokens'),
+  powerTokens: pieceReducer('powerToken', 'powerTokens'),
+
   garrisonTokens,
+
   territories,
 });
 

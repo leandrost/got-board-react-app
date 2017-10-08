@@ -2,14 +2,23 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import { draggable, droppable } from '~/decorators';
 
-import AvailableUnits from './available-units/AvailableUnits';
-import GarrisonTokens from '~/components/garrison-tokens/GarrisonTokens';
+import Pieces from '~/components/pieces/Pieces';
+import GarrisonToken from '~/components/garrison-token/GarrisonToken';
+import HouseToken from '~/components/house-token/HouseToken';
+import PieceCounter from '~/components/piece-counter/PieceCounter';
 
 import styles from './WarRoom.scss';
 
 const DEFAULT_POSITION = { x: 30, y: 30 };
 
-@droppable(['unit', 'garrison-token'])
+@droppable([
+  'footman',
+  'knight',
+  'ship',
+  'siege-engine',
+  'garrison-token',
+  'power-token'
+])
 @draggable('war-room')
 @CSSModules(styles)
 export default class WarRoom extends React.Component {
@@ -46,6 +55,10 @@ export default class WarRoom extends React.Component {
     return isVisible ? '' : 'hidden';
   }
 
+  filter(piece, props) {
+    return piece.available && piece.houseName === props.houseName;
+  }
+
   render() {
     const house = 'stark';
     const { connectDragSource, isDragging, connectDropTarget, isOver } = this.props;
@@ -54,6 +67,7 @@ export default class WarRoom extends React.Component {
       transform: `translate(${x}px, ${y}px)`,
       visibility: this.getVisibility()
     };
+    const unitFilter = (unit) => !unit.territory && unit.houseName === house;
     return (
       <div>
         <button styleName='war-room-button' onClick={() => this.openWarRoom()}>War Room</button>
@@ -62,11 +76,42 @@ export default class WarRoom extends React.Component {
         <div styleName='war-room' data-dragging={isDragging} data-dragging-over={isOver || null}  style={style}>
           <button onClick={() => this.closeWarRoom()}>Fechar</button>
           <main>
-            <AvailableUnits house={house} type='footman' />
-            <AvailableUnits house={house} type='knight' />
-            <AvailableUnits house={house} type='ship' />
-            <AvailableUnits house={house} type='siege-engine' />
-            <GarrisonTokens filter={token => !token.territory} />
+            <PieceCounter
+              type='footman'
+              collection='footmen'
+              houseName={house}
+              piece={HouseToken}
+              filter={unitFilter}
+            />
+            <PieceCounter
+              type='knight'
+              collection='knights'
+              houseName={house}
+              piece={HouseToken}
+              filter={unitFilter}
+            />
+            <PieceCounter
+              type='ship'
+              collection='ships'
+              houseName={house}
+              piece={HouseToken}
+              filter={unitFilter}
+            />
+            <PieceCounter
+              type='siege-engine'
+              collection='siegeEngines'
+              houseName={house}
+              piece={HouseToken}
+              filter={unitFilter}
+            />
+            <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={piece => !piece.territory} />
+            <PieceCounter
+              type='power-token'
+              collection='powerTokens'
+              houseName={house}
+              filter={this.filter}
+              piece={HouseToken}
+            />
           </main>
         </div>
         ))
@@ -75,4 +120,3 @@ export default class WarRoom extends React.Component {
       )
   }
 }
-
