@@ -44,4 +44,11 @@
     width: 5em;
     background-image: url("images/units/siege-engine/#{$house}.png");
   }
+  .#{$house}-order-cover {
+    @include piece;
+    height: 5em;
+    width: 5em;
+    background-image: url("images/tokens/order/covers/#{$house}.png");
+    background-size: cover;
+  }
 }

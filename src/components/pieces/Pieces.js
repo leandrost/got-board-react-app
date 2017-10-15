@@ -9,14 +9,15 @@ import { connect, build } from '~/redux/tools';
 )
 export default class Pieces extends React.Component {
   render() {
-    const { pieces, type } = this.props;
+    const { pieces, type, steady } = this.props;
     const Piece = this.props.piece;
-    return <section>
+    return <div>
       { pieces.map(piece => <Piece
         key={piece.id}
         {...piece}
         type={type || piece.type}
+        steady={steady}
       />) }
-    </section>
+    </div>
   }
 }
