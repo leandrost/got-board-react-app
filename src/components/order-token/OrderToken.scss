@@ -1,0 +1,56 @@
+@import 'styles/mixins';
+
+@mixin order {
+  @include piece;
+  height: 5em;
+  width: 5em;
+}
+
+.march-order {
+  @include order;
+  background-image: url("images/tokens/order/march.png");
+}
+.special-march-order {
+  @include order;
+  background-image: url("images/tokens/order/marchp.png");
+}
+.minus-march-order {
+  @include order;
+  background-image: url("images/tokens/order/marchm.png");
+}
+
+.support-order {
+  @include order;
+  background-image: url("images/tokens/order/support.png");
+}
+.special-support-order {
+  @include order;
+  background-image: url("images/tokens/order/supportp.png");
+}
+
+.raid-order {
+  @include order;
+  background-image: url("images/tokens/order/raid.png");
+}
+.special-raid-order {
+  @include order;
+  background-image: url("images/tokens/order/raidp.png");
+}
+
+.consolidate-order {
+  @include order;
+  background-image: url("images/tokens/order/consolidate.png");
+}
+.special-consolidate-order {
+  @include order;
+  background-image: url("images/tokens/order/consolidatep.png");
+}
+
+.defend-order {
+  @include order;
+  background-image: url("images/tokens/order/defend.png");
+}
+.special-defend-order {
+  @include order;
+  background-image: url("images/tokens/order/defendp.png");
+}

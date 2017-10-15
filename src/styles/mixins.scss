@@ -2,9 +2,11 @@ $factions: baratheon lannister stark greyjoy tyrell martell;
 $houses: baratheon lannister stark greyjoy tyrell martell;
 
 @mixin piece {
-  background-repeat: no-repeat;
   display: inline-block;
   margin: 5px;
+
+  background-repeat: no-repeat;
+  background-size: contain;
 
   &:active {
     opacity: 0.95;

@@ -5,6 +5,7 @@ import { draggable, droppable } from '~/decorators';
 import Pieces from '~/components/pieces/Pieces';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
+import OrderToken from '~/components/order-token/OrderToken';
 import PieceCounter from '~/components/piece-counter/PieceCounter';
 
 import styles from './WarRoom.scss';
@@ -114,7 +115,17 @@ export default class WarRoom extends React.Component {
               />
             </section>
             <section>
-              <HouseToken houseName={house} type="order-cover" steady />
+              <OrderToken houseName={house} type="march-order" steady />
+              <OrderToken houseName={house} type="march-order" steady special />
+              <OrderToken houseName={house} type="minus-march-order" steady />
+              <OrderToken houseName={house} type="support-order" steady />
+              <OrderToken houseName={house} type="support-order" steady special />
+              <OrderToken houseName={house} type="raid-order" steady />
+              <OrderToken houseName={house} type="raid-order" steady special />
+              <OrderToken houseName={house} type="defend-order" steady />
+              <OrderToken houseName={house} type="defend-order" steady special />
+              <OrderToken houseName={house} type="consolidate-order" steady />
+              <OrderToken houseName={house} type="consolidate-order" steady special />
             </section>
             <section>
               <HouseToken houseName={house} type="card-cover" steady />
