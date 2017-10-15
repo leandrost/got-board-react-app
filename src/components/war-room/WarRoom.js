@@ -117,6 +117,9 @@ export default class WarRoom extends React.Component {
               <HouseToken houseName={house} type="order-cover" steady />
             </section>
             <section>
+              <HouseToken houseName={house} type="card-cover" steady />
+            </section>
+            <section>
               <Pieces piece={GarrisonToken} collection="garrisonTokens" steady filter={piece => !piece.territory} />
             </section>
           </main>

@@ -51,4 +51,11 @@
     background-image: url("images/tokens/order/covers/#{$house}.png");
     background-size: cover;
   }
+  .#{$house}-card-cover {
+    @include piece;
+    height: 16em;
+    width: 10em;
+    background-image: url("images//cards/#{$house}-cover.png");
+    background-size: cover;
+  }
 }
