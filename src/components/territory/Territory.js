@@ -10,8 +10,9 @@ import { droppable } from '~/decorators';
   'knight',
   'ship',
   'siege-engine',
+  'power-token',
   'garrison-token',
-  'power-token'
+  'neutral-force-token',
 ])
 @CSSModules(styles)
 export default class Territory extends React.Component {

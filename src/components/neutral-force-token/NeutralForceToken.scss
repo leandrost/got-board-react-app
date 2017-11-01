@@ -1,0 +1,18 @@
+@import 'styles/mixins';
+
+$tokens: '3-theboneway' '3-pyke' '4-5-theboneway' '4-6-theeyrie' '3-dornishmarches'
+'3-saltshore' '4-5-princespass' '4-dornishmarches' '3-theeyrie' '3-starfall'
+'4-5-saltshore' '4-oldtown' '3-highgarden' '3-stormsend' '4-5-starfall'
+'4-stormsend' '3-kingslanding' '3-sunspear' '4-5-sunspear' '4-6-kingslanding'
+'3-oldtown' '3-threetowers' '4-5-threetowers' '3-princespass' '3-yronwood'
+'4-5-yronwood';
+
+@each $token in $tokens {
+  .neutral-force-#{$token} {
+    @include piece;
+    height: 4.5em;
+    width: 6.5em;
+    background-image: url("images/tokens/neutral-force/#{$token}.png");
+    background-size: contain;
+  }
+}

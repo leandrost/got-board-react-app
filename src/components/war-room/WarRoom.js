@@ -7,6 +7,7 @@ import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
 import OrderToken from '~/components/order-token/OrderToken';
 import PieceCounter from '~/components/piece-counter/PieceCounter';
+import HouseCard from '~/components/house-card/HouseCard';
 
 import styles from './WarRoom.scss';
 
@@ -128,7 +129,12 @@ export default class WarRoom extends React.Component {
               <OrderToken houseName={house} type="consolidate-order" steady special />
             </section>
             <section>
-              <HouseToken houseName={house} type="card-cover" steady />
+              <Pieces
+                piece={HouseCard}
+                collection="houseCards"
+                steady
+                filter={piece => piece.houseName === house}
+              />
             </section>
             <section>
               <Pieces piece={GarrisonToken} collection="garrisonTokens" steady filter={piece => !piece.territory} />

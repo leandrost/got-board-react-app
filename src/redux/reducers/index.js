@@ -38,21 +38,27 @@ const pieceReducer = (type, collection) => {
 
 export default combineReducers({
   games: pieceReducer('game', 'games'),
+  houses: pieceReducer('house', 'houses'),
 
   footmen: pieceReducer('footman', 'footmen'),
   knights: pieceReducer('knight', 'knights'),
   ships: pieceReducer('ship', 'ships'),
   siegeEngines: pieceReducer('siegeEngine', 'siegeEngines'),
 
-  ironThroneTokens: pieceReducer('IRON_THRONE_TOKEN', 'ironThroneTokens'),
-  fiefdomTokens: pieceReducer('FIEFDOM_TOKEN', 'fiefdomTokens'),
-  kingsCourtTokens: pieceReducer('KINGS_COURT_TOKEN', 'kingsCourtTokens'),
+  ironThroneTokens: pieceReducer('ironThroneToken', 'ironThroneTokens'),
+  fiefdomTokens: pieceReducer('fiefdomToken', 'fiefdomTokens'),
+  kingsCourtTokens: pieceReducer('kingsCourtToken', 'kingsCourtTokens'),
 
-  supplyTokens: pieceReducer('SUPPLY_TOKEN', 'supplyTokens'),
-  victoryTokens: pieceReducer('VICTORY_TOKEN', 'victoryTokens'),
+  supplyTokens: pieceReducer('supplyToken', 'supplyTokens'),
+  victoryTokens: pieceReducer('victoryToken', 'victoryTokens'),
   powerTokens: pieceReducer('powerToken', 'powerTokens'),
 
+  marchOrders: pieceReducer('marchOrder', 'marchOrders'),
+  houseCards: pieceReducer('houseCard', 'houseCards'),
+
   garrisonTokens,
+  //garrisonTokens: pieceReducer('garrisonToken', 'garrisonTokens'),
+  neutralForceTokens: pieceReducer('neutralForceToken', 'neutralForceTokens'),
 
   territories,
 });

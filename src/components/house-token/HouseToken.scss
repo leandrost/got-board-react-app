@@ -1,5 +1,27 @@
 @import 'styles/mixins';
 
+//TODO: remove ser 'rodrik' cassel after fix card name in the API
+$cards: (
+baratheon: "patchface" "melisandre" "salladhor" "brienne" "davos" "renly"
+"stannis",
+lannister: "cersei" "kevan" "tyrion" "hound" "jaime" "gregor" "tywin",
+stark: "eddard-stark" "robb-stark" "roose-bolton" "greatjon-umber"
+"the-blackfish" "ser-rodrick-cassel" "catelyn-stark" "ser-rodrik-cassel",
+greyjoy: "aeron" "asha" "dagmar" "balon" "theon" "victarion" "euron",
+tyrell: "queen" "alester" "margaery" "garlan" "randyll" "loras" "mace",
+martell: "doran" "arianne" "nymeria" "darkstar" "obara" "areo" "redviper",
+);
+
+@mixin card($house, $card) {
+  .#{$house}-#{$card} {
+    @include piece;
+    height: 16em;
+    width: 10em;
+    background-image: url("images/cards/#{$house}-#{$card}.png");
+    background-size: contain;
+  }
+}
+
 @each $house in $houses {
   .#{$house}-supply-token {
     @include piece;
@@ -51,11 +73,10 @@
     background-image: url("images/tokens/order/covers/#{$house}.png");
     background-size: contain;
   }
-  .#{$house}-card-cover {
-    @include piece;
-    height: 16em;
-    width: 10em;
-    background-image: url("images//cards/#{$house}-cover.png");
-    background-size: contain;
+
+  @include card($house, "card-cover");
+
+  @each $card in map-get($cards, $house) {
+    @include card($house, $card);
   }
 }

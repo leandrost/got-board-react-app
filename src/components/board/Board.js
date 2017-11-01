@@ -15,6 +15,7 @@ import VictoryTrack from '~/components/victory-track/VictoryTrack';
 import InfluenceToken from '~/components/influence-token/InfluenceToken';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
+import NeutralForceToken from '~/components/neutral-force-token/NeutralForceToken';
 
 import { fetchGame } from '~/redux/actions/';
 
@@ -48,15 +49,18 @@ export default class Board extends React.Component {
         { connectDropTarget(
         <main>
           <Map />
+          <Pieces piece={InfluenceToken} collection="ironThroneTokens" filter={positionFiler} />
+          <Pieces piece={InfluenceToken} collection="fiefdomTokens" filter={positionFiler} />
+          <Pieces piece={InfluenceToken} collection="kingsCourtTokens" filter={positionFiler} />
+
           <Pieces piece={HouseToken} collection="footmen" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="knights" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="ships" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="siegeEngines" filter={territoryFilter} />
-          <Pieces piece={InfluenceToken} collection="ironThroneTokens" filter={positionFiler} />
-          <Pieces piece={InfluenceToken} collection="fiefdomTokens" filter={positionFiler} />
-          <Pieces piece={InfluenceToken} collection="kingsCourtTokens" filter={positionFiler} />
-          <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="powerTokens" type="power-token" filter={territoryFilter} />
+
+          <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
+          <Pieces piece={NeutralForceToken} collection="neutralForceTokens" filter={territoryFilter} />
           <WildlingsTrack />
         </main>
         )}

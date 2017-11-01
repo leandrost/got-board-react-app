@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware }  from 'redux';
-//import logger from 'redux-logger';
+import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import reducers from './reducers';
@@ -8,11 +8,12 @@ import normalizer from './middlewares/normalizer';
 
 const middlewares = applyMiddleware(
   thunk,
-  //logger,
+  logger,
   fetcher({
      //host: process.env.API_HOST,
     //host: 'http://192.168.1.120:3000',
-    host: 'https://got-board-api.herokuapp.com',
+    //host: 'https://got-board-api.herokuapp.com',
+    host: 'http://localhost:3000',
 
     headers: {
       'Content-Type': 'application/json',

@@ -67,20 +67,3 @@
   background-image: url("images/round-marker.png");
   background-position: center;
 }
-
-$factions: baratheon lannister stark greyjoy tyrell martell;
-
-@each $faction in $factions {
-  .#{$faction}-victory-token {
-    @include piece;
-    height: 5em;
-    width: 5.6em;
-    background-image: url("images/tokens/victory/#{$faction}.png");
-  }
-  .#{$faction}-power-token {
-    @include piece;
-    height: 5em;
-    width: 3.5em;
-    background-image: url("images/tokens/power/#{$faction}.png");
-  }
-}
