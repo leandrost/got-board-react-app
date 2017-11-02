@@ -13,6 +13,11 @@ import { droppable } from '~/decorators';
   'power-token',
   'garrison-token',
   'neutral-force-token',
+  'raid-order',
+  'march-order',
+  'support-order',
+  'consolidation-order',
+  'defense-order',
 ])
 @CSSModules(styles)
 export default class Territory extends React.Component {

@@ -36,7 +36,7 @@ class App extends Component {
           <div styleName="valyrian-steel-blade-token"></div>
           <div styleName="mensseger-raven-token"></div>
         </aside>
-				<WarRoom visible={false} />
+				<WarRoom visible={true} />
       </div>
     );
   }

@@ -2,6 +2,8 @@ import { combineReducers }  from 'redux';
 import territories from './territories';
 import garrisonTokens from './garrison-tokens';
 import _ from 'lodash';
+import _inflection from 'lodash-inflection';
+_.mixin(_inflection);
 
 const updateAttributes = (state, action) => {
   let id = action.id;
@@ -36,31 +38,41 @@ const pieceReducer = (type, collection) => {
   }
 }
 
-export default combineReducers({
-  games: pieceReducer('game', 'games'),
-  houses: pieceReducer('house', 'houses'),
+const resources = [
+  'game',
+  'house',
 
-  footmen: pieceReducer('footman', 'footmen'),
-  knights: pieceReducer('knight', 'knights'),
-  ships: pieceReducer('ship', 'ships'),
-  siegeEngines: pieceReducer('siegeEngine', 'siegeEngines'),
+  ['footman', 'footmen'],
+  'knight',
+  'ship',
+  'siegeEngine',
 
-  ironThroneTokens: pieceReducer('ironThroneToken', 'ironThroneTokens'),
-  fiefdomTokens: pieceReducer('fiefdomToken', 'fiefdomTokens'),
-  kingsCourtTokens: pieceReducer('kingsCourtToken', 'kingsCourtTokens'),
+  'ironThroneToken',
+  'fiefdomToken',
+  'kingsCourtToken',
 
-  supplyTokens: pieceReducer('supplyToken', 'supplyTokens'),
-  victoryTokens: pieceReducer('victoryToken', 'victoryTokens'),
-  powerTokens: pieceReducer('powerToken', 'powerTokens'),
+  'supplyToken',
+  'victoryToken',
+  'powerToken',
 
-  marchOrders: pieceReducer('marchOrder', 'marchOrders'),
-  houseCards: pieceReducer('houseCard', 'houseCards'),
+  'raidOrder',
+  'marchOrder',
+  'supportOrder',
+  'consolidationOrder',
+  'defenseOrder',
 
-  garrisonTokens,
-  //garrisonTokens: pieceReducer('garrisonToken', 'garrisonTokens'),
-  neutralForceTokens: pieceReducer('neutralForceToken', 'neutralForceTokens'),
+  'houseCard',
+  'neutralForceToken',
+];
 
-  territories,
+const reducers = {};
+
+resources.forEach(resource => {
+  const { type, collection } = Array.isArray(resource) ?
+    { type: resource[0], collection: resource[1] } :
+    { type: resource, collection: _.pluralize(resource) };
+
+  reducers[collection] = pieceReducer(type, collection);
 });
 
-
+export default combineReducers({...reducers, garrisonTokens, territories });

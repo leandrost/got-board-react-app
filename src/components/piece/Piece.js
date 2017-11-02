@@ -30,7 +30,6 @@ export default class Piece extends React.Component {
   }
 
   movePiece = (props, dropResult) => {
-    console.log(this.props);
     this.props.movePiece(props, dropResult);
   }
 

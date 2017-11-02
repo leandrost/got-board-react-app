@@ -10,7 +10,6 @@ export default class NeutralForceToken extends React.Component {
     const { territory, playerRange } = this.props;
     const territoryName = territory.replace(/_/g, '');
     const styleName = `neutral-force-${playerRange}-${territoryName}`;
-    console.log(this.props);
     return <Piece
       {...this.props}
       styleName={styleName}

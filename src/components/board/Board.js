@@ -16,6 +16,7 @@ import InfluenceToken from '~/components/influence-token/InfluenceToken';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
 import NeutralForceToken from '~/components/neutral-force-token/NeutralForceToken';
+import OrderToken from '~/components/order-token/OrderToken';
 
 import { fetchGame } from '~/redux/actions/';
 
@@ -58,6 +59,12 @@ export default class Board extends React.Component {
           <Pieces piece={HouseToken} collection="ships" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="siegeEngines" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="powerTokens" type="power-token" filter={territoryFilter} />
+
+          <Pieces piece={OrderToken} collection="raidOrders" filter={territoryFilter} />
+          <Pieces piece={OrderToken} collection="marchOrders" filter={territoryFilter} />
+          <Pieces piece={OrderToken} collection="supportOrders" filter={territoryFilter} />
+          <Pieces piece={OrderToken} collection="consolidationOrders" filter={territoryFilter} />
+          <Pieces piece={OrderToken} collection="defenseOrders" filter={territoryFilter} />
 
           <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
           <Pieces piece={NeutralForceToken} collection="neutralForceTokens" filter={territoryFilter} />

@@ -37,20 +37,20 @@
   background-image: url("images/tokens/order/raidp.png");
 }
 
-.consolidate-order {
+.consolidation-order {
   @include order;
   background-image: url("images/tokens/order/consolidate.png");
 }
-.special-consolidate-order {
+.special-consolidation-order {
   @include order;
   background-image: url("images/tokens/order/consolidatep.png");
 }
 
-.defend-order {
+.defense-order {
   @include order;
   background-image: url("images/tokens/order/defend.png");
 }
-.special-defend-order {
+.special-defense-order {
   @include order;
   background-image: url("images/tokens/order/defendp.png");
 }
