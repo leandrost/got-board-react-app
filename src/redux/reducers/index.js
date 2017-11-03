@@ -26,11 +26,14 @@ const pieceReducer = (type, collection) => {
 
       case `FETCH_${piece}_SUCCESS`:
       case `LOAD_${pieces}`:
-        return action.payload[collection] || state;
+        return action.data[collection] || state;
 
       case `UPDATE_${piece}`:
       case `MOVE_${piece}`:
         return updateAttributes(state, action);
+
+      case `MOVE_${piece}_SUCCESS`:
+        return updateAttributes(state, action.payload.data);
 
       default:
         return state;
@@ -38,7 +41,7 @@ const pieceReducer = (type, collection) => {
   }
 }
 
-const resources = [
+const dataTypes = [
   'game',
   'house',
 
@@ -67,7 +70,7 @@ const resources = [
 
 const reducers = {};
 
-resources.forEach(resource => {
+dataTypes.forEach(resource => {
   const { type, collection } = Array.isArray(resource) ?
     { type: resource[0], collection: resource[1] } :
     { type: resource, collection: _.pluralize(resource) };
@@ -75,4 +78,18 @@ resources.forEach(resource => {
   reducers[collection] = pieceReducer(type, collection);
 });
 
-export default combineReducers({...reducers, garrisonTokens, territories });
+const current = (state = { gameId: null }, action) => {
+  switch (action.type) {
+    case 'SET_CURRENT_GAME':
+      return {...state, gameId: action.id };
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  current,
+  ...reducers,
+  garrisonTokens,
+  territories
+});

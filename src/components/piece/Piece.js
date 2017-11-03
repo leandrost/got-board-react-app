@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Draggable from '~/components/draggable/Draggable';
 
 @connect(
-  state => ({}),
+  state => ({ gameId: state.current.gameId }),
   actions({ movePiece })
 )
 @CSSModules(styles)

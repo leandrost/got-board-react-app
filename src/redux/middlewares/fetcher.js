@@ -8,8 +8,12 @@ const fetchData = (config, dispatch, action) => {
     return json;
   })
   .then(json => {
-    const includes = Object.keys(json.data.relationships);
+    const includes = json.data.relationships ?
+      Object.keys(json.data.relationships) : [];
     const dispatchers = dispatchersFor(includes, dispatch);
+    if (action.fetch.success) {
+      dispatchers.push(action.fetch.success);
+    }
     return Promise.chain(dispatchers, json);
   })
   .catch(exception => {
@@ -40,7 +44,8 @@ Promise.chain = function(arr, value) {
 };
 
 function fetchFrom(action, config) {
-  const options = Object.assign({}, config.options, action.options);
+  const options = Object.assign({}, config, action.fetch.options);
+  console.log(options);
   const endpoint = `${config.host}${action.fetch.endpoint}`;
 
   return fetch(endpoint, options)
