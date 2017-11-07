@@ -1,6 +1,5 @@
 import { combineReducers }  from 'redux';
 import territories from './territories';
-import garrisonTokens from './garrison-tokens';
 import _ from 'lodash';
 import _inflection from 'lodash-inflection';
 _.mixin(_inflection);
@@ -66,6 +65,7 @@ const dataTypes = [
 
   'houseCard',
   'neutralForceToken',
+  'garrisonToken',
 ];
 
 const reducers = {};
@@ -90,6 +90,5 @@ const current = (state = { gameId: null }, action) => {
 export default combineReducers({
   current,
   ...reducers,
-  garrisonTokens,
   territories
 });

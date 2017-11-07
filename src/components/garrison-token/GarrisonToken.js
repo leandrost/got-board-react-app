@@ -8,7 +8,7 @@ import Piece from '~/components/piece/Piece';
 export default class GarrisonToken extends React.Component {
   render() {
     const { name } = this.props;
-    return <Piece styleName={`garrison-${name}`} type="garrison-token" {...this.props} />
+    return <Piece styleName={`garrison-${name}`} {...this.props} type="garrison-token"  />
   }
 }
 

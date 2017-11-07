@@ -18,7 +18,27 @@ import { droppable } from '~/decorators';
   'support-order',
   'consolidation-order',
   'defense-order',
-])
+],
+{
+  canDrop(props, monitor) {
+    const item = monitor.getItem();
+    switch (item.props.type) {
+      case 'neutral-force-token':
+        return props.slug === item.props.territory;
+
+      case 'footman':
+      case 'knight':
+      case 'siege-engine':
+        return props.type !== 'Sea' && props.type !== 'Port';
+
+      case 'ship':
+        return props.type === 'Sea' || props.type === 'Port';
+
+      default:
+        return true;
+    }
+  }
+})
 @CSSModules(styles)
 export default class Territory extends React.Component {
   drop(monitor) {
@@ -29,10 +49,16 @@ export default class Territory extends React.Component {
     return result;
   }
 
+  canDrop
+
   render() {
     const props = this.props;
-    const { connectDropTarget, isOver } = props;
-    const styleName = isOver ? "territory-actived" : 'territory';
+    const { connectDropTarget, isOver, canDrop } = props;
+    let styleName = 'territory';
+
+    if (isOver) {
+      styleName += `-${canDrop ? 'actived' : 'forbidden'}`;
+    }
 
     return connectDropTarget(
       <g id={props.slug} styleName={styleName}>

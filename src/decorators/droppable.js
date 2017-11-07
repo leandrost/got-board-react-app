@@ -13,6 +13,7 @@ const collect = (connect, monitor) => {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
   }
 };
 
@@ -23,9 +24,10 @@ const getPosition = (offset)  => {
   }
 }
 
-export default (type) => {
+export default (type, customSpecs) => {
+  const dropSpecs = { ...specs, ...customSpecs };
 	return (Component) => {
-		return DropTarget(type, specs, collect)(Component);
+		return DropTarget(type, dropSpecs, collect)(Component);
 	};
 };
 

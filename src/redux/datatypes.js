@@ -10,9 +10,13 @@ const abstractTypes = {
     'march-order',
     'support-order',
     'consolidation-order',
-    'defend-order',
+    'defense-order',
   ],
   unit: [
+    'footman',
+    'knight',
+    'ship',
+    'siege-engine',
   ]
 };
 
@@ -29,7 +33,6 @@ export function abstractType(type) {
 
 export function resourceName(type) {
   const resourceType = abstractType(type) || type;
-  console.log(resourceType);
   const collection = collectionName(resourceType);
   return _.snakeCase(collection);
 };
