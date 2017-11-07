@@ -17,6 +17,13 @@ const abstractTypes = {
     'knight',
     'ship',
     'siege-engine',
+  ],
+  tokens: [
+    'iron-throne-token',
+    'fiefdom-token',
+    'kings-court-token',
+    'supply-token',
+    'victory-token',
   ]
 };
 
