@@ -5,7 +5,7 @@ import { draggable, droppable } from '~/decorators';
 import Pieces from '~/components/pieces/Pieces';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
-import OrderToken from '~/components/order-token/OrderToken';
+import Orders from '~/components/orders/Orders';
 import PieceCounter from '~/components/piece-counter/PieceCounter';
 import HouseCard from '~/components/house-card/HouseCard';
 
@@ -67,8 +67,7 @@ export default class WarRoom extends React.Component {
   }
 
   render() {
-    const house = 'stark';
-    const { connectDragSource, isDragging, connectDropTarget, isOver } = this.props;
+    const { connectDragSource, isDragging, connectDropTarget, isOver, house } = this.props;
     const { x, y } = this.state;
     const style = {
       transform: `translate(${x}px, ${y}px)`,
@@ -121,41 +120,7 @@ export default class WarRoom extends React.Component {
               />
             </section>
             <section>
-              <Pieces
-                collection='raidOrders'
-                piece={OrderToken}
-                houseName={house}
-                filter={unitFilter}
-                steady
-              />
-              <Pieces
-                collection='marchOrders'
-                piece={OrderToken}
-                houseName={house}
-                filter={unitFilter}
-                steady
-              />
-              <Pieces
-                collection='supportOrders'
-                piece={OrderToken}
-                houseName={house}
-                filter={unitFilter}
-                steady
-              />
-              <Pieces
-                collection='consolidationOrders'
-                piece={OrderToken}
-                houseName={house}
-                filter={unitFilter}
-                steady
-              />
-              <Pieces
-                collection='defenseOrders'
-                piece={OrderToken}
-                houseName={house}
-                filter={unitFilter}
-                steady
-              />
+              <Orders house={house} filter={unitFilter} steady={true} />
               <Pieces piece={GarrisonToken} collection="garrisonTokens" steady filter={piece => !piece.territory} />
             </section>
             <section>

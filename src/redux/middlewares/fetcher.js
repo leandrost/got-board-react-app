@@ -45,7 +45,6 @@ Promise.chain = function(arr, value) {
 
 function fetchFrom(action, config) {
   const options = Object.assign({}, config, action.fetch.options);
-  console.log(options);
   const endpoint = `${config.host}${action.fetch.endpoint}`;
 
   return fetch(endpoint, options)

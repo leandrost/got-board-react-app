@@ -4,7 +4,7 @@ _.mixin(_inflection);
 
 _.irregular('footman', 'footman');
 
-const abstractTypes = {
+export const abstractTypes = {
   order: [
     'raid-order',
     'march-order',
@@ -42,6 +42,13 @@ export function resourceName(type) {
   const resourceType = abstractType(type) || type;
   const collection = collectionName(resourceType);
   return _.snakeCase(collection);
+};
+
+export function reducerNames(abstractType) {
+  return abstractTypes[abstractType].map(type => {
+   const collection = collectionName(type);
+   return _.camelCase(collection);
+  });
 };
 
 export function modelName(type) {

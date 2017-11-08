@@ -23,20 +23,47 @@ function DnDBackend()
 @droppable("war-room")
 @CSSModules(styles)
 class App extends Component {
+  componentWillMount() {
+    const params = {}
+    window.location.search.replace('?', '').split('&').forEach(param => {
+      const arr = param.split('=');
+      const key = arr[0]
+      const value = arr[1];
+      params[key] = value;
+    })
+    this.setState(params);
+  }
+
   drop(monitor) {
     return monitor.getDropPosition();
+  }
+
+  selectHouse = () => {
+    alert('For now, please inform the params house in the url. ex.: https://got-board-react-app.herokuapp.com?game=12&house=greyjoy');
+  }
+
+  renderWarRoom() {
+    if(this.state.house) {
+      return <WarRoom visible={true} house={this.state.house} />;
+    }
+    const selectHouseStyle = {
+      position: 'absolute',
+      top: 30,
+      left: 30,
+    }
+    return <button style={selectHouseStyle} onClick={this.selectHouse}>Select a House</button>;
   }
 
   render() {
     return this.props.connectDropTarget(
       <div styleName="app">
-        <Board />
+        <Board gameId={this.state.game} house={this.state.house} />
         <aside>
           <div styleName="iron-throne-token"></div>
           <div styleName="valyrian-steel-blade-token"></div>
           <div styleName="mensseger-raven-token"></div>
         </aside>
-				<WarRoom visible={true} />
+        { this.renderWarRoom() }
       </div>
     );
   }
