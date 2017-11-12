@@ -3,6 +3,8 @@ import CSSModules from 'react-css-modules';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
+import Pusher from 'pusher-js';
+
 import { droppable } from '~/decorators';
 
 import Board from '~/components/board/Board';
@@ -32,6 +34,16 @@ class App extends Component {
       params[key] = value;
     })
     this.setState(params);
+  }
+
+  componentDidMount() {
+    const pusher = new Pusher("cfdf3c0b0c4a559c3dfe");
+    const channel = pusher.subscribe('game');
+
+    channel.bind('update', function(data) {
+      console.table(data);
+      //this.props.update(data);
+    });
   }
 
   drop(monitor) {
