@@ -7,7 +7,9 @@ export default class Draggable extends React.Component {
     const { connectDragSource } = this.props;
 
     return connectDragSource(
-      <div className={this.props.className} style={this.props.style}></div>
+      <div className={this.props.className} style={this.props.style}>
+        { this.props.children }
+      </div>
     );
   }
 }

@@ -55,13 +55,24 @@
   background-image: url("images/tokens/order/defendp.png");
 }
 
+@each $house in $houses {
+  .#{$house}-order-cover {
+    @include piece;
+    height: 5em;
+    width: 5em;
+    background-image: url("images/tokens/order/covers/#{$house}.png");
+    background-size: contain;
+  }
+}
+
 /* entire container, keeps perspective */
 .flippable {
   perspective: 1000;
+  display: inline-block;
 
   /* flip the pane when add the class */
-  &.flipped .flipper {
-    transform: rotateY(180deg);
+  &.flipped .flipper, [flipped] .flipper {
+    transform: rotateY(0deg);
   }
 
   /* flip speed goes here */
@@ -71,25 +82,22 @@
   }
 
   /* hide back of pane during swap */
-  .back, .front {
+  :first-child,
+  :last-child {
     backface-visibility: hidden;
-
-    top: 0;
-    left: 0;
+    position: absolute;
   }
 
-  /* back pane, placed above back */
-  .back {
+  /* front pane, placed above back */
+  :first-child {
     z-index: 2;
     /* for firefox 31 */
     transform: rotateY(0deg);
   }
 
   /* back, initially hidden pane */
-  .front {
+  :last-child {
     transform: rotateY(180deg);
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
   }
 }

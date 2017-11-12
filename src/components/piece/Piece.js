@@ -40,6 +40,8 @@ export default class Piece extends React.Component {
       type={type}
       style={this.getStyle()}
       onDragEnd={this.movePiece}
-    />;
+    >
+      { this.props.children }
+    </Draggable>;
   }
 }

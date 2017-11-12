@@ -44,7 +44,7 @@ class App extends Component {
 
   renderWarRoom() {
     if(this.state.house) {
-      return <WarRoom visible={true} house={this.state.house} />;
+      return <WarRoom visible={false} house={this.state.house} />;
     }
     const selectHouseStyle = {
       position: 'absolute',
