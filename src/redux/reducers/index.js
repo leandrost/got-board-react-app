@@ -18,14 +18,15 @@ const updateAttributes = (state, action) => {
 const pieceReducer = (type, collection) => {
   const piece = _.snakeCase(type).toUpperCase();
   const pieces = _.snakeCase(collection).toUpperCase();
+
   return (state = {}, action) => {
     switch (action.type) {
       case `FETCH_${piece}`:
-        return  {...state, loading: true };
+        return  { ...state, loading: true };
 
       case `FETCH_${piece}_SUCCESS`:
       case `LOAD_${pieces}`:
-        return action.data[collection] || state;
+        return  { ...state, ...action.data[collection] };
 
       case `UPDATE_${piece}`:
       case `MOVE_${piece}`:

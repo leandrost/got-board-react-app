@@ -19,7 +19,7 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
     if (publicUrl.origin !== window.location.origin) {
@@ -31,6 +31,7 @@ export default function register() {
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      console.log(swUrl);
 
       if (!isLocalhost) {
         // Is not local host. Just register service worker
@@ -43,7 +44,22 @@ export default function register() {
   }
 }
 
+function registerSW(url) {
+  const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
+  navigator.serviceWorker.register(swUrl)
+  .then((registration) => {
+    console.log('registered');
+  })
+  .catch((err) => {
+    console.error("Failed to get subscription: ", err);
+  });
+}
+
 function registerValidSW(swUrl) {
+  if (process.env.NODE_ENV !== 'production') {
+    return registerSW(swUrl);
+  }
+
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {

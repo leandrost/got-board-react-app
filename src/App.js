@@ -37,6 +37,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+
     const pusher = new Pusher("cfdf3c0b0c4a559c3dfe");
     const channel = pusher.subscribe('game');
 
