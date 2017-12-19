@@ -41,7 +41,7 @@ class App extends Component {
       Notification.requestPermission();
     }
 
-    const pusher = new Pusher("cfdf3c0b0c4a559c3dfe");
+    const pusher = new Pusher("cfdf3c0b0c4a559c3dfe", { cluster: "mt1" });
     const channel = pusher.subscribe('game');
 
     channel.bind('update', function(data) {

@@ -47,9 +47,6 @@ export default function register() {
 function registerSW(url) {
   const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
   navigator.serviceWorker.register(swUrl)
-  .then((registration) => {
-    console.log('registered');
-  })
   .catch((err) => {
     console.error("Failed to get subscription: ", err);
   });

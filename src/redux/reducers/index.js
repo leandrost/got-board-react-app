@@ -1,8 +1,8 @@
 import { combineReducers }  from 'redux';
-import territories from './territories';
 import _ from 'lodash';
-import _inflection from 'lodash-inflection';
-_.mixin(_inflection);
+
+import { reducerNames } from '~/redux/datatypes';
+import territories from './territories';
 
 const updateAttributes = (state, action) => {
   let id = action.id;
@@ -26,6 +26,14 @@ const pieceReducer = (type, collection) => {
 
       case `FETCH_${piece}_SUCCESS`:
       case `LOAD_${pieces}`:
+      console.log('C', collection);
+        if (collection === 'influenceTokens') {
+          let data = {};
+          reducerNames(collection).forEach(name => {
+            data = { ...data, ...action.data[name] }
+          });
+          return  { ...state, ...data };
+        }
         return  { ...state, ...action.data[collection] };
 
       case `UPDATE_${piece}`:
@@ -50,10 +58,7 @@ const dataTypes = [
   'ship',
   'siegeEngine',
 
-  'ironThroneToken',
-  'fiefdomToken',
-  'kingsCourtToken',
-
+  'influenceToken',
   'supplyToken',
   'victoryToken',
   'powerToken',

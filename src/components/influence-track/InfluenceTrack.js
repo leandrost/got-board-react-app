@@ -9,15 +9,20 @@ import styles from './InfluenceTrack.scss';
 import InfluenceTrackPosition from '~/components/influence-track/InfluenceTrackPosition'
 
 @connect(
-  (state, props) => ({ tokens: build(state, `${props.type}Tokens`) }),
+  (state, props) => {
+    return {
+      tokens: build(state, 'influenceTokens').filter(
+        token => token.type === props.type
+      )
+    }
+  }
 )
 @CSSModules(styles)
 export default class InfluenceTracks extends React.Component {
  findTokenBy(position) {
-   const { tokens,type } = this.props;
-   const tokenType = _.startCase(`${type}Token`).replace(/\s/g, '');
+   const { tokens } = this.props;
    const result = tokens.filter(
-     token => token.type === tokenType && token.position === position
+     token =>  token.position === position
    );
 
    return result ? result[0] : null;
@@ -33,6 +38,7 @@ export default class InfluenceTracks extends React.Component {
 
   render() {
     const positions = [6, 5, 4, 3, 2, 1];
+    console.log('T', this.props.tokens);
     return <ol styleName="influence-track">
       { positions.map(position => this.renderPosition(position)) }
     </ol>

@@ -18,12 +18,12 @@ export const abstractTypes = {
     'ship',
     'siege-engine',
   ],
-  tokens: [
+  influenceTokens: [
     'iron-throne-token',
     'fiefdom-token',
     'kings-court-token',
-    'supply-token',
-    'victory-token',
+    //'supply-token',
+    //'victory-token',
   ]
 };
 

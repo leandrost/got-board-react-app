@@ -16,7 +16,6 @@ import InfluenceToken from '~/components/influence-token/InfluenceToken';
 import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
 import NeutralForceToken from '~/components/neutral-force-token/NeutralForceToken';
-import OrderToken from '~/components/order-token/OrderToken';
 import Orders from '~/components/orders/Orders';
 
 import { fetchGame } from '~/redux/actions/';
@@ -42,16 +41,14 @@ export default class Board extends React.Component {
     const { connectDropTarget, game, house } = this.props;
     const { id, round }  = game;
     const territoryFilter = (piece) => piece.territory;
-    const positionFiler = (token) => !token.position;
+    const positionFilter = (token) => !token.position;
 
     return (
       <div styleName="board">
         { connectDropTarget(
         <main>
           <Map />
-          <Pieces piece={InfluenceToken} collection="ironThroneTokens" filter={positionFiler} />
-          <Pieces piece={InfluenceToken} collection="fiefdomTokens" filter={positionFiler} />
-          <Pieces piece={InfluenceToken} collection="kingsCourtTokens" filter={positionFiler} />
+          <Pieces piece={InfluenceToken} collection="influenceTokens" filter={positionFilter} />
 
           <Pieces piece={HouseToken} collection="footmen" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="knights" filter={territoryFilter} />
@@ -68,9 +65,9 @@ export default class Board extends React.Component {
         )}
         <aside>
           <div styleName="influence-tracks">
-            <InfluenceTrack type="ironThrone" />
-            <InfluenceTrack type="fiefdom" />
-            <InfluenceTrack type="kingsCourt" />
+            <InfluenceTrack type="IronThroneToken" />
+            <InfluenceTrack type="FiefdomToken" />
+            <InfluenceTrack type="KingsCourtToken" />
           </div>
           <div styleName="supply">
             <SupplyTrack />

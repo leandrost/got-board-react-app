@@ -18,6 +18,7 @@ export function fetchGame(id) {
 }
 
 export function movePiece(piece, attrs) {
+  console.log(arguments);
   const { id, type, gameId } = piece;
   const collection = collectionName(type);
   const resource = resourceName(type);

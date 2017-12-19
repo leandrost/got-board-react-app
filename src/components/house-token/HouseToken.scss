@@ -74,6 +74,13 @@ martell: "doran" "arianne" "nymeria" "darkstar" "obara" "areo" "redviper",
     background-size: contain;
   }
 
+  .#{$house}-influence-token {
+    @include piece;
+    height: 6.4em;
+    width: 6.3em;
+    background-image: url("images/tokens/influence/#{$house}.png");
+  }
+
   @include card($house, "card-cover");
 
   @each $card in map-get($cards, $house) {
