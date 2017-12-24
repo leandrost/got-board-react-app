@@ -26,7 +26,6 @@ const pieceReducer = (type, collection) => {
 
       case `FETCH_${piece}_SUCCESS`:
       case `LOAD_${pieces}`:
-      console.log('C', collection);
         if (collection === 'influenceTokens') {
           let data = {};
           reducerNames(collection).forEach(name => {

@@ -38,7 +38,6 @@ export default class InfluenceTracks extends React.Component {
 
   render() {
     const positions = [6, 5, 4, 3, 2, 1];
-    console.log('T', this.props.tokens);
     return <ol styleName="influence-track">
       { positions.map(position => this.renderPosition(position)) }
     </ol>

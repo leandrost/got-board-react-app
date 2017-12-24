@@ -13,7 +13,6 @@ export default class HouseToken extends React.Component {
     return <Piece
       {...this.props}
       type={tokenType}
-      onDragEnd={this.move}
       styleName={`${houseName}-${tokenType}`}
     />
   }

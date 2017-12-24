@@ -34,14 +34,14 @@ export default class Board extends React.Component {
   }
 
   drop(monitor) {
-    return monitor.getDropPosition();
+    return  { ...monitor.getDropPosition(), target: 'board' };
   }
 
   render() {
     const { connectDropTarget, game, house } = this.props;
     const { id, round }  = game;
     const territoryFilter = (piece) => piece.territory;
-    const positionFilter = (token) => !token.position;
+    const positionFilter = (token) => (token.position === 0);
 
     return (
       <div styleName="board">

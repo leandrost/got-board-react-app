@@ -29,7 +29,10 @@ export default class Piece extends React.Component {
     }
   }
 
-  movePiece = (props, dropResult) => {
+  endDrag = (props, dropResult) => {
+    if (this.props.beforeMovePiece) {
+      this.props.beforeMovePiece(dropResult);
+    }
     this.props.movePiece(props, dropResult);
   }
 
@@ -39,7 +42,7 @@ export default class Piece extends React.Component {
       {...this.props}
       type={type}
       style={this.getStyle()}
-      onDragEnd={this.movePiece}
+      onDragEnd={this.endDrag}
     >
       { this.props.children }
     </Draggable>;
