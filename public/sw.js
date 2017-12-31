@@ -8,7 +8,7 @@ self.addEventListener('install', (_event) => {
   const pusher = new Pusher("cfdf3c0b0c4a559c3dfe");
   const channel = pusher.subscribe('game');
 
-  channel.bind('update', function(data) {
-    self.registration.showNotification(data.title, { body: data.message });
-  });
+  //channel.bind('update', function(data) {
+    //self.registration.showNotification(data.title, { body: data.message });
+  //});
 })

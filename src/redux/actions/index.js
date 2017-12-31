@@ -1,4 +1,4 @@
-import { collectionName, resourceName, modelName } from '~/redux/datatypes';
+import { collectionName, resourceName, actionModelName } from '~/redux/datatypes';
 
 export function fetchGame(id) {
   return (dispatch) => {
@@ -18,16 +18,16 @@ export function fetchGame(id) {
 }
 
 export function movePiece(piece, attrs) {
-  console.log(arguments);
+  delete attrs.dropEffect;
+
   const { id, type, gameId } = piece;
   const collection = collectionName(type);
   const resource = resourceName(type);
-  const pieceType = modelName(type).toUpperCase();
-  delete attrs.dropEffect;
+  const actionModel = actionModelName(type);
 
   return (dispatch) => {
     dispatch({
-      type: `MOVE_${pieceType}`,
+      type: `MOVE_${actionModel}`,
       id: id,
       attributes: attrs,
       fetch: {
@@ -46,3 +46,16 @@ export function movePiece(piece, attrs) {
     });
   };
 }
+
+export function update(data) {
+  const actionModel = actionModelName(data.type);
+
+  return (dispatch) => {
+    dispatch({
+      type: `UPDATE_${actionModel}`,
+      id: data.id,
+      attributes: data.attributes,
+    });
+  };
+}
+

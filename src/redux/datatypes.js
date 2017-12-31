@@ -2,7 +2,7 @@ import _ from 'lodash';
 import _inflection from 'lodash-inflection';
 _.mixin(_inflection);
 
-_.irregular('footman', 'footman');
+_.irregular('footman', 'footmen');
 
 export const abstractTypes = {
   order: [
@@ -18,12 +18,10 @@ export const abstractTypes = {
     'ship',
     'siege-engine',
   ],
-  influenceTokens: [
+  influenceToken: [
     'iron-throne-token',
     'fiefdom-token',
     'kings-court-token',
-    //'supply-token',
-    //'victory-token',
   ]
 };
 
@@ -32,10 +30,16 @@ export function collectionName(typeName) {
 };
 
 export function abstractType(type) {
+  const modelType = _.kebabCase(type);
   const key = _.findKey(abstractTypes, types => {
-    return _.includes(types, type)
+    return _.includes(types, modelType)
   });
   return key || type;
+}
+
+export function actionModelName(type) {
+  const abstractName = abstractType(type);
+  return _.snakeCase(abstractName).toUpperCase();
 }
 
 export function resourceName(type) {
@@ -45,7 +49,10 @@ export function resourceName(type) {
 };
 
 export function reducerNames(abstractType) {
-  return abstractTypes[abstractType].map(type => {
+  const types = abstractTypes[abstractType];
+  if (!types) { return null; }
+
+  return types.map(type => {
    const collection = collectionName(type);
    return _.camelCase(collection);
   });

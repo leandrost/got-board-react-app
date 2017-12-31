@@ -2,7 +2,6 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import { connect } from 'react-redux';
 import build from 'redux-object';
-import _ from 'lodash';
 
 import styles from './InfluenceTrack.scss';
 

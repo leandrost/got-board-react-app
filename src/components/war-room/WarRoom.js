@@ -66,6 +66,13 @@ export default class WarRoom extends React.Component {
     return piece.available && piece.houseName === props.houseName;
   }
 
+  unitFilter(unit, props) {
+    return !unit.territory &&
+      unit.houseName === props.houseName &&
+      unit.type === props.type;
+  }
+
+
   render() {
     const { connectDragSource, isDragging, connectDropTarget, isOver, house } = this.props;
     const { x, y } = this.state;
@@ -73,7 +80,7 @@ export default class WarRoom extends React.Component {
       transform: `translate(${x}px, ${y}px)`,
       visibility: this.getVisibility()
     };
-    const unitFilter = (unit) => !unit.territory && unit.houseName === house;
+    const territoryFilter = (unit) => !unit.territory && unit.houseName === house;
     return (
       <div>
         <button styleName='war-room-button' onClick={() => this.openWarRoom()}>War Room</button>
@@ -84,32 +91,32 @@ export default class WarRoom extends React.Component {
           <main>
             <section>
               <PieceCounter
-                type='footman'
-                collection='footmen'
+                type='Footman'
+                collection='units'
                 houseName={house}
                 piece={HouseToken}
-                filter={unitFilter}
+                filter={this.unitFilter}
               />
               <PieceCounter
-                type='knight'
-                collection='knights'
+                type='Knight'
+                collection='units'
                 houseName={house}
                 piece={HouseToken}
-                filter={unitFilter}
+                filter={this.unitFilter}
               />
               <PieceCounter
-                type='ship'
-                collection='ships'
+                type='Ship'
+                collection='units'
                 houseName={house}
                 piece={HouseToken}
-                filter={unitFilter}
+                filter={this.unitFilter}
               />
               <PieceCounter
-                type='siege-engine'
-                collection='siegeEngines'
+                type='SiegeEngine'
+                collection='units'
                 houseName={house}
                 piece={HouseToken}
-                filter={unitFilter}
+                filter={this.unitFilter}
               />
               <PieceCounter
                 type='power-token'
@@ -120,7 +127,7 @@ export default class WarRoom extends React.Component {
               />
             </section>
             <section>
-              <Orders house={house} filter={unitFilter} steady={true} />
+              <Orders houseName={house} filter={territoryFilter} steady={true} />
               <Pieces piece={GarrisonToken} collection="garrisonTokens" steady filter={piece => !piece.territory} />
             </section>
             <section>

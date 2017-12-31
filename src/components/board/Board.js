@@ -50,13 +50,10 @@ export default class Board extends React.Component {
           <Map />
           <Pieces piece={InfluenceToken} collection="influenceTokens" filter={positionFilter} />
 
-          <Pieces piece={HouseToken} collection="footmen" filter={territoryFilter} />
-          <Pieces piece={HouseToken} collection="knights" filter={territoryFilter} />
-          <Pieces piece={HouseToken} collection="ships" filter={territoryFilter} />
-          <Pieces piece={HouseToken} collection="siegeEngines" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="units" filter={territoryFilter} />
           <Pieces piece={HouseToken} collection="powerTokens" type="power-token" filter={territoryFilter} />
 
-          <Orders house={house} filter={territoryFilter} />
+          <Orders houseName={house} filter={territoryFilter} />
 
           <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
           <Pieces piece={NeutralForceToken} collection="neutralForceTokens" filter={territoryFilter} />

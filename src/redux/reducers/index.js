@@ -26,14 +26,19 @@ const pieceReducer = (type, collection) => {
 
       case `FETCH_${piece}_SUCCESS`:
       case `LOAD_${pieces}`:
-        if (collection === 'influenceTokens') {
-          let data = {};
-          reducerNames(collection).forEach(name => {
-            data = { ...data, ...action.data[name] }
-          });
-          return  { ...state, ...data };
+        const type = _.singularize(collection);
+        const reducers = reducerNames(type);
+
+        if(!reducers) {
+          return  { ...state, ...action.data[collection] };
         }
-        return  { ...state, ...action.data[collection] };
+
+        let data = {};
+        reducers.forEach(name => {
+          data = { ...data, ...action.data[name] }
+        });
+
+        return  { ...state, ...data };
 
       case `UPDATE_${piece}`:
       case `MOVE_${piece}`:
@@ -51,26 +56,15 @@ const pieceReducer = (type, collection) => {
 const dataTypes = [
   'game',
   'house',
-
-  ['footman', 'footmen'],
-  'knight',
-  'ship',
-  'siegeEngine',
-
-  'influenceToken',
-  'supplyToken',
-  'victoryToken',
+  'unit',
+  'order',
   'powerToken',
-
-  'raidOrder',
-  'marchOrder',
-  'supportOrder',
-  'consolidationOrder',
-  'defenseOrder',
-
   'houseCard',
   'neutralForceToken',
   'garrisonToken',
+  'influenceToken',
+  'supplyToken',
+  'victoryToken',
 ];
 
 const reducers = {};
