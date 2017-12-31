@@ -6,7 +6,7 @@ import territories from './territories';
 
 const updateAttributes = (state, action) => {
   let id = action.id;
-  if (!id) { return; }
+  if (!id) { return state; }
   return {
     ...state,
     [id]: {...state[id],
@@ -25,6 +25,7 @@ const pieceReducer = (type, collection) => {
         return  { ...state, loading: true };
 
       case `FETCH_${piece}_SUCCESS`:
+      case `BULK_UPDATE_${pieces}_SUCCESS`:
       case `LOAD_${pieces}`:
         const type = _.singularize(collection);
         const reducers = reducerNames(type);

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { collectionName, resourceName, actionModelName } from '~/redux/datatypes';
 
 export function fetchGame(id) {
@@ -47,6 +48,33 @@ export function movePiece(piece, attrs) {
   };
 }
 
+export function updateAll(gameId, type, data) {
+  const collection = collectionName(type);
+  const resource = resourceName(type);
+  const filter = Object.entries(data.filter)
+  .map(([key, value]) => `filter[${key}]=${value}`)
+  .join('&');
+
+  return (dispatch) => {
+    dispatch({
+      type: `BULK_UPDATE_${collection.toUpperCase()}`,
+      attributes: data.attributes,
+      fetch: {
+        endpoint: `/games/${gameId}/${resource}?${filter}`,
+        options: {
+          method: "PATCH",
+          body: JSON.stringify({
+            data: {
+              type: collection,
+              attributes: data.attributes
+            }
+          }),
+        }
+      }
+    });
+  };
+}
+
 export function update(data) {
   const actionModel = actionModelName(data.type);
 
@@ -59,3 +87,11 @@ export function update(data) {
   };
 }
 
+export function bulkUpdate(type, data) {
+  return (dispatch) => {
+    dispatch({
+      type: `LOAD_${type.toUpperCase()}`,
+      data: data,
+    });
+  };
+}

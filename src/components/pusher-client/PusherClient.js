@@ -1,13 +1,14 @@
 import React from 'react';
 import Pusher from 'pusher-js';
+import normalize from 'json-api-normalizer';
 
 import { connect, actions } from '~/redux/tools';
 
-import { update } from '~/redux/actions/';
+import { update, bulkUpdate } from '~/redux/actions/';
 
 @connect(
   () => ({}),
-  actions({ update })
+  actions({ update, bulkUpdate })
 )
 export default class PusherClient extends React.Component {
   componentDidMount() {
@@ -16,6 +17,12 @@ export default class PusherClient extends React.Component {
 
     channel.bind('update', (data) => {
       this.props.update(data)
+    });
+
+    channel.bind('bulk_update', (bulk) => {
+      const json = JSON.parse(bulk.payload);
+      const data = normalize(json);
+      this.props.bulkUpdate(bulk.type, data);
     });
   }
 

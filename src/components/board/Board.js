@@ -18,13 +18,13 @@ import HouseToken from '~/components/house-token/HouseToken';
 import NeutralForceToken from '~/components/neutral-force-token/NeutralForceToken';
 import Orders from '~/components/orders/Orders';
 
-import { fetchGame } from '~/redux/actions/';
+import { fetchGame, updateAll } from '~/redux/actions/';
 
 @connect(
   (state, props) => ({
-    game: build(state, `games`, props.gameId) || {},
+    game: build(state, 'games', props.gameId) || {},
   }),
-  actions({ fetchGame })
+  actions({ fetchGame, updateAll })
 )
 @droppable('influence-token')
 @CSSModules(styles)
@@ -37,14 +37,28 @@ export default class Board extends React.Component {
     return  { ...monitor.getDropPosition(), target: 'board' };
   }
 
+  flipOrders = (revealed) => {
+    const house = this.props.game.houses.find(
+      (house) => house.name === this.props.house
+    );
+    this.props.updateAll(this.props.gameId, 'order', {
+      filter: { house_id: house.id  },
+      attributes: { revealed: revealed }
+    })
+  }
+
   render() {
     const { connectDropTarget, game, house } = this.props;
     const { id, round }  = game;
     const territoryFilter = (piece) => piece.territory;
     const positionFilter = (token) => (token.position === 0);
+    const showStyle = { position: 'absolute', top: 30, left: 50 };
+    const hideStyle = { position: 'absolute', top: 30, left: 70 };
 
     return (
       <div styleName="board">
+        <button style={showStyle} onClick={() => this.flipOrders(true)}>Show Orders</button>
+        <button style={hideStyle} onClick={() => this.flipOrders(false)}>Hide Orders</button>
         { connectDropTarget(
         <main>
           <Map />
