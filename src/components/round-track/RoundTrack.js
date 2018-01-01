@@ -3,7 +3,7 @@ import CSSModules from 'react-css-modules';
 import _ from 'lodash';
 import { droppable } from '~/decorators';
 import { connect, actions } from '~/redux/tools';
-import { movePiece } from '~/redux/actions';
+import { updateGame } from '~/redux/actions';
 
 import styles from './RoundTrack.scss';
 import Draggable from '~/components/draggable/Draggable';
@@ -11,13 +11,12 @@ import Draggable from '~/components/draggable/Draggable';
 @connect(
   state => ({
   }),
-  actions({ movePiece })
+  actions({ updateGame })
 )
 @CSSModules(styles)
 export default class Track extends React.Component {
   handleMove = (_p, changes) => {
-    const { gameId } = this.props;
-    this.props.movePiece({ type: 'game', id: gameId }, changes);
+    this.props.updateGame(this.props.gameId, { round: changes.round });
   }
 
   renderMarker() {

@@ -49,16 +49,17 @@ export default class Board extends React.Component {
 
   render() {
     const { connectDropTarget, game, house } = this.props;
-    const { id, round }  = game;
+    const { id, round, wildlingThreat }  = game;
     const territoryFilter = (piece) => piece.territory;
     const positionFilter = (token) => (token.position === 0);
-    const showStyle = { position: 'absolute', top: 30, left: 50 };
-    const hideStyle = { position: 'absolute', top: 30, left: 70 };
+    const showStyle = { position: 'fixed', top: 5, left: 90 };
+    const hideStyle = { position: 'fixed', top: 5, left: 190 };
 
     return (
       <div styleName="board">
         <button style={showStyle} onClick={() => this.flipOrders(true)}>Show Orders</button>
         <button style={hideStyle} onClick={() => this.flipOrders(false)}>Hide Orders</button>
+        <WildlingsTrack gameId={id} threat={wildlingThreat} />
         { connectDropTarget(
         <main>
           <Map />
@@ -71,7 +72,6 @@ export default class Board extends React.Component {
 
           <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
           <Pieces piece={NeutralForceToken} collection="neutralForceTokens" filter={territoryFilter} />
-          <WildlingsTrack />
         </main>
         )}
         <aside>

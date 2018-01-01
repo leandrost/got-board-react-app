@@ -1,5 +1,19 @@
-import _ from 'lodash';
 import { collectionName, resourceName, actionModelName } from '~/redux/datatypes';
+import _ from 'lodash';
+
+const snakeCaseKeys = (obj) => {
+  if (!_.isObject(obj)) {
+    return obj;
+  } else if (_.isArray(obj)) {
+    return obj.map((v) => snakeCaseKeys(v));
+  }
+  return _.reduce(obj, (r, v, k) => {
+    return {
+      ...r,
+      [_.snakeCase(k)]: snakeCaseKeys(v)
+    };
+  }, {});
+};
 
 export function fetchGame(id) {
   return (dispatch) => {
@@ -34,12 +48,35 @@ export function movePiece(piece, attrs) {
       fetch: {
         endpoint: `/games/${gameId}/${resource}/${id}`,
         options: {
-          method: "PATCH",
+          method: 'PATCH',
           body: JSON.stringify({
             data: {
               type: collection,
               id: id,
               attributes: attrs,
+            }
+          }),
+        }
+      }
+    });
+  };
+}
+
+export function updateGame(id, attrs) {
+  return (dispatch) => {
+    dispatch({
+      type: `UPDATE_GAME`,
+      id: id,
+      attributes: attrs,
+      fetch: {
+        endpoint: `/games/${id}`,
+        options: {
+          method: 'PATCH',
+          body: JSON.stringify({
+            data: {
+              type: 'games',
+              id: id,
+              attributes: snakeCaseKeys(attrs),
             }
           }),
         }

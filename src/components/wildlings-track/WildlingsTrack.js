@@ -1,21 +1,23 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
-
-import { draggable, droppable } from '~/decorators';
 import styles from './WildlingsTrack.scss';
 
-@draggable("wildling-threat-token")
+import { droppable } from '~/decorators';
+import { connect, actions } from '~/redux/tools';
+import { updateGame } from '~/redux/actions';
+
+import Piece from '~/components/piece/Piece';
+
+const POSITIONS = [0, 2, 4, 6, 8, 10, 12];
+
 @CSSModules(styles)
 export class WildlingThreatToken extends React.Component {
-  endDrag(monitor) {
-    const result = monitor.getDropResult();
-    this.props.onDragEnd(result.position);
-  }
 	render() {
-		const { connectDragSource } = this.props;
-		return connectDragSource(
-				<div styleName="threat-token"></div>
-		);
+    return <Piece
+      {...this.props}
+      type="wildling-threat-token"
+      styleName="threat-token"
+    />
 	}
 }
 
@@ -38,23 +40,25 @@ export class WildlingTrackSlot extends React.Component {
   }
 }
 
+@connect(
+  (state) => ({ }),
+  actions({ updateGame })
+)
 @CSSModules(styles)
 export default class WildlingsTrack extends React.Component {
-  constructor() {
-    super();
-    this.state = { position: 1 };
-  }
-
-  updateCurrentPosition(position) {
-    this.setState({ position: position });
+  updatePosition = (props, dropResult) => {
+    const threat = POSITIONS[dropResult.position];
+    this.props.updateGame(this.props.gameId, { wildlingThreat: threat });
   }
 
   renderToken(position) {
-    if (this.state.position === position)  {
-      return <WildlingThreatToken
-				position={position}
-			  onDragEnd={ position => this.updateCurrentPosition(position) } />;
-    }
+    const  { threat } = this.props;
+    const currentPostion = POSITIONS.indexOf(threat);
+
+    console.log(position, currentPostion);
+    if (position !== currentPostion)  { return }
+
+    return <WildlingThreatToken onDragEnd={ this.updatePosition} />;
   }
 
   renderPosition(position) {
@@ -66,9 +70,8 @@ export default class WildlingsTrack extends React.Component {
   }
 
   render() {
-    const positions = [0, 2, 4, 6, 8, 10, 12];
     return <div styleName="track">
-      { positions.map((threat, position) => { return this.renderPosition(position) }) }
+      { POSITIONS.map((threat, position) => { return this.renderPosition(position) }) }
     </div>
   }
 }
