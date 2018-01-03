@@ -6,14 +6,12 @@ import reducers from './reducers';
 import fetcher from './middlewares/fetcher';
 import normalizer from './middlewares/normalizer';
 
+console.log(process.env);
 const middlewares = applyMiddleware(
   thunk,
   logger,
   fetcher({
-    //host: process.env.API_HOST,
-    //host: 'https://got-board-api.herokuapp.com',
-    host: 'http://localhost:5000',
-
+    host: process.env.API_HOST,
     headers: {
       'Content-Type': 'application/json',
     },

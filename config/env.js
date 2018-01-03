@@ -39,6 +39,8 @@ dotenvFiles.forEach(dotenvFile => {
 
 // We support resolving modules according to `NODE_PATH`.
 // This lets you use absolute paths in imports inside large monorepos:
+// @todo find out how to spec this
+// @todo find out how to spec this
 // https://github.com/facebookincubator/create-react-app/issues/253.
 // It works similar to `NODE_PATH` in Node itself:
 // https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders
@@ -62,7 +64,7 @@ function getClientEnvironment(publicUrl) {
     .filter(key => REACT_APP.test(key))
     .reduce(
       (env, key) => {
-        env[key] = process.env[key];
+        env[key.replace(REACT_APP, '')] = process.env[key];
         return env;
       },
       {
