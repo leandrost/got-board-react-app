@@ -27,7 +27,7 @@ const camelCaseKeys = (obj) => {
 )
 export default class PusherClient extends React.Component {
   componentDidMount() {
-    const pusher = new Pusher("cfdf3c0b0c4a559c3dfe", { cluster: "mt1" });
+    const pusher = new Pusher(process.env.PUSHER_KEY, { cluster: process.env.PUSHER_CLUSTER });
     const channel = pusher.subscribe('game');
 
     channel.bind('update', (data) => {
