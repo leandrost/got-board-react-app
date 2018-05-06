@@ -20,6 +20,14 @@ React version of the Front-End App for the board game
   npm install
   ```
 
+### Setup environment variables
+
+Copy the .env.example to .env on project root and load the variables:
+```
+  cp .env.example .env
+  source .env
+```
+
 ### Running
   ```
   yarn start
@@ -33,6 +41,10 @@ React version of the Front-End App for the board game
 ```
 TODO
 ```
+
+### Building a component
+
+There is a script availble to speed up 
 
 ### Disclaimer
 This project is for study purposes ONLY! Please do NOT use this otherwise.
