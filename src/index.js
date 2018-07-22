@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Raven from 'raven-js';
+import 'xray-react/lib/xray-react-ui';
 
 import store from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
