@@ -1,0 +1,29 @@
+@import 'styles/mixins';
+
+.iron-throne-token {
+  @include piece;
+  height: 25em;
+  width: 16em;
+  background-image: url("images/tokens/throne.png");
+}
+
+.valyrian-steel-blade-token {
+  @include piece;
+  height: 32em;
+  width: 12em;
+  background-image: url("images/tokens/blade.png");
+}
+
+.mensseger-raven-token {
+  @include piece;
+  height: 25em;
+  width: 16em;
+  background-image: url("images/tokens/raven.png");
+}
+
+.wildling-threat-token {
+  @include piece;
+  height: 5em;
+  width: 5em;
+  background-image: url("images/tokens/wilding.png");
+}
