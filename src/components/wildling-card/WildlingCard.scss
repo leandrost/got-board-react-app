@@ -1,0 +1,37 @@
+@import 'styles/mixins';
+
+.wildling-card {
+  position: absolute;
+  left: 1150px;
+  top: 20px;
+
+  display: flex;
+  height: 205px;
+  width: 320px;
+
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+
+  a {
+    padding: 10px;
+    color: white;
+
+    &:hover {
+      color: cyan;
+    }
+  }
+}
+
+.silence-at-the-wall {
+  @include piece;
+
+  top: 70px;
+  left: 50px;
+  z-index: 999;
+
+  height: 40em;
+  width: 22em;
+
+  background-image: url("images/cards/wilds/silence_at_the_wall.png");
+  background-size: contain;
+}

@@ -21,12 +21,13 @@ export default class Piece extends React.Component {
   }
 
   getStyle() {
-    const { steady, x, y, disabled } = this.props;
-    return {
+    const { steady, x, y, disabled, style } = this.props;
+    const pieceStyle =  {
       transform: `translate(${x}px, ${y}px)`,
       position: steady ? 'static' : 'absolute',
       opacity: disabled ? 0.5 : 1,
     }
+    return Object.assign(pieceStyle, style);
   }
 
   endDrag = (props, dropResult) => {

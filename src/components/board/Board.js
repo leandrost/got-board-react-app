@@ -17,6 +17,7 @@ import GarrisonToken from '~/components/garrison-token/GarrisonToken';
 import HouseToken from '~/components/house-token/HouseToken';
 import NeutralForceToken from '~/components/neutral-force-token/NeutralForceToken';
 import Orders from '~/components/orders/Orders';
+import WildlingCard from '~/components/wildling-card/WildlingCard';
 
 import { fetchGame, updateAll } from '~/redux/actions/';
 
@@ -60,6 +61,7 @@ export default class Board extends React.Component {
         <button style={showStyle} onClick={() => this.flipOrders(true)}>Show Orders</button>
         <button style={hideStyle} onClick={() => this.flipOrders(false)}>Hide Orders</button>
         <WildlingsTrack gameId={id} threat={wildlingThreat} />
+        <WildlingCard gameId={id} />
         { connectDropTarget(
         <main>
           <Map />
