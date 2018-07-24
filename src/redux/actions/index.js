@@ -132,3 +132,41 @@ export function bulkUpdate(type, data) {
     });
   };
 }
+
+export function revealWildlingCard(id) {
+  return (dispatch) => {
+    dispatch({
+      type: `REVEAL_WILDLING_CARD`,
+      id: id,
+      fetch: {
+        endpoint: `/games/${id}/wildling_cards/reveal`,
+        options: {
+          method: 'PATCH',
+          success: (json) => {
+            dispatch({
+              type: 'REVEAL_WILDLING_CARD_SUCCESS',
+              id: id,
+            })
+          },
+        }
+      }
+    });
+  };
+}
+
+export function revealWildlingCardSuccess() {
+  return (dispatch) => {
+    dispatch({
+      type: `REVEAL_WILDLING_CARD_SUCCESS`,
+    });
+  };
+}
+
+export function unrevealWildlingCardSuccess() {
+  return (dispatch) => {
+    dispatch({
+      type: `UNREVEAL_WILDLING_CARD_SUCCESS`,
+    });
+  };
+}
+

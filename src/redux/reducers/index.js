@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { reducerNames } from '~/redux/datatypes';
 import territories from './territories';
+import wildlingCards from './wildling-cards';
 
 const updateAttributes = (state, action) => {
   let id = action.id;
@@ -90,5 +91,6 @@ const current = (state = { gameId: null }, action) => {
 export default combineReducers({
   current,
   ...reducers,
-  territories
+  territories,
+  wildlingCards,
 });
