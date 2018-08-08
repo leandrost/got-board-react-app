@@ -4,6 +4,7 @@ export default (state = {}, action) => {
       return  {...state, loading: true };
 
     case 'FETCH_GAME_SUCCESS':
+      debugger;
       return action.payload.games || state;
 
     default:

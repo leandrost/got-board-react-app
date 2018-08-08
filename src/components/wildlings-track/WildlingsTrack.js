@@ -55,7 +55,6 @@ export default class WildlingsTrack extends React.Component {
     const  { threat } = this.props;
     const currentPostion = POSITIONS.indexOf(threat);
 
-    console.log(position, currentPostion);
     if (position !== currentPostion)  { return }
 
     return <WildlingThreatToken onDragEnd={ this.updatePosition} />;

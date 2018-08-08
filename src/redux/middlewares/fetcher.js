@@ -1,4 +1,4 @@
-const fetchData = (config, dispatch, action) => {
+ const fetchData = (config, dispatch, action) => {
   fetchFrom(action, config).then(json => {
     dispatch({
       type: `${action.type}_SUCCESS`,

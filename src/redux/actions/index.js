@@ -133,19 +133,20 @@ export function bulkUpdate(type, data) {
   };
 }
 
-export function revealWildlingCard(id) {
+function revealCard(gameId, action) {
+  const actionType = action.toUpperCase();
   return (dispatch) => {
     dispatch({
-      type: `REVEAL_WILDLING_CARD`,
-      id: id,
+      type: `${actionType}_WILDLING_CARD`,
+      id: gameId,
       fetch: {
-        endpoint: `/games/${id}/wildling_cards/reveal`,
+        endpoint: `/games/${gameId}/wildling_cards/${action}`,
         options: {
           method: 'PATCH',
           success: (json) => {
             dispatch({
-              type: 'REVEAL_WILDLING_CARD_SUCCESS',
-              id: id,
+              type: `REVEAL_WILDLING_CARD`,
+              id: gameId,
             })
           },
         }
@@ -154,19 +155,36 @@ export function revealWildlingCard(id) {
   };
 }
 
-export function revealWildlingCardSuccess() {
+export function drawWildlingCard(id) {
+  return revealCard(id, 'draw');
+}
+
+export function peekWildlingCard(id) {
+  return revealCard(id, 'peek');
+}
+
+export function hideWildlingCard(gameId) {
   return (dispatch) => {
     dispatch({
-      type: `REVEAL_WILDLING_CARD_SUCCESS`,
+      type: `HIDE_WILDLING_CARD`,
+      id: gameId,
+      fetch: {
+        endpoint: `/games/${gameId}/wildling_cards/hide`,
+        options: { method: 'PATCH' }
+      }
     });
   };
 }
 
-export function unrevealWildlingCardSuccess() {
+export function moveWildlingCardToBottom(gameId) {
   return (dispatch) => {
     dispatch({
-      type: `UNREVEAL_WILDLING_CARD_SUCCESS`,
+      type: `MOVE_WILDLING_CARD_TO_BOTTOM`,
+      id: gameId,
+      fetch: {
+        endpoint: `/games/${gameId}/wildling_cards/move_to_bottom`,
+        options: { method: 'PATCH' }
+      }
     });
   };
 }
-

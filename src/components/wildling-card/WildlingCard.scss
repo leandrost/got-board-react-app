@@ -22,16 +22,23 @@
   }
 }
 
-.silence-at-the-wall {
-  @include piece;
+$wildling-cards: crow-killers the-horde-descends a-king-beyond-the-wall
+mammoth-riders massing-on-the-milkwater preemptive-raid rattleshirts-raiders
+silence-at-the-wall skinchanger-scout;
 
-  top: 70px;
-  left: 50px;
-  z-index: 999;
+@each $card in $wildling-cards {
+  .#{$card} {
+    @include piece;
 
-  height: 40em;
-  width: 22em;
+    top: 70px;
+    left: 50px;
+    z-index: 999;
 
-  background-image: url("images/cards/wilds/silence_at_the_wall.png");
-  background-size: contain;
+    height: 40em;
+    width: 22em;
+
+    background-image: url("images/cards/wildling/#{$card}.png");
+    background-size: contain;
+  }
 }
+
