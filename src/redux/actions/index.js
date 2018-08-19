@@ -16,11 +16,25 @@ const snakeCaseKeys = (obj) => {
 };
 
 export function fetchGame(id) {
+  const relationships = [
+    'territories',
+    'houses',
+    'units',
+    'orders',
+    'power_tokens',
+    'house_cards',
+    'neutral_force_tokens',
+    'garrison_tokens',
+    // 'influence_tokens',
+    'supply_tokens',
+    'victory_tokens'
+  ];
+
   return (dispatch) => {
     return dispatch({
       type: 'FETCH_GAME',
       fetch: {
-        endpoint: `/games/${id}?include=*`,
+        endpoint: `/games/${id}?include=${relationships}`,
         success: (json) => {
           dispatch({
             type: 'SET_CURRENT_GAME',

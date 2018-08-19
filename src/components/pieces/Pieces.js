@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { connect, build } from '~/redux/tools';
 
@@ -8,14 +9,19 @@ import { connect, build } from '~/redux/tools';
   })
 )
 export default class Pieces extends React.Component {
+  get typeAttribute() {
+    const type = _.singularize(this.props.collection);
+    return `${type}Type`;
+  }
+
   render() {
-    const { pieces, type, steady } = this.props;
+    const { pieces, steady } = this.props;
     const Piece = this.props.piece;
     return <div>
       { pieces.map(piece => <Piece
         key={piece.id}
         {...piece}
-        type={type || piece.type}
+        type={piece[this.typeAttribute]}
         steady={steady}
       />) }
     </div>

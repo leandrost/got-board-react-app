@@ -13,12 +13,15 @@ export default class OrderToken extends React.Component {
     this.setState(prevState => ({ flipped: !prevState.flipped }));
   }
 
+  get orderType() {
+    return _.kebabCase(this.props.orderType);
+  }
+
   render() {
-    const { special, type, houseName, strength, revealed } = this.props;
+    const { special, houseName, strength, revealed } = this.props;
     const specialModifier = special ? 'special-' : '';
     const minusModifier = strength < 0 ? 'minus-' : '';
     const flippedStyle = revealed ? 'flipped' : '';
-    const orderType = _.kebabCase(type);
 
     return (
       <Piece
@@ -32,7 +35,7 @@ export default class OrderToken extends React.Component {
           onClick={this.flip}
         >
           <div
-            styleName={`${specialModifier}${minusModifier}${orderType}`}
+            styleName={`${specialModifier}${minusModifier}${this.orderType}`}
             onClick={this.flip}
           >
           </div>

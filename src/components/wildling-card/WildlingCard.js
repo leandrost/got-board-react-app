@@ -3,7 +3,7 @@ import CSSModules from 'react-css-modules';
 import styles from './WildlingCard.scss';
 
 import _ from 'lodash';
-import { connect, build, actions } from '~/redux/tools';
+import { connect, actions } from '~/redux/tools';
 
 import Piece from '~/components/piece/Piece';
 
@@ -58,7 +58,7 @@ export default class WildlingCard extends React.Component {
   render() {
     return (
       <div styleName="wildling-card">
-        <a href="#peek" onClick={this.peek}>Peak</a>
+        <a href="#peek" onClick={this.peek}>Peak 1</a>
         <a href="#draw" onClick={this.draw}>Draw</a>
         <a href="#shuffle" onClick={this.shuffle}>Shuffle</a>
         <Piece styleName={this.cardName} />

@@ -1,9 +1,9 @@
 import { combineReducers }  from 'redux';
 import _ from 'lodash';
+import _inflection from 'lodash-inflection';
 
-import { reducerNames } from '~/redux/datatypes';
-import territories from './territories';
 import wildlingCards from './wildling-cards';
+_.mixin(_inflection);
 
 const updateAttributes = (state, action) => {
   let id = action.id;
@@ -28,20 +28,7 @@ const pieceReducer = (type, collection) => {
       case `FETCH_${piece}_SUCCESS`:
       case `BULK_UPDATE_${pieces}_SUCCESS`:
       case `LOAD_${pieces}`:
-        const type = _.singularize(collection);
-        const reducers = reducerNames(type);
-
-        if(!reducers) {
-          return  { ...state, ...action.data[collection] };
-        }
-
-        let data = {};
-        reducers.forEach(name => {
-          data = { ...data, ...action.data[name] }
-        });
-
-        return  { ...state, ...data };
-
+        return  { ...state, ...action.data[type] };
       case `UPDATE_${piece}`:
       case `MOVE_${piece}`:
         return updateAttributes(state, action);
@@ -57,6 +44,7 @@ const pieceReducer = (type, collection) => {
 
 const dataTypes = [
   'game',
+  'territory',
   'house',
   'unit',
   'order',
@@ -66,18 +54,16 @@ const dataTypes = [
   'garrisonToken',
   'influenceToken',
   'supplyToken',
-  'victoryToken',
+  'victoryToken'
 ];
 
 const reducers = {};
 
-dataTypes.forEach(resource => {
-  const { type, collection } = Array.isArray(resource) ?
-    { type: resource[0], collection: resource[1] } :
-    { type: resource, collection: _.pluralize(resource) };
-
+dataTypes.forEach(type => {
+  const collection = _.pluralize(type);
   reducers[collection] = pieceReducer(type, collection);
 });
+
 
 const current = (state = { gameId: null }, action) => {
   switch (action.type) {
@@ -91,6 +77,5 @@ const current = (state = { gameId: null }, action) => {
 export default combineReducers({
   current,
   ...reducers,
-  territories,
   wildlingCards,
 });
