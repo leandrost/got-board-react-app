@@ -10,10 +10,12 @@
   .then(json => {
     const includes = json.data.relationships ?
       Object.keys(json.data.relationships) : [];
+
     const dispatchers = dispatchersFor(includes, dispatch);
     if (action.fetch.success) {
       dispatchers.push(action.fetch.success);
     }
+
     return Promise.chain(dispatchers, json);
   })
   .catch(exception => {
