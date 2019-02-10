@@ -25,7 +25,7 @@ export function fetchGame(id) {
     'house_cards',
     'neutral_force_tokens',
     'garrison_tokens',
-    // 'influence_tokens',
+    'influence_tokens',
     'supply_tokens',
     'victory_tokens'
   ];
