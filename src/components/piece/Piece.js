@@ -39,6 +39,7 @@ export default class Piece extends React.Component {
 
   render() {
     const type = _.kebabCase(this.props.type)
+
     return <Draggable
       onDragEnd={this.endDrag}
       {...this.props}

@@ -26,6 +26,7 @@ export default class OrderToken extends React.Component {
     return (
       <Piece
         {...this.props}
+        type={this.props.orderType}
         styleName={`flippable ${flippedStyle}`}
         data-flipped={this.state.flipped}
         onClick={this.flip}
