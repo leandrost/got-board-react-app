@@ -29,10 +29,10 @@ import { droppable } from '~/decorators';
       case 'footman':
       case 'knight':
       case 'siege-engine':
-        return props.type !== 'Sea' && props.type !== 'Port';
+        return props.territoryType !== 'Sea' && props.territoryType !== 'Port';
 
       case 'ship':
-        return props.type === 'Sea' || props.type === 'Port';
+        return props.territoryType === 'Sea' || props.territoryType === 'Port';
 
       default:
         return true;
