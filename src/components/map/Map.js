@@ -11,7 +11,7 @@ import Territory from '~/components/territory/Territory';
 @CSSModules(styles)
 export default class Map extends React.Component {
   renderTerritories(){
-    const territories = build(this.props, 'territories');
+    const territories = build(this.props, 'territory');
     if(!territories) { return; }
     return territories.map(territory => {
       return (

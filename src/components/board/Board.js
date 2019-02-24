@@ -2,7 +2,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import styles from './Board.scss';
 
-import { connect, build, actions } from '~/redux/tools';
+import { connect, actions, build } from '~/redux/tools';
 import { droppable } from '~/decorators';
 
 import Map from '~/components/map/Map';
@@ -22,9 +22,11 @@ import WildlingCard from '~/components/wildling-card/WildlingCard';
 import { fetchGame, updateAll } from '~/redux/actions/';
 
 @connect(
-  (state, props) => ({
-    game: build(state, 'games', props.gameId) || {},
-  }),
+  (state, props) => {
+    return {
+      game: build(state, 'game', props.gameId, { eager: true }) || {},
+    };
+  },
   actions({ fetchGame, updateAll })
 )
 @droppable('influence-token')
@@ -42,6 +44,7 @@ export default class Board extends React.Component {
     const house = this.props.game.houses.find(
       (house) => house.name === this.props.house
     );
+
     this.props.updateAll(this.props.gameId, 'order', {
       filter: { house_id: house.id  },
       attributes: { revealed: revealed }
@@ -65,15 +68,18 @@ export default class Board extends React.Component {
         { connectDropTarget(
         <main>
           <Map />
-          <Pieces piece={InfluenceToken} collection="influenceTokens" filter={positionFilter} />
+          <Pieces piece={InfluenceToken} collection="influenceTokens" type="influenceToken" filter={positionFilter} />
 
-          <Pieces piece={HouseToken} collection="units" filter={territoryFilter} />
-          <Pieces piece={HouseToken} collection="powerTokens" type="power-token" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="units" type="footman" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="units" type="knight" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="units" type="ship" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="units" type="siegeEngine" filter={territoryFilter} />
+          <Pieces piece={HouseToken} collection="powerTokens" type="powerToken" filter={territoryFilter} />
 
           <Orders houseName={house} filter={territoryFilter} />
 
-          <Pieces piece={GarrisonToken} collection="garrisonTokens" filter={territoryFilter} />
-          <Pieces piece={NeutralForceToken} collection="neutralForceTokens" filter={territoryFilter} />
+          <Pieces piece={GarrisonToken} collection="garrisonTokens" type="garrisonToken" filter={territoryFilter} />
+          <Pieces piece={NeutralForceToken} collection="neutralForceTokens" type="neutralForceToken" filter={territoryFilter} />
         </main>
         )}
         <aside>

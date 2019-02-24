@@ -10,7 +10,7 @@ import InfluenceTrackPosition from '~/components/influence-track/InfluenceTrackP
 @connect(
   (state, props) => {
     return {
-      tokens: build(state, 'influenceTokens').filter(
+      tokens: build(state, 'influenceToken').filter(
         token => token.tokenType === props.type
       )
     }

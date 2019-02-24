@@ -9,7 +9,7 @@ import styles from './PieceCounter.scss';
     const filter = (piece) => {
       return props.filter(piece, props);
     };
-    const array = build(state, props.collection) || [];
+    const array = build(state, props.type) || [];
     return { pieces: array.filter(filter) };
   },
 )
