@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import Raven from 'raven-js';
 
 import store from './redux/store';
@@ -21,7 +22,9 @@ const rootElement = document.getElementById('root');
 function render(App) {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>,
     rootElement
   );
