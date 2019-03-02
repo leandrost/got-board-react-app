@@ -61,7 +61,7 @@ const reducers = {};
 
 dataTypes.forEach(type => {
   const collection = _.pluralize(type);
-  reducers[type] = pieceReducer(type, collection);
+  reducers[collection] = pieceReducer(type, collection);
 });
 
 

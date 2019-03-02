@@ -10,7 +10,7 @@ import HouseToken from '~/components/house-token/HouseToken';
 
 
 @connect(
-  (state, props) => ({ tokens: build(state, `victoryToken`) }),
+  (state, props) => ({ tokens: build(state, `victoryTokens`) }),
 )
 @CSSModules(styles)
 export default class Track extends React.Component {

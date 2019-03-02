@@ -11,7 +11,7 @@ import { fetchGame } from '~/redux/actions';
 
 @connect(
   state => ({
-    game: (build(state, `game`) || [])[0],
+    game: (build(state, `games`) || [])[0],
   }),
   actions({ fetchGame })
 )

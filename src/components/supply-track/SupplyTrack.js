@@ -10,7 +10,7 @@ import HouseToken from '~/components/house-token/HouseToken';
 
 
 @connect(
-  (state, props) => ({ tokens: build(state, `supplyToken`) }),
+  (state, props) => ({ tokens: build(state, `supplyTokens`) }),
 )
 @CSSModules(styles)
 export default class SupplyTrack extends React.Component {

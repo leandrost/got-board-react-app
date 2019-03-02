@@ -91,35 +91,35 @@ export default class WarRoom extends React.Component {
           <main>
             <section>
               <PieceCounter
-                type='footman'
+                type='Footman'
                 collection='units'
                 houseName={house}
                 piece={HouseToken}
                 filter={this.unitFilter}
               />
               <PieceCounter
-                type='knight'
+                type='Knight'
                 collection='units'
                 houseName={house}
                 piece={HouseToken}
                 filter={this.unitFilter}
               />
               <PieceCounter
-                type='ship'
+                type='Ship'
                 collection='units'
                 houseName={house}
                 piece={HouseToken}
                 filter={this.unitFilter}
               />
               <PieceCounter
-                type='siegeEngine'
+                type='SiegeEngine'
                 collection='units'
                 houseName={house}
                 piece={HouseToken}
                 filter={this.unitFilter}
               />
               <PieceCounter
-                type='powerToken'
+                type='power-token'
                 collection='powerTokens'
                 houseName={house}
                 filter={this.filter}
@@ -128,28 +128,18 @@ export default class WarRoom extends React.Component {
             </section>
             <section>
               <Orders houseName={house} filter={territoryFilter} steady={true} />
-              <Pieces
-                piece={GarrisonToken}
-                collection="garrisonTokens"
-                type="garrisonToken"
-                steady
-                filter={piece => !piece.territory} />
+              <Pieces piece={GarrisonToken} collection="garrisonTokens" steady filter={piece => !piece.territory} />
             </section>
             <section>
               <Pieces
                 piece={HouseCard}
                 collection="houseCards"
-                type="houseCard"
                 steady
                 filter={piece => piece.houseName === house}
               />
             </section>
             <section>
-              <Pieces
-                piece={GarrisonToken}
-                collection="garrisonTokens"
-                type="garrisonToken"
-                steady filter={piece => !piece.territory} />
+              <Pieces piece={GarrisonToken} collection="garrisonTokens" steady filter={piece => !piece.territory} />
             </section>
           </main>
         </div>
