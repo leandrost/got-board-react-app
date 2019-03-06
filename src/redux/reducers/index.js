@@ -3,6 +3,7 @@ import _ from 'lodash';
 import _inflection from 'lodash-inflection';
 
 import wildlingCards from './wildling-cards';
+
 _.mixin(_inflection);
 
 const updateAttributes = (state, action) => {
@@ -45,9 +46,7 @@ const pieceReducer = (type, collection) => {
 const dataTypes = [
   'game',
   'territory',
-  'house',
   'unit',
-  'order',
   'powerToken',
   'houseCard',
   'neutralForceToken',
@@ -57,11 +56,23 @@ const dataTypes = [
   'victoryToken'
 ];
 
+const pieceTypes = [
+  'order',
+  'house',
+];
+
+
 const reducers = {};
+const pieces = {};
 
 dataTypes.forEach(type => {
   const collection = _.pluralize(type);
   reducers[collection] = pieceReducer(type, collection);
+});
+
+pieceTypes.forEach(type => {
+  const collection = _.pluralize(type);
+  pieces[type] = pieceReducer(type, collection);
 });
 
 
@@ -77,5 +88,6 @@ const current = (state = { gameId: null }, action) => {
 export default combineReducers({
   current,
   ...reducers,
+  ...pieces,
   wildlingCards,
 });

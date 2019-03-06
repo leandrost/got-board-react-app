@@ -8,7 +8,7 @@ import OrderToken from '~/components/order-token/OrderToken';
 
 @connect(
   (state, props) => {
-    const collections = (build(state, 'orders') || []).filter(props.filter);
+    const collections = (build(state, 'order') || []).filter(props.filter);
     return { pieces: collections };
   }
 )
