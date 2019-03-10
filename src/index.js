@@ -8,6 +8,7 @@ import store from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
+import Games from './components/game/Games';
 
 import './index.scss';
 
@@ -23,7 +24,8 @@ function render(App) {
   ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        {/* <App /> */}
+        <Games />
       </BrowserRouter>
     </Provider>,
     rootElement
