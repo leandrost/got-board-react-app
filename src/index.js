@@ -10,6 +10,7 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import Games from './components/game/Games';
 
+import 'semantic-ui-css/semantic.min.css'
 import './index.scss';
 
 if (!window.location.host.startsWith('local')) {
@@ -41,4 +42,3 @@ if (module.hot) {
     render(NextApp)
   })
 }
-
