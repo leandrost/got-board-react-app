@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import CSSModules from 'react-css-modules';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import TouchBackend from 'react-dnd-touch-backend';
+import React, { Component } from "react";
+import CSSModules from "react-css-modules";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+import TouchBackend from "react-dnd-touch-backend";
 
-import { droppable } from '~/decorators';
+import { droppable } from "~/decorators";
 
-import Board from '~/components/board/Board';
-import WarRoom from '~/components/war-room/WarRoom';
-import PusherClient from '~/components/pusher-client/PusherClient';
+import Board from "~/components/board/Board";
+import WarRoom from "~/components/war-room/WarRoom";
+import Combat from "~/components/combat/Combat";
+import PusherClient from "~/components/pusher-client/PusherClient";
 
-import styles from './app.scss';
+import styles from "./app.scss";
 
-function DnDBackend()
-{
-  const is_touch_device = 'ontouchstart' in window || navigator.maxTouchPoints;
+function DnDBackend() {
+  const is_touch_device = "ontouchstart" in window || navigator.maxTouchPoints;
   if (is_touch_device) {
     return TouchBackend;
   }
@@ -26,13 +26,16 @@ function DnDBackend()
 @CSSModules(styles)
 class App extends Component {
   componentWillMount() {
-    const params = {}
-    window.location.search.replace('?', '').split('&').forEach(param => {
-      const arr = param.split('=');
-      const key = arr[0]
-      const value = arr[1];
-      params[key] = value;
-    })
+    const params = {};
+    window.location.search
+      .replace("?", "")
+      .split("&")
+      .forEach(param => {
+        const arr = param.split("=");
+        const key = arr[0];
+        const value = arr[1];
+        params[key] = value;
+      });
     this.setState(params);
   }
 
@@ -47,19 +50,25 @@ class App extends Component {
   }
 
   selectHouse = () => {
-    alert('For now, please inform the params house in the url. ex.: https://got-board-react-app.herokuapp.com?game=12&house=greyjoy');
-  }
+    alert(
+      "For now, please inform the params house in the url. ex.: https://got-board-react-app.herokuapp.com?game=12&house=greyjoy"
+    );
+  };
 
   renderWarRoom() {
-    if(this.state.house) {
+    if (this.state.house) {
       return <WarRoom visible={false} house={this.state.house} />;
     }
     const selectHouseStyle = {
-      position: 'absolute',
+      position: "absolute",
       top: 30,
-      left: 30,
-    }
-    return <button style={selectHouseStyle} onClick={this.selectHouse}>Select a House</button>;
+      left: 30
+    };
+    return (
+      <button style={selectHouseStyle} onClick={this.selectHouse}>
+        Select a House
+      </button>
+    );
   }
 
   render() {
@@ -68,11 +77,12 @@ class App extends Component {
         <PusherClient />
         <Board gameId={this.state.game} house={this.state.house} />
         <aside>
-          <div styleName="iron-throne-token"></div>
-          <div styleName="valyrian-steel-blade-token"></div>
-          <div styleName="mensseger-raven-token"></div>
+          <div styleName="iron-throne-token" />
+          <div styleName="valyrian-steel-blade-token" />
+          <div styleName="mensseger-raven-token" />
         </aside>
-        { this.renderWarRoom() }
+        {this.renderWarRoom()}
+        <Combat />
       </div>
     );
   }
