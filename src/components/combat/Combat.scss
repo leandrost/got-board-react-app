@@ -1,8 +1,19 @@
 .combat {
   position: absolute;
-  background: red;
+  background-color: rgba(0,0,0,.7);
+  transform: translate(0px, 0px);
   width: 400px;
-  height: 500px;
-	top: 30px;
-	left: 660px;
+  height: 300px;
+  top: 30px;
+  left: 660px;
+
+  &[data-dragging-over] {
+    background-color: rgba(255,255,255,.7);
+  }
+}
+
+.combat-button {
+  position: fixed;
+  top: 5px;
+  left: 285px;
 }

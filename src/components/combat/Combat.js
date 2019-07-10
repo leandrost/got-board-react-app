@@ -1,6 +1,6 @@
 import React from "react";
 import CSSModules from "react-css-modules";
-import { droppable } from "~/decorators";
+import { draggable, droppable } from "~/decorators";
 import { connect, actions } from "~/redux/tools";
 
 import Pieces from "~/components/pieces/Pieces";
@@ -10,6 +10,8 @@ import { updateCombat } from "~/redux/actions/";
 
 import styles from "./Combat.scss";
 
+const DEFAULT_POSITION = { x: 30, y: 30 };
+
 @connect(
   (state, props) => ({
     //game: build(state, 'games', props.gameId) || {},
@@ -17,18 +19,48 @@ import styles from "./Combat.scss";
   actions({ updateCombat })
 )
 @droppable(["house-card"])
+@draggable("combat")
 @CSSModules(styles)
 export default class Combat extends React.Component {
+  state = {
+    isVisible: this.props.visible || false,
+    DEFAULT_POSITION
+  };
+
+  endDrag(monitor) {
+    const { x, y } = monitor.getDropResult();
+    console.log("endDrop", { x, y });
+    this.setState({ x, y });
+  }
+
+  close() {
+    this.setState({ isVisible: false });
+  }
+
+  open() {
+    this.setState({ isVisible: true });
+  }
+
+  getVisibility() {
+    let isVisible = this.state.isVisible;
+    if (this.props.isDragging) {
+      isVisible = false;
+    }
+    return isVisible ? "" : "hidden";
+  }
+
   drop(monitor) {
     const {
       props: { id, name, houseName }
     } = monitor.getItem();
-    const result = monitor.getDropPosition();
+    const droppedItemPosition = monitor.getDropPosition();
     const piece = { id, name, houseName };
-    console.log("drop: drop in combat", result);
     console.log("drop: piece", piece);
-    this.props.updateCombat({ piece, result });
-    return result;
+    this.props.updateCombat({ piece, droppedItemPosition });
+    return {
+      ...droppedItemPosition,
+      territory: null
+    };
   }
 
   // 1. when combat is initiated, shows combat modal to all players;
@@ -44,18 +76,48 @@ export default class Combat extends React.Component {
   // 10. A "end combat" button shows and when it's clicked, destroys the modal and resets it's state.
 
   render() {
-    const { connectDropTarget } = this.props;
-    return connectDropTarget(
-      <div styleName="combat">
-        <section>
-          <Pieces
-            piece={HouseCard}
-            collection="combat"
-            steady
-            filter={piece => true} // No filter
-          />
-        </section>
-      </div>
+    const {
+      connectDragSource,
+      isDragging,
+      connectDropTarget,
+      isOver
+    } = this.props;
+    const { x, y } = this.state;
+    console.log("render", { x: x, y: y });
+    const style = {
+      transform: `translate(${x}px, ${y}px)`,
+      visibility: this.getVisibility()
+    };
+
+    return connectDragSource(
+      connectDropTarget(
+        <div>
+          {this.state.isVisible ? (
+            <div
+              styleName="combat"
+              data-dragging={isDragging}
+              data-dragging-over={isOver || null}
+              style={style}
+            >
+              {this.state.isVisible ? (
+                <button onClick={() => this.close()}>Fechar</button>
+              ) : null}
+              <section>
+                <Pieces
+                  piece={HouseCard}
+                  collection="combat"
+                  steady
+                  filter={piece => true} // No filter
+                />
+              </section>
+            </div>
+          ) : (
+            <button styleName="combat-button" onClick={() => this.open()}>
+              Combat
+            </button>
+          )}
+        </div>
+      )
     );
   }
 }

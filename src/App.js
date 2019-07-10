@@ -22,7 +22,7 @@ function DnDBackend() {
 }
 
 @DragDropContext(DnDBackend())
-@droppable("war-room")
+@droppable(["war-room", "combat"])
 @CSSModules(styles)
 class App extends Component {
   componentWillMount() {
