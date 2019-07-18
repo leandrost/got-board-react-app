@@ -1,25 +1,25 @@
-import React from 'react';
-import CSSModules from 'react-css-modules';
-import styles from './Game.scss';
+import React from "react";
+import CSSModules from "react-css-modules";
+import styles from "./Game.scss";
 
-import { droppable } from '~/decorators';
-import Board from '~/components/board/Board';
-import WarRoom from '~/components/war-room/WarRoom';
-import Combat from '~/components/combat/Combat';
-import { connect, build, actions } from '~/redux/tools';
-import { fetchGame } from '~/redux/actions';
+import { droppable } from "~/decorators";
+import Board from "~/components/board/Board";
+import WarRoom from "~/components/war-room/WarRoom";
+import Combat from "~/components/combat/Combat";
+import { connect, build, actions } from "~/redux/tools";
+import { fetchGame } from "~/redux/actions";
 
 @connect(
   state => ({
-    game: (build(state, `games`) || [])[0],
+    game: (build(state, `games`) || [])[0]
   }),
   actions({ fetchGame })
 )
-@droppable("war-room")
+@droppable(["war-room", "combat"])
 @CSSModules(styles)
 export default class Game extends React.Component {
   componentDidMount() {
-    const arr = window.location.search.split('=');
+    const arr = window.location.search.split("=");
     window.gameId = arr[arr.length - 1];
     this.props.fetchGame(window.gameId);
   }
@@ -34,13 +34,12 @@ export default class Game extends React.Component {
       <div styleName="app">
         <Board game={game} />
         <aside>
-          <div styleName="iron-throne-token"></div>
-          <div styleName="valyrian-steel-blade-token"></div>
-          <div styleName="mensseger-raven-token"></div>
+          <div styleName="iron-throne-token" />
+          <div styleName="valyrian-steel-blade-token" />
+          <div styleName="mensseger-raven-token" />
         </aside>
-				<WarRoom visible={true} />
+        <WarRoom visible={true} />
       </div>
     );
   }
 }
-

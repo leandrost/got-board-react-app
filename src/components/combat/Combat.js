@@ -29,7 +29,7 @@ export default class Combat extends React.Component {
 
   endDrag(monitor) {
     const { x, y } = monitor.getDropResult();
-    console.log("endDrop", { x, y });
+    console.log({ x, y });
     this.setState({ x, y });
   }
 
@@ -83,41 +83,44 @@ export default class Combat extends React.Component {
       isOver
     } = this.props;
     const { x, y } = this.state;
-    console.log("render", { x: x, y: y });
     const style = {
       transform: `translate(${x}px, ${y}px)`,
       visibility: this.getVisibility()
     };
 
-    return connectDragSource(
-      connectDropTarget(
-        <div>
-          {this.state.isVisible ? (
-            <div
-              styleName="combat"
-              data-dragging={isDragging}
-              data-dragging-over={isOver || null}
-              style={style}
-            >
-              {this.state.isVisible ? (
-                <button onClick={() => this.close()}>Fechar</button>
-              ) : null}
-              <section>
-                <Pieces
-                  piece={HouseCard}
-                  collection="combat"
-                  steady
-                  filter={piece => true} // No filter
-                />
-              </section>
-            </div>
-          ) : (
-            <button styleName="combat-button" onClick={() => this.open()}>
-              Combat
-            </button>
-          )}
-        </div>
-      )
+    console.log("x, y", { x, y });
+
+    return (
+      <div>
+        {this.state.isVisible ? (
+          connectDragSource(
+            connectDropTarget(
+              <div
+                styleName="combat"
+                data-dragging={isDragging}
+                data-dragging-over={isOver || null}
+                style={style}
+              >
+                {this.state.isVisible ? (
+                  <button onClick={() => this.close()}>Fechar</button>
+                ) : null}
+                <section>
+                  <Pieces
+                    piece={HouseCard}
+                    collection="combat"
+                    steady
+                    filter={piece => true} // No filter
+                  />
+                </section>
+              </div>
+            )
+          )
+        ) : (
+          <button styleName="combat-button" onClick={() => this.open()}>
+            Combat
+          </button>
+        )}
+      </div>
     );
   }
 }

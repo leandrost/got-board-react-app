@@ -2,7 +2,6 @@ import { DragSource } from "react-dnd";
 
 const specs = {
   beginDrag(props, monitor, component) {
-    console.log(monitor);
     return { props: props, component: component };
   },
   canDrag(props) {
@@ -13,17 +12,14 @@ const specs = {
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
-      console.log("!monitor.didDrop()");
       return false;
     }
     if (props.onDragEnd) {
-      console.log("props.onDragEnd");
       const result = monitor.getDropResult();
       props.onDragEnd(props, result);
       return;
     }
     if (!component || !component.endDrag) {
-      console.log("!component || !component.endDrag");
       return;
     }
     component.endDrag(monitor);

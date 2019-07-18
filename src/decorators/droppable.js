@@ -7,6 +7,7 @@ const specs = {
       return props;
     }
     const offset = monitor.getSourceClientOffset();
+    console.log("this is diff: offset", offset);
     monitor.getDropPosition = () => {
       return getPosition(offset);
     };

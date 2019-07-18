@@ -46,6 +46,8 @@ class App extends Component {
   }
 
   drop(monitor) {
+    console.log("drop monitor", monitor);
+    console.log("monitor.getDropPosition()", monitor.getDropPosition());
     return monitor.getDropPosition();
   }
 
