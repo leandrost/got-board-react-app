@@ -10,7 +10,13 @@ import { updateCombat } from "~/redux/actions/";
 
 import styles from "./Combat.scss";
 
-const DEFAULT_POSITION = { x: 30, y: 30 };
+const defaultPosition = () => {
+  const combatWindowWidth = styles.combatAreaWidth.replace("px", "");
+  const combatWindowHeight = styles.combatAreaHeight.replace("px", "");
+  const x = (window.innerWidth - combatWindowWidth) / 2;
+  const y = (window.innerHeight - combatWindowHeight) / 2;
+  return { x, y };
+};
 
 @connect(
   (state, props) => ({
@@ -24,12 +30,11 @@ const DEFAULT_POSITION = { x: 30, y: 30 };
 export default class Combat extends React.Component {
   state = {
     isVisible: this.props.visible || false,
-    DEFAULT_POSITION
+    ...defaultPosition()
   };
 
   endDrag(monitor) {
     const { x, y } = monitor.getDropResult();
-    console.log({ x, y });
     this.setState({ x, y });
   }
 
@@ -55,7 +60,6 @@ export default class Combat extends React.Component {
     } = monitor.getItem();
     const droppedItemPosition = monitor.getDropPosition();
     const piece = { id, name, houseName };
-    console.log("drop: piece", piece);
     this.props.updateCombat({ piece, droppedItemPosition });
     return {
       ...droppedItemPosition,
@@ -88,8 +92,6 @@ export default class Combat extends React.Component {
       visibility: this.getVisibility()
     };
 
-    console.log("x, y", { x, y });
-
     return (
       <div>
         {this.state.isVisible ? (
@@ -104,13 +106,24 @@ export default class Combat extends React.Component {
                 {this.state.isVisible ? (
                   <button onClick={() => this.close()}>Fechar</button>
                 ) : null}
-                <section>
-                  <Pieces
-                    piece={HouseCard}
-                    collection="combat"
-                    steady
-                    filter={piece => true} // No filter
-                  />
+                <section styleName="combat-area">
+                  <section styleName="combat-attacker-area">
+                    <Pieces
+                      piece={HouseCard}
+                      collection="combat"
+                      steady
+                      filter={piece => true} // No filter
+                    />
+                  </section>
+
+                  <section styleName="combat-defender-area">
+                    <Pieces
+                      piece={HouseCard}
+                      collection="combat"
+                      steady
+                      filter={piece => true} // No filter
+                    />
+                  </section>
                 </section>
               </div>
             )
