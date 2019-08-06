@@ -20,15 +20,28 @@ const updateAttributes = (state, action) => {
 };
 
 const combatReducer = () => {
-  return (state = {}, action) => {
+  return (state = { attacker: null, defender: null }, action) => {
     switch (action.type) {
       case "UPDATE_COMBAT":
+        console.log(state);
         const { piece } = action;
-        console.log("UPDATE_COMBAT", piece);
+        if (state.attacker) {
+          return {
+            ...state,
+            defender: {
+              [piece.id]: {
+                attributes: { ...piece }
+              }
+            }
+          };
+        }
+
         return {
           ...state,
-          [piece.id]: {
-            attributes: { ...piece }
+          attacker: {
+            [piece.id]: {
+              attributes: { ...piece }
+            }
           }
         };
       default:

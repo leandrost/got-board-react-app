@@ -23,9 +23,8 @@ const snakeCaseKeys = obj => {
   );
 };
 
-export function updateCombat({ piece, result }) {
+export function updateCombat({ piece }) {
   console.log("action: piece", piece);
-  console.log("action: result", result);
   // Set in redux store in the same format as it is in fetch game
   return dispatch => {
     return dispatch({

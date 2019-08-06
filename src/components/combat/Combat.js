@@ -1,12 +1,11 @@
 import React from "react";
 import CSSModules from "react-css-modules";
 import { draggable, droppable } from "~/decorators";
-import { connect, actions } from "~/redux/tools";
-
-import Pieces from "~/components/pieces/Pieces";
-import HouseCard from "~/components/house-card/HouseCard";
+import { connect, actions, build } from "~/redux/tools";
 
 import { updateCombat } from "~/redux/actions/";
+
+import HouseCard from "../house-card/HouseCard";
 
 import styles from "./Combat.scss";
 
@@ -19,9 +18,15 @@ const defaultPosition = () => {
 };
 
 @connect(
-  (state, props) => ({
-    //game: build(state, 'games', props.gameId) || {},
-  }),
+  (state, props) => {
+    const a = build(state.combat, "attacker");
+    const d = build(state.combat, "defender");
+
+    return {
+      attacker: a && a[0],
+      defender: d && d[0]
+    };
+  },
   actions({ updateCombat })
 )
 @droppable(["house-card"])
@@ -84,7 +89,9 @@ export default class Combat extends React.Component {
       connectDragSource,
       isDragging,
       connectDropTarget,
-      isOver
+      isOver,
+      attacker,
+      defender
     } = this.props;
     const { x, y } = this.state;
     const style = {
@@ -108,21 +115,21 @@ export default class Combat extends React.Component {
                 ) : null}
                 <section styleName="combat-area">
                   <section styleName="combat-attacker-area">
-                    <Pieces
-                      piece={HouseCard}
-                      collection="combat"
-                      steady
-                      filter={piece => true} // No filter
-                    />
+                    {attacker && (
+                      <HouseCard
+                        name={attacker.name}
+                        houseName={attacker.houseName}
+                      />
+                    )}
                   </section>
 
                   <section styleName="combat-defender-area">
-                    <Pieces
-                      piece={HouseCard}
-                      collection="combat"
-                      steady
-                      filter={piece => true} // No filter
-                    />
+                    {defender && (
+                      <HouseCard
+                        name={defender.name}
+                        houseName={defender.houseName}
+                      />
+                    )}
                   </section>
                 </section>
               </div>
