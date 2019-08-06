@@ -23,7 +23,6 @@ import { droppable } from "~/decorators";
   ],
   {
     canDrop(props, monitor) {
-      console.log("canDrop", props);
       const item = monitor.getItem();
       switch (item.props.type) {
         case "neutral-force-token":

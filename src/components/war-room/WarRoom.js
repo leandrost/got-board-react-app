@@ -39,7 +39,6 @@ export default class WarRoom extends React.Component {
 
   endDrag(monitor) {
     const { x, y } = monitor.getDropResult();
-    console.log({ x, y });
     this.setState({ x, y });
   }
 
