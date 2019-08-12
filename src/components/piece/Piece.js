@@ -34,6 +34,7 @@ export default class Piece extends React.Component {
     if (this.props.beforeMovePiece) {
       this.props.beforeMovePiece(dropResult);
     }
+    console.log("1. Piece component event endDrag > call movePiece");
     this.props.movePiece(props, dropResult);
   };
 

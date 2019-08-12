@@ -65,10 +65,16 @@ const pieceReducer = (type, collection) => {
         return { ...state, ...action.data[type] };
       case `UPDATE_${piece}`:
       case `MOVE_${piece}`:
+        console.log("3. dispatcher", `MOVE_${piece}`);
         return updateAttributes(state, action);
 
       case `MOVE_${piece}_SUCCESS`:
-        return updateAttributes(state, action.payload.data);
+        console.log(
+          "missing data node in payload! pieceReducer",
+          `MOVE_${piece}_SUCCESS`,
+          action.payload
+        );
+        return updateAttributes(state, action.payload);
 
       default:
         return state;

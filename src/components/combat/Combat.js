@@ -19,6 +19,7 @@ const defaultPosition = () => {
 
 @connect(
   (state, props) => {
+    console.log("combat props", props);
     const a = build(state.combat, "attacker");
     const d = build(state.combat, "defender");
 
@@ -49,6 +50,7 @@ export default class Combat extends React.Component {
 
   open() {
     this.setState({ isVisible: true });
+    this.props.updateCombat({ started: true });
   }
 
   getVisibility() {

@@ -23,13 +23,29 @@ const snakeCaseKeys = obj => {
   );
 };
 
-export function updateCombat({ piece }) {
+export function updateCombat({ piece, started }) {
   console.log("action: piece", piece);
+  const id = 1;
   // Set in redux store in the same format as it is in fetch game
   return dispatch => {
     return dispatch({
       type: "UPDATE_COMBAT",
-      piece: piece
+      piece: piece,
+      fetch: {
+        endpoint: `/games/${id}/combat`,
+        options: {
+          method: "PATCH",
+          body: JSON.stringify({
+            data: {
+              type: "combat",
+              attributes: { started, piece }
+            }
+          })
+        },
+        success: json => {
+          console.log("response from API", json);
+        }
+      }
     });
   };
 }
@@ -73,7 +89,7 @@ export function movePiece(piece, attrs) {
   const resource = resourceName(type);
   const actionModel = actionModelName(type);
 
-  console.log("MOVE CARD");
+  console.log("2. movePiece action dispatches", `MOVE_${actionModel}`);
 
   return dispatch => {
     dispatch({
@@ -150,7 +166,7 @@ export function updateAll(gameId, type, data) {
 export function update(data) {
   const actionModel = actionModelName(data.type);
 
-  console.log("update", data);
+  console.log("remote update", data);
 
   return dispatch => {
     dispatch({

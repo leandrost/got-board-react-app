@@ -1,48 +1,48 @@
- const fetchData = (config, dispatch, action) => {
-  fetchFrom(action, config).then(json => {
-    dispatch({
-      type: `${action.type}_SUCCESS`,
-      payload: json,
-      jsonapi: true,
+const fetchData = (config, dispatch, action) => {
+  console.log("middleware fetchData", action);
+  fetchFrom(action, config)
+    .then(json => {
+      dispatch({
+        type: `${action.type}_SUCCESS`,
+        payload: json,
+        jsonapi: true
+      });
+      return json;
+    })
+    .then(json => {
+      const includes = json.data.relationships
+        ? Object.keys(json.data.relationships)
+        : [];
+
+      const dispatchers = dispatchersFor(includes, dispatch);
+      if (action.fetch.success) {
+        dispatchers.push(action.fetch.success);
+      }
+
+      return Promise.chain(dispatchers, json);
+    })
+    .catch(exception => {
+      console.error(exception);
     });
-    return json;
-  })
-  .then(json => {
-    const includes = json.data.relationships ?
-      Object.keys(json.data.relationships) : [];
-
-    const dispatchers = dispatchersFor(includes, dispatch);
-    if (action.fetch.success) {
-      dispatchers.push(action.fetch.success);
-    }
-
-    return Promise.chain(dispatchers, json);
-  })
-  .catch(exception => {
-    console.error(exception);
-  });
 };
 
 function dispatchersFor(includes, dispatch) {
   return includes.map(include => {
-    return (json => {
+    return json => {
       dispatch({
         type: `LOAD_${include.replace(/-/g, "_").toUpperCase()}`,
         payload: json,
-        jsonapi: true,
+        jsonapi: true
       });
       return json;
-    });
+    };
   });
 }
 
 Promise.chain = function(arr, value) {
-  return arr.reduce(
-    (promise, item) => {
-      return promise.then(item).catch(console.error);
-    },
-    Promise.resolve(value)
-  );
+  return arr.reduce((promise, item) => {
+    return promise.then(item).catch(console.error);
+  }, Promise.resolve(value));
 };
 
 function fetchFrom(action, config) {
@@ -50,7 +50,8 @@ function fetchFrom(action, config) {
   const endpoint = `${config.host}${action.fetch.endpoint}`;
 
   return fetch(endpoint, options)
-    .then(checkStatus).then(formatToJSON);
+    .then(checkStatus)
+    .then(formatToJSON);
 }
 
 function checkStatus(response) {
@@ -71,9 +72,9 @@ function formatToJSON(response) {
   return response.json();
 }
 
-export default (config = {}) => (store) => (next) => (action) => {
+export default (config = {}) => store => next => action => {
   if (action.fetch) {
     fetchData(config, store.dispatch, action);
   }
   next(action);
-}
+};
