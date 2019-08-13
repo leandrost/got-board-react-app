@@ -23,14 +23,25 @@ const snakeCaseKeys = obj => {
   );
 };
 
-export function updateCombat({ piece, started }) {
-  console.log("action: piece", piece);
+export function receiveUpdatedCombat({ choosenCard, started }) {
+  return dispatch => {
+    return dispatch({
+      type: "UPDATE_COMBAT",
+      choosenCard,
+      started
+    });
+  };
+}
+
+export function updateCombat({ choosenCard, started }) {
   const id = 1;
+  console.log("updateCombat", { choosenCard, started });
   // Set in redux store in the same format as it is in fetch game
   return dispatch => {
     return dispatch({
       type: "UPDATE_COMBAT",
-      piece: piece,
+      choosenCard,
+      started,
       fetch: {
         endpoint: `/games/${id}/combat`,
         options: {
@@ -38,7 +49,7 @@ export function updateCombat({ piece, started }) {
           body: JSON.stringify({
             data: {
               type: "combat",
-              attributes: { started, piece }
+              attributes: { choosenCard, started }
             }
           })
         },
@@ -88,8 +99,6 @@ export function movePiece(piece, attrs) {
   const collection = collectionName(type);
   const resource = resourceName(type);
   const actionModel = actionModelName(type);
-
-  console.log("2. movePiece action dispatches", `MOVE_${actionModel}`);
 
   return dispatch => {
     dispatch({
@@ -166,8 +175,6 @@ export function updateAll(gameId, type, data) {
 export function update(data) {
   const actionModel = actionModelName(data.type);
 
-  console.log("remote update", data);
-
   return dispatch => {
     dispatch({
       type: `UPDATE_${actionModel}`,
@@ -178,7 +185,6 @@ export function update(data) {
 }
 
 export function bulkUpdate(type, data) {
-  console.log("bulkUpdate");
   return dispatch => {
     dispatch({
       type: `LOAD_${type.toUpperCase()}`,

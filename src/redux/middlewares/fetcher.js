@@ -1,5 +1,4 @@
 const fetchData = (config, dispatch, action) => {
-  console.log("middleware fetchData", action);
   fetchFrom(action, config)
     .then(json => {
       dispatch({

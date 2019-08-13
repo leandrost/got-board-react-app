@@ -20,17 +20,28 @@ const updateAttributes = (state, action) => {
 };
 
 const combatReducer = () => {
-  return (state = { attacker: null, defender: null }, action) => {
+  return (
+    state = { attacker: null, defender: null, started: false },
+    action
+  ) => {
     switch (action.type) {
       case "UPDATE_COMBAT":
-        console.log(state);
-        const { piece } = action;
+        const { choosenCard, started } = action;
+        console.log("action", action);
+
+        if (!choosenCard) {
+          return {
+            ...state,
+            started
+          };
+        }
+
         if (state.attacker) {
           return {
             ...state,
             defender: {
-              [piece.id]: {
-                attributes: { ...piece }
+              [choosenCard.id]: {
+                attributes: { ...choosenCard }
               }
             }
           };
@@ -39,8 +50,8 @@ const combatReducer = () => {
         return {
           ...state,
           attacker: {
-            [piece.id]: {
-              attributes: { ...piece }
+            [choosenCard.id]: {
+              attributes: { ...choosenCard }
             }
           }
         };
@@ -65,7 +76,6 @@ const pieceReducer = (type, collection) => {
         return { ...state, ...action.data[type] };
       case `UPDATE_${piece}`:
       case `MOVE_${piece}`:
-        console.log("3. dispatcher", `MOVE_${piece}`);
         return updateAttributes(state, action);
 
       case `MOVE_${piece}_SUCCESS`:

@@ -19,13 +19,13 @@ const defaultPosition = () => {
 
 @connect(
   (state, props) => {
-    console.log("combat props", props);
-    const a = build(state.combat, "attacker");
-    const d = build(state.combat, "defender");
+    const attacker = build(state.combat, "attacker");
+    const defender = build(state.combat, "defender");
 
     return {
-      attacker: a && a[0],
-      defender: d && d[0]
+      attacker: attacker && attacker[0],
+      defender: defender && defender[0],
+      started: state.combat.started
     };
   },
   actions({ updateCombat })
@@ -35,7 +35,6 @@ const defaultPosition = () => {
 @CSSModules(styles)
 export default class Combat extends React.Component {
   state = {
-    isVisible: this.props.visible || false,
     ...defaultPosition()
   };
 
@@ -45,16 +44,15 @@ export default class Combat extends React.Component {
   }
 
   close() {
-    this.setState({ isVisible: false });
+    this.props.updateCombat({ started: false });
   }
 
   open() {
-    this.setState({ isVisible: true });
     this.props.updateCombat({ started: true });
   }
 
   getVisibility() {
-    let isVisible = this.state.isVisible;
+    let isVisible = this.props.started;
     if (this.props.isDragging) {
       isVisible = false;
     }
@@ -66,8 +64,11 @@ export default class Combat extends React.Component {
       props: { id, name, houseName }
     } = monitor.getItem();
     const droppedItemPosition = monitor.getDropPosition();
-    const piece = { id, name, houseName };
-    this.props.updateCombat({ piece, droppedItemPosition });
+    const choosenCard = { id, name, houseName };
+    this.props.updateCombat({
+      choosenCard,
+      started: this.props.started
+    });
     return {
       ...droppedItemPosition,
       territory: null
@@ -93,7 +94,8 @@ export default class Combat extends React.Component {
       connectDropTarget,
       isOver,
       attacker,
-      defender
+      defender,
+      started
     } = this.props;
     const { x, y } = this.state;
     const style = {
@@ -103,7 +105,7 @@ export default class Combat extends React.Component {
 
     return (
       <div>
-        {this.state.isVisible ? (
+        {started ? (
           connectDragSource(
             connectDropTarget(
               <div
@@ -112,7 +114,7 @@ export default class Combat extends React.Component {
                 data-dragging-over={isOver || null}
                 style={style}
               >
-                {this.state.isVisible ? (
+                {started ? (
                   <button onClick={() => this.close()}>Fechar</button>
                 ) : null}
                 <section styleName="combat-area">
