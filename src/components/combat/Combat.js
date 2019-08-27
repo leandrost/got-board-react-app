@@ -3,7 +3,7 @@ import CSSModules from "react-css-modules";
 import { draggable, droppable } from "~/decorators";
 import { connect, actions, build } from "~/redux/tools";
 
-import { updateCombat } from "~/redux/actions/";
+import { resetCombat, updateCombat } from "~/redux/actions/";
 
 import HouseCard from "../house-card/HouseCard";
 
@@ -28,7 +28,7 @@ const defaultPosition = () => {
       started: state.combat.started
     };
   },
-  actions({ updateCombat })
+  actions({ resetCombat, updateCombat })
 )
 @droppable(["house-card"])
 @draggable("combat")
@@ -44,7 +44,7 @@ export default class Combat extends React.Component {
   }
 
   close() {
-    this.props.updateCombat({ started: false });
+    this.props.resetCombat();
   }
 
   open() {

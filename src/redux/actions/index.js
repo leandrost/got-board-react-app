@@ -33,8 +33,35 @@ export function receiveUpdatedCombat({ choosenCard, started }) {
   };
 }
 
-export function updateCombat({ choosenCard, started }) {
-  const id = 1;
+const combatPusherAction = (gameId, attributes) => ({
+  endpoint: `/games/${gameId}/combat`,
+  options: {
+    method: "PATCH",
+    body: JSON.stringify({
+      data: {
+        type: "combat",
+        attributes: attributes
+      }
+    }),
+    success: json => {
+      console.log("response from API", json);
+    }
+  }
+});
+
+export function resetCombat(gameId, withFetch = true) {
+  let action = {
+    type: "RESET_COMBAT"
+  };
+
+  if (withFetch) {
+    action["fetch"] = combatPusherAction(gameId, { reset: true });
+  }
+
+  return dispatch => dispatch(action);
+}
+
+export function updateCombat({ id, choosenCard, started }) {
   console.log("updateCombat", { choosenCard, started });
   // Set in redux store in the same format as it is in fetch game
   return dispatch => {
@@ -42,21 +69,7 @@ export function updateCombat({ choosenCard, started }) {
       type: "UPDATE_COMBAT",
       choosenCard,
       started,
-      fetch: {
-        endpoint: `/games/${id}/combat`,
-        options: {
-          method: "PATCH",
-          body: JSON.stringify({
-            data: {
-              type: "combat",
-              attributes: { choosenCard, started }
-            }
-          })
-        },
-        success: json => {
-          console.log("response from API", json);
-        }
-      }
+      fetch: combatPusherAction(id, { choosenCard, started })
     });
   };
 }

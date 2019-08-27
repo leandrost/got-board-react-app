@@ -19,15 +19,25 @@ const updateAttributes = (state, action) => {
   };
 };
 
+const combatInitialState = {
+  attacker: null,
+  defender: null,
+  started: false,
+  reset: false
+};
+
 const combatReducer = () => {
-  return (
-    state = { attacker: null, defender: null, started: false },
-    action
-  ) => {
+  return (state = combatInitialState, action) => {
+    console.log("combatReducer", { state, action });
     switch (action.type) {
+      case "RESET_COMBAT":
+        return combatInitialState;
       case "UPDATE_COMBAT":
-        const { choosenCard, started } = action;
-        console.log("action", action);
+        const { choosenCard, started, reset } = action;
+
+        if (reset) {
+          return combatInitialState;
+        }
 
         if (!choosenCard) {
           return {

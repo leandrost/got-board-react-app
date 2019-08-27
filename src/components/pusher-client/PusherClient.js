@@ -5,7 +5,12 @@ import _ from "lodash";
 
 import { connect, actions } from "~/redux/tools";
 
-import { update, bulkUpdate, receiveUpdatedCombat } from "~/redux/actions/";
+import {
+  update,
+  bulkUpdate,
+  receiveUpdatedCombat,
+  resetCombat
+} from "~/redux/actions/";
 
 const camelCaseKeys = obj => {
   if (!_.isObject(obj)) {
@@ -27,7 +32,7 @@ const camelCaseKeys = obj => {
 
 @connect(
   () => ({}),
-  actions({ update, bulkUpdate, receiveUpdatedCombat })
+  actions({ update, bulkUpdate, receiveUpdatedCombat, resetCombat })
 )
 export default class PusherClient extends React.Component {
   componentDidMount() {
@@ -48,8 +53,11 @@ export default class PusherClient extends React.Component {
     });
 
     channel.bind("combat", data => {
-      console.log("pusher received", data.attributes);
-      this.props.receiveUpdatedCombat(data.attributes);
+      const { attributes } = data;
+      if (attributes.reset) {
+        return this.props.resetCombat(attributes.id, false);
+      }
+      this.props.receiveUpdatedCombat(attributes);
     });
   }
 
