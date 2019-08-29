@@ -33,44 +33,54 @@ export function receiveUpdatedCombat({ choosenCard, started }) {
   };
 }
 
-const combatPusherAction = (gameId, attributes) => ({
+const combatPusherAction = (gameId, houseName, attributes) => ({
   endpoint: `/games/${gameId}/combat`,
   options: {
     method: "PATCH",
     body: JSON.stringify({
       data: {
         type: "combat",
+        game_id: gameId,
+        house_name: houseName,
         attributes: attributes
       }
-    }),
-    success: json => {
-      console.log("response from API", json);
-    }
+    })
   }
 });
 
-export function resetCombat(gameId, withFetch = true) {
+export function resetCombat(gameId, houseName, withFetch = true) {
   let action = {
     type: "RESET_COMBAT"
   };
 
   if (withFetch) {
-    action["fetch"] = combatPusherAction(gameId, { reset: true });
+    action["fetch"] = combatPusherAction(gameId, houseName, { reset: true });
   }
 
   return dispatch => dispatch(action);
 }
 
-export function updateCombat({ id, choosenCard, started }) {
-  console.log("updateCombat", { choosenCard, started });
+export function updateCombat(
+  { id, houseName, choosenCard, started },
+  withFetch = true
+) {
+  console.log("updateCombat", { houseName, choosenCard, started });
+  let action = {
+    type: "UPDATE_COMBAT",
+    choosenCard,
+    started
+  };
+
+  if (withFetch) {
+    action["fetch"] = combatPusherAction(id, houseName, {
+      choosenCard,
+      started
+    });
+  }
+
   // Set in redux store in the same format as it is in fetch game
   return dispatch => {
-    return dispatch({
-      type: "UPDATE_COMBAT",
-      choosenCard,
-      started,
-      fetch: combatPusherAction(id, { choosenCard, started })
-    });
+    return dispatch(action);
   };
 }
 
@@ -103,6 +113,14 @@ export function fetchGame(id) {
       }
     });
   };
+}
+
+export function selectHouse(houseName) {
+  return dispatch =>
+    dispatch({
+      type: "SET_CURRENT_HOUSE",
+      house: houseName
+    });
 }
 
 export function movePiece(piece, attrs) {

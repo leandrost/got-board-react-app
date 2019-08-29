@@ -31,7 +31,10 @@ const camelCaseKeys = obj => {
 };
 
 @connect(
-  () => ({}),
+  (state, props) => ({
+    gameId: state.current.gameId,
+    houseName: state.current.house
+  }),
   actions({ update, bulkUpdate, receiveUpdatedCombat, resetCombat })
 )
 export default class PusherClient extends React.Component {
@@ -53,11 +56,19 @@ export default class PusherClient extends React.Component {
     });
 
     channel.bind("combat", data => {
-      const { attributes } = data;
-      if (attributes.reset) {
-        return this.props.resetCombat(attributes.id, false);
+      const { attributes, game_id, house_name } = data;
+      const { gameId: currentGameId, houseName: currentHouseName } = this.props;
+
+      if (game_id === currentGameId && house_name === currentHouseName) {
+        // Same user that triggered pusher, so don't dispatch again!
+        return;
       }
-      this.props.receiveUpdatedCombat(attributes);
+
+      if (attributes.reset) {
+        return this.props.resetCombat(attributes.id, house_name, false);
+      }
+
+      this.props.receiveUpdatedCombat(attributes, false);
     });
   }
 

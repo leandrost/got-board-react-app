@@ -4,12 +4,15 @@ import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import TouchBackend from "react-dnd-touch-backend";
 
+import { connect, actions } from "~/redux/tools";
 import { droppable } from "~/decorators";
 
 import Board from "~/components/board/Board";
 import WarRoom from "~/components/war-room/WarRoom";
 import Combat from "~/components/combat/Combat";
 import PusherClient from "~/components/pusher-client/PusherClient";
+
+import { selectHouse } from "~/redux/actions/";
 
 import styles from "./app.scss";
 
@@ -21,6 +24,10 @@ function DnDBackend() {
   return HTML5Backend;
 }
 
+@connect(
+  (state, props) => ({}),
+  actions({ selectHouse })
+)
 @DragDropContext(DnDBackend())
 @droppable(["war-room", "combat"])
 @CSSModules(styles)
@@ -37,6 +44,7 @@ class App extends Component {
         params[key] = value;
       });
     this.setState(params);
+    this.props.selectHouse(params.house);
   }
 
   componentDidMount() {

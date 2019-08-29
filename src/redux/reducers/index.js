@@ -131,7 +131,9 @@ dataTypes.forEach(type => {
 const current = (state = { gameId: null }, action) => {
   switch (action.type) {
     case "SET_CURRENT_GAME":
-      return { ...state, gameId: action.id, house: action.house };
+      return { ...state, gameId: action.id };
+    case "SET_CURRENT_HOUSE":
+      return { ...state, house: action.house };
     default:
       return state;
   }
