@@ -22,7 +22,7 @@ import styles from "./Combat.scss";
 // 10. A "end combat" button shows and when it's clicked, destroys the modal and resets it's state.
 
 // TODO:
-// * Reducer being called 3 times!!!
+// * [FIXED] Reducer being called 3 times!!!
 // * When drag a card, only fill attacker space;
 // * Show chosen card flipped to all opponents;
 // * Reveal button;
