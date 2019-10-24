@@ -46,24 +46,22 @@ const combatReducer = () => {
           };
         }
 
+        const card = {
+          [choosenCard.id]: {
+            attributes: { ...choosenCard }
+          }
+        };
+
         if (state.attacker) {
           return {
             ...state,
-            defender: {
-              [choosenCard.id]: {
-                attributes: { ...choosenCard }
-              }
-            }
+            defender: card
           };
         }
 
         return {
           ...state,
-          attacker: {
-            [choosenCard.id]: {
-              attributes: { ...choosenCard }
-            }
-          }
+          attacker: card
         };
       default:
         return state;

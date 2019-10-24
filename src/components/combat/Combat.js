@@ -93,6 +93,7 @@ export default class Combat extends React.Component {
     this.props.updateCombat({
       id: this.props.gameId,
       choosenCard,
+      houseName: this.props.houseName,
       started: this.props.started
     });
     return {
