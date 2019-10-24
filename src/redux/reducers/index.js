@@ -28,7 +28,7 @@ const combatInitialState = {
 
 const combatReducer = () => {
   return (state = combatInitialState, action) => {
-    console.log("combatReducer", { state, action });
+    console.log(action.type, { action, state });
     switch (action.type) {
       case "RESET_COMBAT":
         return combatInitialState;

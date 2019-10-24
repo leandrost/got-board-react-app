@@ -23,7 +23,8 @@ import { fetchGame, updateAll } from "~/redux/actions/";
 
 @connect(
   (state, props) => ({
-    game: build(state, "games", props.gameId) || {}
+    game: build(state, "games", props.gameId) || {},
+    houses: build(state, "houses")
   }),
   actions({ fetchGame, updateAll })
 )
@@ -39,7 +40,7 @@ export default class Board extends React.Component {
   }
 
   flipOrders = revealed => {
-    const house = this.props.game.houses.find(
+    const house = this.props.houses.find(
       house => house.name === this.props.house
     );
     this.props.updateAll(this.props.gameId, "order", {

@@ -23,7 +23,7 @@ import styles from "./Combat.scss";
 
 // TODO:
 // * [FIXED] Reducer being called 3 times!!!
-// * When drag a card, only fill attacker space;
+// * [FIXED] When drag a card, only fill attacker space;
 // * Show chosen card flipped to all opponents;
 // * Reveal button;
 // * Used card or return cards to war-room?

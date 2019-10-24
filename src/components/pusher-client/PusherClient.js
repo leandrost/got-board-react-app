@@ -49,7 +49,7 @@ export default class PusherClient extends React.Component {
       this.props.update(obj);
     });
 
-    channel.bind("bulk_update", bulk => {
+    channel.bind("bulk-update", bulk => {
       const json = JSON.parse(bulk.payload);
       const data = normalize(json);
       this.props.bulkUpdate(bulk.type, data);

@@ -64,7 +64,6 @@ export function updateCombat(
   { id, houseName, choosenCard, started },
   withFetch = true
 ) {
-  console.log("updateCombat", { houseName, choosenCard, started });
   let action = {
     type: "UPDATE_COMBAT",
     choosenCard,

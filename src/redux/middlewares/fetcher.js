@@ -9,7 +9,7 @@ const fetchData = (config, dispatch, action) => {
       return json;
     })
     .then(json => {
-      const includes = json.data.relationships
+      const includes = json.data && json.data.relationships
         ? Object.keys(json.data.relationships)
         : [];
 
