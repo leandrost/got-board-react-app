@@ -24,8 +24,8 @@ import styles from "./Combat.scss";
 // TODO:
 // * [FIXED] Reducer being called 3 times!!!
 // * [FIXED] When drag a card, only fill attacker space;
-// * Show chosen card flipped to all opponents;
-// * Reveal button;
+// * [FIXED] Show chosen card flipped to all opponents;
+// * [FIXED] Reveal button;
 // * Used card or return cards to war-room?
 
 const defaultPosition = () => {
