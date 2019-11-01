@@ -59,6 +59,11 @@ export default class Combat extends React.Component {
     ...defaultPosition()
   };
 
+  isCardRevealed = () => {
+    // show card only to current user until it's revealed
+    return this.props.houseName === piece.houseName || piece.revealed;
+  }
+
   endDrag(monitor) {
     const { x, y } = monitor.getDropResult();
     this.setState({ x, y });

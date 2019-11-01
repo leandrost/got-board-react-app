@@ -23,7 +23,8 @@ const combatInitialState = {
   attacker: null,
   defender: null,
   started: false,
-  reset: false
+  reset: false,
+  revealed: false,
 };
 
 const combatReducer = () => {
@@ -33,10 +34,17 @@ const combatReducer = () => {
       case "RESET_COMBAT":
         return combatInitialState;
       case "UPDATE_COMBAT":
-        const { choosenCard, started, reset } = action;
+      const { choosenCard, started, reset, revealed } = action;
 
         if (reset) {
           return combatInitialState;
+        }
+
+        if (revealed) {
+          return {
+            ...state,
+            revealed
+          };
         }
 
         if (!choosenCard) {
