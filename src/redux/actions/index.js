@@ -60,6 +60,18 @@ export function resetCombat(gameId, houseName, withFetch = true) {
   return dispatch => dispatch(action);
 }
 
+export function revealCombat(gameId, houseName, withFetch = true) {
+  let action = {
+    type: "REVEAL_COMBAT"
+  };
+
+  if (withFetch) {
+    action["fetch"] = combatPusherAction(gameId, houseName, { started: true, revealed: true });
+  }
+
+  return dispatch => dispatch(action);
+}
+
 export function updateCombat(
   { id, houseName, choosenCard, started },
   withFetch = true

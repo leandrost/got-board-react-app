@@ -9,7 +9,8 @@ import {
   update,
   bulkUpdate,
   receiveUpdatedCombat,
-  resetCombat
+  resetCombat,
+  revealCombat,
 } from "~/redux/actions/";
 
 const camelCaseKeys = obj => {
@@ -35,7 +36,7 @@ const camelCaseKeys = obj => {
     gameId: state.current.gameId,
     houseName: state.current.house
   }),
-  actions({ update, bulkUpdate, receiveUpdatedCombat, resetCombat })
+  actions({ update, bulkUpdate, receiveUpdatedCombat, resetCombat, revealCombat })
 )
 export default class PusherClient extends React.Component {
   componentDidMount() {
@@ -59,9 +60,15 @@ export default class PusherClient extends React.Component {
       const { attributes, game_id, house_name } = data;
       const { gameId: currentGameId, houseName: currentHouseName } = this.props;
 
+      console.log(attributes)
+
       if (game_id === currentGameId && house_name === currentHouseName) {
         // Same user that triggered pusher, so don't dispatch again!
         return;
+      }
+
+      if (attributes.revealed) {
+        return this.props.revealCombat(attributes.id, house_name, false);
       }
 
       if (attributes.reset) {

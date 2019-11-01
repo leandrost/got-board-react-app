@@ -8,13 +8,15 @@ import Piece from '~/components/piece/Piece';
 @CSSModules(styles)
 export default class HouseCard extends React.Component {
   render() {
-    const { houseName, name } = this.props;
+    const { houseName, name, revealed = true } = this.props;
     const cardName = _.kebabCase(name);
+    const styleName = revealed ? `${houseName}-${cardName}` : `${houseName}-card-cover`;
+
     return (
       <Piece
         {...this.props}
         type='house-card'
-        styleName={`${houseName}-${cardName}`}
+        styleName={styleName}
       />
     );
   }

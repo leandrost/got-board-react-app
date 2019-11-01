@@ -29,10 +29,14 @@ const combatInitialState = {
 
 const combatReducer = () => {
   return (state = combatInitialState, action) => {
-    console.log(action.type, { action, state });
     switch (action.type) {
       case "RESET_COMBAT":
         return combatInitialState;
+      case "REVEAL_COMBAT":
+        return {
+          ...state,
+          revealed: true,
+        };
       case "UPDATE_COMBAT":
       const { choosenCard, started, reset, revealed } = action;
 

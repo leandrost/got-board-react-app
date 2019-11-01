@@ -3,7 +3,7 @@ import CSSModules from "react-css-modules";
 import { draggable, droppable } from "~/decorators";
 import { connect, actions, build } from "~/redux/tools";
 
-import { resetCombat, updateCombat } from "~/redux/actions/";
+import { resetCombat, updateCombat, revealCombat } from "~/redux/actions/";
 
 import HouseCard from "../house-card/HouseCard";
 
@@ -45,11 +45,12 @@ const defaultPosition = () => {
       attacker: attacker && attacker[0],
       defender: defender && defender[0],
       started: state.combat.started,
+      revealed: state.combat.revealed,
       gameId: state.current.gameId,
       houseName: state.current.house
     };
   },
-  actions({ resetCombat, updateCombat })
+  actions({ resetCombat, updateCombat, revealCombat })
 )
 @droppable(["house-card"])
 @draggable("combat")
@@ -59,9 +60,32 @@ export default class Combat extends React.Component {
     ...defaultPosition()
   };
 
-  isCardRevealed = () => {
-    // show card only to current user until it's revealed
-    return this.props.houseName === piece.houseName || piece.revealed;
+  isAttackerRevealed() {
+    if (this.props.revealed) {
+      return true;
+    }
+
+    if (this.props.attacker && this.props.houseName === this.props.attacker.houseName) {
+      return true;
+    }
+
+    return false;
+  }
+
+  isDefenderRevealed() {
+    if (this.props.revealed) {
+      return true;
+    }
+
+    if (this.props.defender && this.props.houseName === this.props.defender.houseName) {
+      return true;
+    }
+
+    return false;
+  }
+
+  revealCombat() {
+    this.props.revealCombat(this.props.gameId, this.props.houseName);
   }
 
   endDrag(monitor) {
@@ -134,15 +158,15 @@ export default class Combat extends React.Component {
                 data-dragging-over={isOver || null}
                 style={style}
               >
-                {started ? (
-                  <button onClick={() => this.close()}>Fechar</button>
-                ) : null}
+                {started && <button onClick={() => this.close()}>Fechar</button>}
+                <button onClick={() => this.revealCombat()}>Reveal</button>
                 <section styleName="combat-area">
                   <section styleName="combat-attacker-area">
                     {attacker && (
                       <HouseCard
                         name={attacker.name}
                         houseName={attacker.houseName}
+                        revealed={this.isAttackerRevealed()}
                       />
                     )}
                   </section>
@@ -152,6 +176,7 @@ export default class Combat extends React.Component {
                       <HouseCard
                         name={defender.name}
                         houseName={defender.houseName}
+                        revealed={this.isDefenderRevealed()}
                       />
                     )}
                   </section>
