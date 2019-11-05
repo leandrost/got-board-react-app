@@ -9,6 +9,7 @@ import HouseCard from "../house-card/HouseCard";
 
 import styles from "./Combat.scss";
 
+// Combat flow:
 // 1. when combat is initiated, shows combat modal to all players;
 // 2. attacker drags a card into combat modal (left side placeholder);
 // 3. when the attacker drops a card, his house symbol shows as attacker;
