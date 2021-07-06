@@ -1,49 +1,137 @@
-import { collectionName, resourceName, actionModelName } from '~/redux/datatypes';
-import _ from 'lodash';
+import {
+  collectionName,
+  resourceName,
+  actionModelName
+} from "~/redux/datatypes";
+import _ from "lodash";
 
-const snakeCaseKeys = (obj) => {
+const snakeCaseKeys = obj => {
   if (!_.isObject(obj)) {
     return obj;
   } else if (_.isArray(obj)) {
-    return obj.map((v) => snakeCaseKeys(v));
+    return obj.map(v => snakeCaseKeys(v));
   }
-  return _.reduce(obj, (r, v, k) => {
-    return {
-      ...r,
-      [_.snakeCase(k)]: snakeCaseKeys(v)
-    };
-  }, {});
+  return _.reduce(
+    obj,
+    (r, v, k) => {
+      return {
+        ...r,
+        [_.snakeCase(k)]: snakeCaseKeys(v)
+      };
+    },
+    {}
+  );
 };
+
+export function receiveUpdatedCombat({ choosenCard, started }) {
+  return dispatch => {
+    return dispatch({
+      type: "UPDATE_COMBAT",
+      choosenCard,
+      started
+    });
+  };
+}
+
+const combatPusherAction = (gameId, houseName, attributes) => ({
+  endpoint: `/games/${gameId}/combat`,
+  options: {
+    method: "PATCH",
+    body: JSON.stringify({
+      data: {
+        type: "combat",
+        game_id: gameId,
+        house_name: houseName,
+        attributes: attributes
+      }
+    })
+  }
+});
+
+export function resetCombat(gameId, houseName, withFetch = true) {
+  let action = {
+    type: "RESET_COMBAT"
+  };
+
+  if (withFetch) {
+    action["fetch"] = combatPusherAction(gameId, houseName, { reset: true });
+  }
+
+  return dispatch => dispatch(action);
+}
+
+export function revealCombat(gameId, houseName, withFetch = true) {
+  let action = {
+    type: "REVEAL_COMBAT"
+  };
+
+  if (withFetch) {
+    action["fetch"] = combatPusherAction(gameId, houseName, { started: true, revealed: true });
+  }
+
+  return dispatch => dispatch(action);
+}
+
+export function updateCombat(
+  { id, houseName, choosenCard, started },
+  withFetch = true
+) {
+  let action = {
+    type: "UPDATE_COMBAT",
+    choosenCard,
+    started
+  };
+
+  if (withFetch) {
+    action["fetch"] = combatPusherAction(id, houseName, {
+      choosenCard,
+      started
+    });
+  }
+
+  // Set in redux store in the same format as it is in fetch game
+  return dispatch => {
+    return dispatch(action);
+  };
+}
 
 export function fetchGame(id) {
   const relationships = [
-    'territories',
-    'houses',
-    'units',
-    'orders',
-    'power_tokens',
-    'house_cards',
-    'neutral_force_tokens',
-    'garrison_tokens',
-    'influence_tokens',
-    'supply_tokens',
-    'victory_tokens'
+    "territories",
+    "houses",
+    "units",
+    "orders",
+    "power_tokens",
+    "house_cards",
+    "neutral_force_tokens",
+    "garrison_tokens",
+    "influence_tokens",
+    "supply_tokens",
+    "victory_tokens"
   ];
 
-  return (dispatch) => {
+  return dispatch => {
     return dispatch({
-      type: 'FETCH_GAME',
+      type: "FETCH_GAME",
       fetch: {
         endpoint: `/games/${id}?include=${relationships}`,
-        success: (json) => {
+        success: json => {
           dispatch({
-            type: 'SET_CURRENT_GAME',
-            id: id,
-          })
-        },
+            type: "SET_CURRENT_GAME",
+            id: id
+          });
+        }
       }
     });
   };
+}
+
+export function selectHouse(houseName) {
+  return dispatch =>
+    dispatch({
+      type: "SET_CURRENT_HOUSE",
+      house: houseName
+    });
 }
 
 export function movePiece(piece, attrs) {
@@ -54,7 +142,7 @@ export function movePiece(piece, attrs) {
   const resource = resourceName(type);
   const actionModel = actionModelName(type);
 
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `MOVE_${actionModel}`,
       id: id,
@@ -62,14 +150,14 @@ export function movePiece(piece, attrs) {
       fetch: {
         endpoint: `/games/${gameId}/${resource}/${id}`,
         options: {
-          method: 'PATCH',
+          method: "PATCH",
           body: JSON.stringify({
             data: {
               type: collection,
               id: id,
-              attributes: attrs,
+              attributes: attrs
             }
-          }),
+          })
         }
       }
     });
@@ -77,7 +165,7 @@ export function movePiece(piece, attrs) {
 }
 
 export function updateGame(id, attrs) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `UPDATE_GAME`,
       id: id,
@@ -85,14 +173,14 @@ export function updateGame(id, attrs) {
       fetch: {
         endpoint: `/games/${id}`,
         options: {
-          method: 'PATCH',
+          method: "PATCH",
           body: JSON.stringify({
             data: {
-              type: 'games',
+              type: "games",
               id: id,
-              attributes: snakeCaseKeys(attrs),
+              attributes: snakeCaseKeys(attrs)
             }
-          }),
+          })
         }
       }
     });
@@ -103,10 +191,10 @@ export function updateAll(gameId, type, data) {
   const collection = collectionName(type);
   const resource = resourceName(type);
   const filter = Object.entries(data.filter)
-  .map(([key, value]) => `filter[${key}]=${value}`)
-  .join('&');
+    .map(([key, value]) => `filter[${key}]=${value}`)
+    .join("&");
 
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `BULK_UPDATE_${collection.toUpperCase()}`,
       attributes: data.attributes,
@@ -119,7 +207,7 @@ export function updateAll(gameId, type, data) {
               type: collection,
               attributes: data.attributes
             }
-          }),
+          })
         }
       }
     });
@@ -129,40 +217,40 @@ export function updateAll(gameId, type, data) {
 export function update(data) {
   const actionModel = actionModelName(data.type);
 
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `UPDATE_${actionModel}`,
       id: data.id,
-      attributes: data.attributes,
+      attributes: data.attributes
     });
   };
 }
 
 export function bulkUpdate(type, data) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `LOAD_${type.toUpperCase()}`,
-      data: data,
+      data: data
     });
   };
 }
 
 function revealCard(gameId, action) {
   const actionType = action.toUpperCase();
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `${actionType}_WILDLING_CARD`,
       id: gameId,
       fetch: {
         endpoint: `/games/${gameId}/wildling_cards/${action}`,
         options: {
-          method: 'PATCH',
-          success: (json) => {
+          method: "PATCH",
+          success: json => {
             dispatch({
               type: `REVEAL_WILDLING_CARD`,
-              id: gameId,
-            })
-          },
+              id: gameId
+            });
+          }
         }
       }
     });
@@ -170,34 +258,34 @@ function revealCard(gameId, action) {
 }
 
 export function drawWildlingCard(id) {
-  return revealCard(id, 'draw');
+  return revealCard(id, "draw");
 }
 
 export function peekWildlingCard(id) {
-  return revealCard(id, 'peek');
+  return revealCard(id, "peek");
 }
 
 export function hideWildlingCard(gameId) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `HIDE_WILDLING_CARD`,
       id: gameId,
       fetch: {
         endpoint: `/games/${gameId}/wildling_cards/hide`,
-        options: { method: 'PATCH' }
+        options: { method: "PATCH" }
       }
     });
   };
 }
 
 export function moveWildlingCardToBottom(gameId) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: `MOVE_WILDLING_CARD_TO_BOTTOM`,
       id: gameId,
       fetch: {
         endpoint: `/games/${gameId}/wildling_cards/move_to_bottom`,
-        options: { method: 'PATCH' }
+        options: { method: "PATCH" }
       }
     });
   };
